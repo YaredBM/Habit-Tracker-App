@@ -16,15 +16,14 @@ This repository hosts the core engineering deliverables for the project.
 ### 📄 [Download Software Requirements Specification (SRS)](./Software%20Requirements%20Specification%20(SRS)%20Document%20for%20EcoHabit.pdf)
 A complete engineering document defining the scope, functional requirements, and system architecture.
 * **Scope:** Mobile app for Android.
-* **Key Definitions:** Functional (FR) & Non-Functional Requirements (NFR).
 * **Tech Constraints:** Flutter Frontend, Firebase Backend, Offline Functionality.
 
 ### 🎨 UI/UX Design (Figma)
 High-fidelity prototypes designed in **Figma**, featuring a high-contrast **Dark Mode** aesthetic.
 
-| Login Screen | Dashboard / Habits | Analytics & Streaks |
+| Login Screen | Habit Dashboard (Weekly) | Create Habit Flow |
 |:---:|:---:|:---:|
-| <img src="./assets/login.png" width="250"> | <img src="./assets/dashboard.png" width="250"> | <img src="./assets/analytics.png" width="250"> |
+| <img src="./Assets/Login%20Page.png" width="250"> | <img src="./Assets/Streaks%20Weekly.png" width="250"> | <img src="./Assets/Create%20Habit%20Page.png" width="250"> |
 
 ---
 
@@ -32,17 +31,12 @@ High-fidelity prototypes designed in **Figma**, featuring a high-contrast **Dark
 
 ### 🔐 User Authentication [FR-1]
 * Secure Sign up/Login (Email & Social Login via Google/Apple/Facebook).
-* Password management and secure session handling.
+* Password management with visibility toggle.
 
 ### 📅 Habit Management [FR-2]
 * **Create Habits:** Custom names, descriptions, colors, and frequency settings (Daily, Weekly, Specific Days).
-* **Tracking:** Mark habits as complete with a single tap for efficiency.
-* **Templates:** Predefined "Popular Routines" for quick setup.
-
-### 📊 Visualization & Insights [FR-3]
-* **Dashboards:** "Today", "Weekly", and "Overall" views.
-* **Gamification:** Visual streaks (e.g., circular progress rings) and motivational quotes.
-* **Analytics:** Charts detailing completion rates and earned badges.
+* **Tracking:** Visual streaks and motivational quotes.
+* **Views:** "Today", "Weekly", and "Overall" dashboards.
 
 ---
 

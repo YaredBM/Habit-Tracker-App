@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "162382854792",
+    "project_id": "ecohabit-9b49c",
+    "storage_bucket": "ecohabit-9b49c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162382854792:android:378cae96cae833c98cbd3d",
+        "android_client_info": {
+          "package_name": "com.example.ecohabit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvMsdDb_rKLV422LxaVny6bApUOfzhLE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

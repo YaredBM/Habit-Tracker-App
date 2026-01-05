@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '/l10n/app_localizations.dart';
 
 class ProPlanScreen extends StatelessWidget {
   const ProPlanScreen({
     super.key,
     this.isSubscribed = true,
-    this.planLabel = 'Pro Yearly',
+    this.planLabel,
   });
 
   final bool isSubscribed;
-  final String planLabel;
+
+  /// If null, we use localized default from .arb (t.proPlanDefaultLabel)
+  final String? planLabel;
 
   // Call this to open it exactly like the screenshot (modal bottom sheet).
   static Future<void> show(
       BuildContext context, {
         bool isSubscribed = true,
-        String planLabel = 'Pro Yearly',
+        String? planLabel,
       }) {
     return showModalBottomSheet(
       context: context,
@@ -27,6 +30,8 @@ class ProPlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     const bg = Color(0xFF111015);
     const sheet = Color(0xFF0F0F13);
     const card = Color(0xFF15151A);
@@ -34,45 +39,47 @@ class ProPlanScreen extends StatelessWidget {
 
     final h = MediaQuery.of(context).size.height;
 
+    final resolvedPlanLabel = planLabel ?? t.proPlanDefaultLabel;
+
     final features = <_ProFeature>[
       _ProFeature(
-        label: 'Unlimited Habits',
+        label: t.proFeatureUnlimitedHabits,
         leadingAsset: 'lib/assets/current_streak.png',
         free: true,
         pro: true,
       ),
       _ProFeature(
-        label: 'Routine AI',
+        label: t.proFeatureRoutineAi,
         leadingAsset: 'lib/assets/sparkles.png',
         free: false,
         pro: true,
       ),
       _ProFeature(
-        label: 'Analytics',
+        label: t.proFeatureAnalytics,
         leadingAsset: 'lib/assets/bar_analytics.png',
         free: false,
         pro: true,
       ),
       _ProFeature(
-        label: 'Goal setting',
+        label: t.proFeatureGoalSetting,
         leadingAsset: 'lib/assets/best_streak.png',
         free: false,
         pro: true,
       ),
       _ProFeature(
-        label: 'Journaling',
+        label: t.proFeatureJournaling,
         leadingAsset: 'lib/assets/journal_book.png',
         free: false,
         pro: true,
       ),
       _ProFeature(
-        label: 'Color Picker',
+        label: t.proFeatureColorPicker,
         leadingAsset: 'lib/assets/color_palette.png',
         free: false,
         pro: true,
       ),
       _ProFeature(
-        label: 'Backup habits',
+        label: t.proFeatureBackupHabits,
         leadingAsset: 'lib/assets/disk_backup.png',
         free: false,
         pro: true,
@@ -104,13 +111,14 @@ class ProPlanScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 2),
                       Text(
-                        'EcoHabit Pro ',
+                        t.proPlanTitle,
                         style: GoogleFonts.poppins(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
                       ),
+                      const SizedBox(width: 6),
                       const Icon(Icons.star, color: Color(0xFFFFD166), size: 16),
                       const Spacer(),
                     ],
@@ -149,7 +157,9 @@ class ProPlanScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      isSubscribed ? 'You are subscribed to' : 'Upgrade to',
+                                      isSubscribed
+                                          ? t.proPlanSubscribedPrefix
+                                          : t.proPlanUpgradePrefix,
                                       style: GoogleFonts.poppins(
                                         fontSize: 13,
                                         color: Colors.grey[400],
@@ -158,7 +168,7 @@ class ProPlanScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      planLabel,
+                                      resolvedPlanLabel,
                                       style: GoogleFonts.poppins(
                                         fontSize: 14,
                                         color: proBlue,
@@ -178,6 +188,8 @@ class ProPlanScreen extends StatelessWidget {
                         _FeatureTable(
                           cardColor: card,
                           proBlue: proBlue,
+                          freeHeader: t.proPlanFreeHeader,
+                          proHeader: t.proPlanProHeader,
                           features: features,
                         ),
 
@@ -203,7 +215,7 @@ class ProPlanScreen extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'Close',
+                        t.commonClose,
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -226,11 +238,15 @@ class _FeatureTable extends StatelessWidget {
     required this.cardColor,
     required this.proBlue,
     required this.features,
+    required this.freeHeader,
+    required this.proHeader,
   });
 
   final Color cardColor;
   final Color proBlue;
   final List<_ProFeature> features;
+  final String freeHeader;
+  final String proHeader;
 
   @override
   Widget build(BuildContext context) {
@@ -246,14 +262,6 @@ class _FeatureTable extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          // Table shell
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(18),
-            ),
-          ),
-
           // PRO column highlight (behind)
           Positioned.fill(
             child: Align(
@@ -288,7 +296,7 @@ class _FeatureTable extends StatelessWidget {
                         width: colW,
                         child: Center(
                           child: Text(
-                            'FREE',
+                            freeHeader,
                             style: GoogleFonts.poppins(
                               fontSize: 11,
                               color: Colors.grey[400],
@@ -301,7 +309,7 @@ class _FeatureTable extends StatelessWidget {
                         width: colW,
                         child: Center(
                           child: Text(
-                            'PRO',
+                            proHeader,
                             style: GoogleFonts.poppins(
                               fontSize: 11,
                               color: proBlue,

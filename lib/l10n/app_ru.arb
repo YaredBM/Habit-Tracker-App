@@ -1,0 +1,639 @@
+{
+  "@@locale": "ru",
+  "signInTitle": "Войти",
+  "emailOrUsername": "Эл. почта или имя пользователя",
+  "enterEmailOrUsername": "Введите эл. почту или имя пользователя",
+  "password": "Пароль",
+  "forgotPassword": "Забыли пароль?",
+  "orContinueWith": "Или продолжить с",
+  "signInButton": "Войти",
+  "dontHaveAccount": "Ещё нет аккаунта? ",
+  "signUp": "Зарегистрироваться",
+  "errEnterEmailOrUsername": "Пожалуйста, введите эл. почту или имя пользователя",
+  "errEnterPassword": "Пожалуйста, введите пароль",
+  "chooseLanguageTitle": "Выберите язык",
+  "continueButton": "Продолжить",
+  "languageEnglish": "Английский",
+  "languageGerman": "Немецкий",
+  "languageSpanish": "Испанский",
+  "languageRussian": "Русский",
+  "languageTurkish": "Турецкий",
+  "languageFrench": "Французский",
+  "signUpTitle": "Регистрация",
+  "signUpButton": "Зарегистрироваться",
+  "signUpEmailLabel": "Эл. почта",
+  "signUpEmailHint": "Введите эл. почту",
+  "signUpUsernameLabel": "Создайте имя пользователя",
+  "signUpUsernameHint": "Введите имя пользователя",
+  "signUpPasswordLabel": "Создайте пароль",
+  "signUpPasswordHint": "Пароль",
+  "signUpOrContinueWith": "Или продолжить с",
+  "signUpEmailRequired": "Пожалуйста, введите эл. почту",
+  "signUpUsernameRequired": "Пожалуйста, введите имя пользователя",
+  "signUpPasswordRequired": "Пожалуйста, введите пароль",
+  "signUpErrorDefault": "Ошибка регистрации",
+  "signUpErrorGeneric": "Что-то пошло не так. Пожалуйста, попробуйте снова.",
+
+    "forgotPasswordTitle": "Новый пароль",
+    "forgotPasswordEmailLabel": "Эл. почта",
+    "forgotPasswordEmailHint": "Введите эл. почту или имя пользователя",
+    "forgotPasswordNewPasswordLabel": "Новый пароль",
+    "forgotPasswordConfirmPasswordLabel": "Подтвердите пароль",
+    "forgotPasswordPasswordHint": "Пароль",
+    "forgotPasswordDoneButton": "Готово",
+    "forgotPasswordEmailRequired": "Пожалуйста, введите эл. почту или имя пользователя",
+    "forgotPasswordNewPasswordRequired": "Пожалуйста, введите новый пароль",
+    "forgotPasswordConfirmPasswordRequired": "Пожалуйста, подтвердите пароль",
+    "forgotPasswordPasswordsDoNotMatch": "Пароли не совпадают",
+    "forgotPasswordResetEmailSent": "Письмо для сброса пароля отправлено. Проверьте входящие.",
+    "forgotPasswordNoAccountFound": "Аккаунт для этого адреса эл. почты не найден.",
+    "forgotPasswordInvalidEmail": "Пожалуйста, введите корректный адрес эл. почты.",
+    "forgotPasswordNetworkError": "Ошибка сети. Пожалуйста, попробуйте снова.",
+    "forgotPasswordFailedToSendResetEmail": "Не удалось отправить письмо для сброса пароля.",
+    "forgotPasswordGenericError": "Что-то пошло не так. Пожалуйста, попробуйте снова.",
+
+    "exploreTitle": "Обзор",
+    "exploreMostPopularRoutines": "Самые популярные рутины",
+    "exploreBecomeBetterYou": "Станьте лучше",
+
+    "exploreHeroHeadline": "Умные\nпроекты\nуже здесь",
+    "exploreHeroSubtitle": "Создавайте проекты с ИИ-\nкомандой, заметками, задачами и\nфайлами",
+    "exploreHeroCta": "Создать бесплатный проект",
+
+    "exploreRoutineTag": "РУТИНА",
+    "exploreHabitsTitle": "Привычки",
+
+    "exploreCopyHabitsButton": "Скопировать {count} привычек",
+    "@exploreCopyHabitsButton": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "explorePleaseSignInToCopyHabits": "Пожалуйста, войдите, чтобы копировать привычки.",
+
+    "exploreCopiedHabitsSnack": "Скопировано привычек: {count}",
+    "@exploreCopiedHabitsSnack": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "exploreCouldNotCopyHabits": "Не удалось скопировать привычки. Попробуйте снова.",
+
+    "exploreConfirmCopyTitle": "Скопировать привычки?",
+    "exploreConfirmCopySubtitle": "Будет создано привычек: {count}.",
+    "@exploreConfirmCopySubtitle": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "exploreYes": "Да",
+    "exploreCancel": "Отмена",
+
+    "exploreRoutineProcrastinationTitle": "Преодолеть\nпрокрастинацию",
+    "exploreRoutineProcrastinationDescription": "Прокрастинация может саботировать вашу продуктивность и мешать успеху, но она не обязана определять ваше будущее. Эта рутина предлагает стратегии, основанные на доказательных данных, чтобы помочь вам преодолеть прокрастинацию и набрать темп.",
+
+    "exploreRoutineAnxietyTitle": "Снять\nтревожность",
+    "exploreRoutineAnxietyDescription": "Практичная рутина, чтобы снизить базовый стресс и уменьшить тревожные циклы с помощью небольших ежедневных действий.",
+
+    "exploreRoutineFocusBoostTitle": "Усиление\nфокуса",
+    "exploreRoutineFocusBoostDescription": "Укрепляйте концентрацию с помощью компактной рутины, разработанной для глубокой работы.",
+
+    "exploreRoutineMorningMomentumTitle": "Утренний\nразгон",
+    "exploreRoutineMorningMomentumDescription": "Начните день с импульсом и чётким планом.",
+
+    "exploreHabitPomodoroTitle": "Техника Помодоро",
+    "exploreHabitPomodoroSubtitle": "Используйте 25-минутные блоки фокусировки с короткими перерывами.",
+    "exploreHabitTimeBlockingTitle": "Тайм-блокинг",
+    "exploreHabitTimeBlockingSubtitle": "Распланируйте день по понятным временным окнам задач.",
+    "exploreHabitEatThatFrogTitle": "Съешь лягушку",
+    "exploreHabitEatThatFrogSubtitle": "Сделайте самую сложную задачу первой, чтобы снизить избегание.",
+    "exploreHabitBreakTasksTitle": "Разбивайте задачи на маленькие шаги",
+    "exploreHabitBreakTasksSubtitle": "Превращайте большие задачи в небольшие, выполнимые шаги.",
+    "exploreHabitSmartGoalsTitle": "Ставьте SMART-цели",
+    "exploreHabitSmartGoalsSubtitle": "Конкретные, измеримые, достижимые, релевантные, ограниченные по времени.",
+
+    "exploreHabitBoxBreathingTitle": "Квадратное дыхание",
+    "exploreHabitBoxBreathingSubtitle": "Дыхательный цикл 4-4-4-4.",
+    "exploreHabitShortWalkTitle": "Короткая прогулка",
+    "exploreHabitShortWalkSubtitle": "10 минут на улице, если возможно.",
+    "exploreHabitJournalDumpTitle": "Выгрузка в дневник",
+    "exploreHabitJournalDumpSubtitle": "Записывайте мысли без фильтра.",
+    "exploreHabitLimitCaffeineTitle": "Ограничьте кофеин",
+    "exploreHabitLimitCaffeineSubtitle": "Сократите триггеры после полудня.",
+    "exploreHabitSleepWindDownTitle": "Подготовка ко сну",
+    "exploreHabitSleepWindDownSubtitle": "Стабильный ритуал перед сном.",
+
+    "exploreHabitNoPhoneStartTitle": "Старт без телефона",
+    "exploreHabitNoPhoneStartSubtitle": "Первые 30 минут без пролистывания.",
+    "exploreHabitDeepWorkBlockTitle": "Блок глубокой работы",
+    "exploreHabitDeepWorkBlockSubtitle": "Один спринт фокусировки на 45–60 минут.",
+    "exploreHabitSingleTaskListTitle": "Список ключевых задач",
+    "exploreHabitSingleTaskListSubtitle": "Выберите максимум 1–3 результата.",
+    "exploreHabitHydrateTitle": "Пейте воду",
+    "exploreHabitHydrateSubtitle": "Вода перед кофе.",
+
+    "exploreHabitMakeBedTitle": "Заправьте кровать",
+    "exploreHabitMakeBedSubtitle": "Быстрая победа на старте.",
+    "exploreHabitTop3PrioritiesTitle": "Топ-3 приоритета",
+    "exploreHabitTop3PrioritiesSubtitle": "Запишите результаты дня.",
+    "exploreHabitStretchTitle": "Растяжка",
+    "exploreHabitStretchSubtitle": "2–5 минут на всё тело.",
+    "exploreHabitProteinBreakfastTitle": "Белковый завтрак",
+    "exploreHabitProteinBreakfastSubtitle": "Стабильная энергия.",
+
+    "exploreRoutineCreativityBoostTitle": "Рутина\nдля повышения\nкреативности",
+    "exploreRoutineCreativityBoostDescription": "Простая рутина, чтобы увеличить творческий результат и снизить трение.",
+
+    "exploreRoutineProductivityEnhancerTitle": "Рутина\nдля повышения\nпродуктивности",
+    "exploreRoutineProductivityEnhancerDescription": "Улучшайте результаты с помощью лучших привычек планирования и исполнения.",
+
+    "exploreRoutineBuildConfidenceTitle": "Развить\nуверенность",
+    "exploreRoutineBuildConfidenceDescription": "Небольшие ежедневные действия, чтобы укреплять уверенность и регулярность.",
+
+    "exploreRoutineBetterSleepTitle": "Лучший\nсон",
+    "exploreRoutineBetterSleepDescription": "Успокаивающая рутина для улучшения качества сна и восстановления.",
+
+    "exploreHabitIdeaCaptureTitle": "Фиксация идей",
+    "exploreHabitIdeaCaptureSubtitle": "Записывайте 5 идей ежедневно.",
+    "exploreHabitCreateBeforeConsumeTitle": "Создавайте до потребления",
+    "exploreHabitCreateBeforeConsumeSubtitle": "Сначала создавайте, потом листайте.",
+    "exploreHabitInputWalkTitle": "Прогулка для вдохновения",
+    "exploreHabitInputWalkSubtitle": "Пройдитесь, чтобы вдохновиться.",
+    "exploreHabitDailySketchTitle": "Ежедневный скетч",
+    "exploreHabitDailySketchSubtitle": "2 минуты, без давления.",
+
+    "exploreHabitPlanTomorrowTitle": "План на завтра",
+    "exploreHabitPlanTomorrowSubtitle": "Пятиминутный план в конце дня.",
+    "exploreHabitInboxZeroTitle": "Inbox Zero",
+    "exploreHabitInboxZeroSubtitle": "Разберите сообщения одним блоком.",
+    "exploreHabitTwoMinuteRuleTitle": "Правило двух минут",
+    "exploreHabitTwoMinuteRuleSubtitle": "Сделайте сейчас, если это быстро.",
+    "exploreHabitShutdownRitualTitle": "Ритуал завершения",
+    "exploreHabitShutdownRitualSubtitle": "Закройте хвосты, завершите работу чисто.",
+
+    "exploreHabitDailyWinTitle": "Победа дня",
+    "exploreHabitDailyWinSubtitle": "Записывайте одну победу каждый день.",
+    "exploreHabitPracticeSkillTitle": "Практикуйте навык",
+    "exploreHabitPracticeSkillSubtitle": "10 минут целенаправленной практики.",
+    "exploreHabitPostureResetTitle": "Проверка осанки",
+    "exploreHabitPostureResetSubtitle": "Проверка 2 раза в день.",
+    "exploreHabitPositiveReframeTitle": "Позитивная переоценка",
+    "exploreHabitPositiveReframeSubtitle": "Перепишите историю в своей голове.",
+
+    "exploreHabitNoScreensTitle": "Без экранов",
+    "exploreHabitNoScreensSubtitle": "Избегайте экранов за 30 минут до сна.",
+    "exploreHabitCoolRoomTitle": "Прохладная комната",
+    "exploreHabitCoolRoomSubtitle": "Снизьте температуру для лучшего сна.",
+    "exploreHabitReadTitle": "Чтение",
+    "exploreHabitReadSubtitle": "10 страниц книги.",
+    "exploreHabitSameBedtimeTitle": "Одинаковое время сна",
+    "exploreHabitSameBedtimeSubtitle": "Регулярность важнее идеала.",
+
+
+    "createHabitCreateTitle": "Создать привычку",
+    "createHabitEditTitle": "Редактировать привычку",
+
+    "createHabitColorPicker": "Выбор цвета",
+    "createHabitPickColorTitle": "Выберите цвет",
+    "createHabitContinue": "Продолжить",
+    "createHabitCancel": "Отмена",
+    "createHabitDone": "Готово",
+
+    "createHabitTitleLabel": "Название",
+    "createHabitTitleHint": "Название",
+    "createHabitDescriptionLabel": "Описание",
+    "createHabitDescriptionHint": "Описание",
+    "createHabitColorLabel": "Цвет",
+
+    "createHabitRepeatLabel": "Повтор",
+    "createHabitDaily": "Ежедневно",
+    "createHabitWeekly": "Еженедельно",
+    "createHabitMonthly": "Ежемесячно",
+
+    "createHabitReminderLabel": "Напоминание",
+    "createHabitSendNotificationAt": "Отправить уведомление в",
+    "createHabitPickTime": "Выберите время",
+    "createHabitReminderInfo": "Вы получите «Пора заняться привычкой.» вместе с названием привычки.",
+
+    "createHabitGoalLabel": "Цель",
+    "createHabitEdit": "Изменить",
+    "createHabitPerDay": "в день",
+    "createHabitSetGoal": "Задать цель",
+    "createHabitTrackUnitsHelp": "Отслеживайте разы, минуты, часы, кг, км, литры или унции.",
+
+    "createHabitSave": "Сохранить",
+    "createHabitSaveChanges": "Сохранить изменения",
+
+    "createHabitTitleRequired": "Пожалуйста, введите название",
+    "createHabitMustBeSignedIn": "Чтобы создать привычку, нужно войти в аккаунт.",
+    "createHabitFailedToSave": "Не удалось сохранить привычку. Пожалуйста, попробуйте снова.",
+
+    "createHabitOnTheseDays": "В эти дни",
+    "createHabitFrequency": "Частота",
+    "createHabitEveryday": "Каждый день",
+    "createHabitDaysPerWeek": "{count} дней в неделю",
+    "@createHabitDaysPerWeek": {
+    "placeholders": {
+    "count": { "type": "int" }
+    }
+    },
+    "createHabitOnThisDayEachMonth": "В этот день каждого месяца",
+
+    "createHabitMonShort": "П",
+    "createHabitTueShort": "В",
+    "createHabitWedShort": "С",
+    "createHabitThuShort": "Ч",
+    "createHabitFriShort": "П",
+    "createHabitSatShort": "С",
+    "createHabitSunShort": "В",
+
+    "createHabitAm": "AM",
+    "createHabitPm": "PM",
+
+    "createHabitGoalLabelText": "{value} {unit}{plural} в день",
+    "@createHabitGoalLabelText": {
+    "placeholders": {
+    "value": { "type": "int" },
+    "unit": { "type": "String" },
+    "plural": { "type": "String" }
+    }
+    },
+
+    "createHabitGoalText": "{value} {unit} в день",
+    "@createHabitGoalText": {
+    "placeholders": {
+    "value": { "type": "int" },
+    "unit": { "type": "String" }
+    }
+    },
+
+    "createHabitUnitTime": "раз",
+    "createHabitUnitMinute": "минута",
+    "createHabitUnitHour": "час",
+    "createHabitUnitKg": "кг",
+    "createHabitUnitKm": "км",
+    "createHabitUnitL": "л",
+    "createHabitUnitOz": "унц.",
+
+    "habitDetailPleaseSignInHabits": "Пожалуйста, войдите, чтобы просматривать привычки.",
+    "habitDetailPleaseSignInNotes": "Пожалуйста, войдите, чтобы просматривать заметки.",
+    "habitDetailDefaultHabitTitle": "Привычка",
+
+    "habitDetailUpdateProgress": "Обновить прогресс",
+
+    "habitDetailMarkedIncompleteDay": "Отмечено как невыполненное за этот день",
+    "habitDetailMarkedCompleteDay": "Отмечено как выполненное за этот день",
+    "habitDetailCouldNotUpdateDay": "Не удалось обновить этот день. Попробуйте снова.",
+
+    "habitDetailDeleteHabitTitle": "Удалить привычку?",
+    "habitDetailDeleteHabitMessage": "Это удалит привычку и её историю.",
+    "habitDetailCancel": "Отмена",
+    "habitDetailDelete": "Удалить",
+
+    "habitDetailStatScore": "Баллы",
+    "habitDetailStatTotal": "Всего",
+    "habitDetailStatBestStreak": "Лучшая серия",
+    "habitDetailStatStreak": "Серия",
+
+    "habitDetailScoreTitle": "Баллы",
+    "habitDetailAnalytics": "Аналитика",
+    "habitDetailNoDataYet": "Данных пока нет",
+
+    "habitDetailHistory": "История",
+
+    "habitDetailNotes": "Заметки",
+    "habitDetailAddNote": "Добавить заметку",
+    "habitDetailCouldNotLoadNotes": "Не удалось загрузить заметки.",
+    "habitDetailLoading": "Загрузка…",
+    "habitDetailNoNotesYet": "Заметок пока нет",
+
+    "habitDetailDeleteNoteTitle": "Удалить заметку?",
+    "habitDetailDeleteNoteMessage": "Она будет удалена и из привычки, и из журнала.",
+    "habitDetailNoteDeleted": "Заметка удалена",
+    "habitDetailNoteSaved": "Заметка сохранена",
+    "habitDetailCouldNotSaveNote": "Не удалось сохранить заметку. Попробуйте снова.",
+    "habitDetailCouldNotSaveNoteWithCode": "Не удалось сохранить заметку: {code}",
+    "@habitDetailCouldNotSaveNoteWithCode": {
+      "placeholders": {
+        "code": { "type": "String" }
+      }
+    },
+
+    "habitDetailToday": "Сегодня",
+    "habitDetailTodayTime": "Сегодня, {time}",
+    "@habitDetailTodayTime": {
+      "placeholders": {
+        "time": { "type": "String" }
+      }
+    },
+
+    "habitDetailWhatHappenedToday": "Что произошло сегодня?",
+
+    "habitDetailPickerCancel": "Отмена",
+    "habitDetailPickerDone": "Готово",
+
+    "habitDetailMonthJanShort": "янв.",
+    "habitDetailMonthFebShort": "февр.",
+    "habitDetailMonthMarShort": "март",
+    "habitDetailMonthAprShort": "апр.",
+    "habitDetailMonthMayShort": "май",
+    "habitDetailMonthJunShort": "июнь",
+    "habitDetailMonthJulShort": "июль",
+    "habitDetailMonthAugShort": "авг.",
+    "habitDetailMonthSepShort": "сент.",
+    "habitDetailMonthOctShort": "окт.",
+    "habitDetailMonthNovShort": "нояб.",
+    "habitDetailMonthDecShort": "дек.",
+
+    "habitsTitle": "Привычки",
+
+    "habitsSnackHabitCompletedCorrectly": "Привычка выполнена корректно",
+    "habitsSnackProgressUpdated": "Прогресс обновлён",
+    "habitsSnackCouldNotUpdateProgress": "Не удалось обновить прогресс. Попробуйте снова.",
+    "habitsSnackHabitDeleted": "Привычка удалена",
+
+    "habitsBottomNavHome": "Главная",
+    "habitsBottomNavAnalytics": "Аналитика",
+    "habitsBottomNavExplore": "Обзор",
+
+    "habitsTabToday": "Сегодня",
+    "habitsTabWeekly": "Неделя",
+    "habitsTabOverall": "Общее",
+
+    "habitsNotSignedInTitle": "Вы не вошли",
+    "habitsNotSignedInSubtitle": "Пожалуйста, войдите, чтобы создавать привычки.",
+
+    "habitsGoodJobTitle": "Отлично!",
+    "habitsAllSetAndDone": "Всё готово.",
+    "habitsGreatButton": "Отлично!",
+
+    "habitsProgressCountCompleted": "Выполнено: {count}",
+    "@habitsProgressCountCompleted": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "habitsCompletedShown": "Выполненные показаны",
+    "habitsCompletedHidden": "Выполненные скрыты",
+    "habitsShowCompleted": "Показать выполненные",
+
+    "habitsCompletionSheetPerDay": "{current} / {goal} {unit}{plural} в день",
+    "@habitsCompletionSheetPerDay": {
+      "placeholders": {
+        "current": { "type": "int" },
+        "goal": { "type": "int" },
+        "unit": { "type": "String" },
+        "plural": { "type": "String" }
+      }
+    },
+
+    "habitsCompletionSheetMarkCompleted": "Отметить как выполненное",
+    "habitsCompletionSheetSaveProgress": "Сохранить прогресс",
+    "habitsCompletionSheetHint": "Нажимайте + или - чтобы фиксировать разы или единицы, которые вы задали.",
+
+    "habitsDefaultHabitTitle": "Привычка",
+
+    "habitsEmptyTitle": "На сегодня привычек нет",
+    "habitsEmptySubtitle": "На сегодня привычек нет. Создать?",
+    "habitsEmptyCreateButton": "+ Создать",
+
+    "habitsWeeklyCompletedCount": "Выполнено: {count}",
+    "@habitsWeeklyCompletedCount": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "habitsOverallEveryday": "Каждый день",
+    "habitsOverallWeeklyHabit": "Еженедельная привычка",
+    "habitsOverallMonthlyHabit": "Ежемесячная привычка",
+
+    "habitsGoalUnitTime": "раз",
+
+    "journalSignInPrompt": "Пожалуйста, войдите, чтобы просматривать журнал.",
+    "journalTitle": "Журнал",
+
+    "journalEmptyTitle": "Заметок пока нет",
+    "journalEmptySubtitle": "Добавьте заметку, чтобы начать",
+    "journalAddButton": "+ Добавить",
+
+    "journalComposerHint": "Что произошло сегодня?",
+    "journalToday": "Сегодня",
+
+    "commonCancel": "Отмена",
+    "commonDone": "Готово",
+
+    "journalDeleteNoteTitle": "Удалить заметку?",
+    "journalDeleteNoteBody": "Это действие нельзя отменить.",
+    "commonDelete": "Удалить",
+
+    "journalSignInPrompt": "Пожалуйста, войдите, чтобы просматривать журнал.",
+    "journalTitle": "Журнал",
+
+    "journalEmptyTitle": "Заметок пока нет",
+    "journalEmptySubtitle": "Добавьте заметку, чтобы начать",
+    "journalAddButton": "+ Добавить",
+
+    "journalComposerHint": "Что произошло сегодня?",
+    "journalToday": "Сегодня",
+
+    "commonCancel": "Отмена",
+    "commonDone": "Готово",
+
+    "journalDeleteNoteTitle": "Удалить заметку?",
+    "journalDeleteNoteBody": "Это действие нельзя отменить.",
+    "commonDelete": "Удалить",
+
+    "monthJanuary": "Январь",
+    "monthFebruary": "Февраль",
+    "monthMarch": "Март",
+    "monthApril": "Апрель",
+    "monthMay": "Май",
+    "monthJune": "Июнь",
+    "monthJuly": "Июль",
+    "monthAugust": "Август",
+    "monthSeptember": "Сентябрь",
+    "monthOctober": "Октябрь",
+    "monthNovember": "Ноябрь",
+    "monthDecember": "Декабрь",
+
+    "monthJanuaryShort": "янв.",
+    "monthFebruaryShort": "февр.",
+    "monthMarchShort": "март",
+    "monthAprilShort": "апр.",
+    "monthMayShort": "май",
+    "monthJuneShort": "июнь",
+    "monthJulyShort": "июль",
+    "monthAugustShort": "авг.",
+    "monthSeptemberShort": "сент.",
+    "monthOctoberShort": "окт.",
+    "monthNovemberShort": "нояб.",
+    "monthDecemberShort": "дек.",
+
+    "weekdayMonShort": "пн",
+    "weekdayTueShort": "вт",
+    "weekdayWedShort": "ср",
+    "weekdayThuShort": "чт",
+    "weekdayFriShort": "пт",
+    "weekdaySatShort": "сб",
+    "weekdaySunShort": "вс",
+
+    "accountTitle": "Мой аккаунт",
+
+    "accountUsernameLabel": "Имя пользователя",
+    "accountPasswordLabel": "Пароль",
+    "accountEmailLabel": "Эл. почта",
+
+    "accountPasswordLeaveBlankHint": "Оставьте пустым, чтобы сохранить текущий",
+
+    "accountUsernameEmptyError": "Пожалуйста, введите имя пользователя.",
+    "accountUsernameTooShortError": "Слишком коротко.",
+    "accountEmailEmptyError": "Пожалуйста, введите эл. почту.",
+    "accountEmailInvalidError": "Некорректный адрес эл. почты.",
+
+    "accountEmailVerified": "Эл. почта подтверждена",
+    "accountEmailNotVerified": "Эл. почта не подтверждена",
+    "accountSendButton": "Отправить",
+
+    "accountVerificationEmailSent": "Письмо для подтверждения отправлено.",
+    "accountVerificationEmailFailed": "Не удалось отправить письмо для подтверждения.",
+
+    "accountMyHabits": "Мои привычки",
+    "accountDeleteAccount": "Удалить аккаунт",
+
+    "accountSaving": "Сохранение...",
+    "accountSaveChanges": "Сохранить изменения",
+    "accountLogOut": "Выйти",
+
+    "accountChangesSaved": "Изменения сохранены.",
+    "accountChangesSavedEmailVerificationHint": "Изменения сохранены. Проверьте входящие, если было отправлено письмо для подтверждения.",
+    "accountCouldNotSaveChanges": "Не удалось сохранить изменения. Попробуйте снова.",
+
+    "accountDeleteDialogTitle": "Удалить аккаунт?",
+    "accountDeleteDialogBody": "Это навсегда удалит данные вашего аккаунта.",
+    "accountDeletedSnackbar": "Аккаунт удалён.",
+    "accountCouldNotDelete": "Не удалось удалить аккаунт.",
+
+    "accountRequiresRecentLoginError": "В целях безопасности, пожалуйста, войдите снова и повторите это действие.",
+    "accountEmailAlreadyInUseError": "Этот адрес эл. почты уже используется.",
+    "accountInvalidEmailError": "Пожалуйста, введите корректный адрес эл. почты.",
+    "accountWeakPasswordError": "Пароль должен быть не короче 6 символов.",
+    "accountWeakPasswordGenericError": "Этот пароль слишком слабый.",
+    "accountAuthGenericError": "Ошибка аутентификации.",
+
+    "commonCancel": "Отмена",
+    "commonDelete": "Удалить",
+    "commonDone": "Готово",
+
+    "hubVersionLabel": "Версия: {version}",
+    "@hubVersionLabel": {
+      "description": "Отображается внизу экрана хаба",
+      "placeholders": {
+        "version": { "type": "String" }
+      }
+    },
+
+    "hubProTitle": "EcoHabit Pro",
+    "hubProPlanLabel": "Pro (годовой)",
+
+    "hubMenuSettings": "Настройки",
+    "hubMenuAnalytics": "Аналитика",
+    "hubMenuJournal": "Журнал",
+    "hubMenuAccount": "Аккаунт",
+    "hubMenuBackup": "Резервное копирование",
+
+    "proPlanTitle": "EcoHabit Pro",
+    "proPlanDefaultLabel": "Pro (годовой)",
+
+    "proPlanSubscribedPrefix": "Вы подписаны на",
+    "proPlanUpgradePrefix": "Перейти на",
+
+    "proPlanFreeHeader": "БЕСПЛАТНО",
+    "proPlanProHeader": "PRO",
+
+    "proFeatureUnlimitedHabits": "Неограниченные привычки",
+    "proFeatureRoutineAi": "ИИ для рутин",
+    "proFeatureAnalytics": "Аналитика",
+    "proFeatureGoalSetting": "Постановка целей",
+    "proFeatureJournaling": "Ведение журнала",
+    "proFeatureColorPicker": "Выбор цвета",
+    "proFeatureBackupHabits": "Резервное копирование привычек",
+
+    "commonClose": "Закрыть",
+
+    "settingsTitle": "Настройки",
+
+    "settingsThemeTitle": "Тема",
+    "settingsThemeLight": "Светлая",
+    "settingsThemeDark": "Тёмная",
+
+    "settingsAccentColorTitle": "Акцентный цвет",
+
+    "settingsStartWeekOnTitle": "Начинать неделю с",
+    "settingsStartWeekSaturday": "Субботы",
+    "settingsStartWeekSunday": "Воскресенья",
+    "settingsStartWeekMonday": "Понедельника",
+
+    "settingsHabitTabsOrderTitle": "Порядок вкладок привычек",
+    "settingsHabitTabsOrderHint": "Нажмите и удерживайте элемент, чтобы изменить порядок",
+
+    "habitsTabToday": "Сегодня",
+    "habitsTabWeekly": "Неделя",
+    "habitsTabOverall": "Общее",
+
+    "analyticsTitle": "Аналитика",
+    "analyticsSignInPrompt": "Пожалуйста, войдите, чтобы просматривать аналитику.",
+    "analyticsNoHabitsYet": "Пока нет привычек",
+    "analyticsHabitFallbackTitle": "Привычка",
+
+    "analyticsAllHabitsTab": "Все привычки",
+
+    "analyticsAverageScore": "Средний балл",
+    "analyticsHabitsCompletedTitle": "Привычек выполнено",
+    "analyticsTotalCompletedHabitsSubtitle": "Всего выполненных привычек",
+    "analyticsHabitHeatmapTitle": "Тепловая карта привычек",
+
+    "analyticsStreakTitle": "Серия",
+    "analyticsBestStreak": "Лучшая серия",
+    "analyticsCurrentStreak": "Текущая серия",
+
+    "analyticsWeeklyCompletionsTitle": "Выполнения за неделю",
+    "analyticsScoreTitle": "Баллы",
+    "analyticsNoData": "Нет данных",
+
+    "analyticsThisWeek": "На этой неделе",
+    "analyticsThisMonth": "В этом месяце",
+
+    "weekdayShortMon": "пн",
+    "weekdayShortTue": "вт",
+    "weekdayShortWed": "ср",
+    "weekdayShortThu": "чт",
+    "weekdayShortFri": "пт",
+    "weekdayShortSat": "сб",
+    "weekdayShortSun": "вс",
+
+    "weekdayVeryShortMon": "П",
+    "weekdayVeryShortTue": "В",
+    "weekdayVeryShortWed": "С",
+    "weekdayVeryShortThu": "Ч",
+    "weekdayVeryShortFri": "П",
+    "weekdayVeryShortSat": "С",
+    "weekdayVeryShortSun": "В",
+
+    "monthShortJan": "янв.",
+    "monthShortFeb": "февр.",
+    "monthShortMar": "март",
+    "monthShortApr": "апр.",
+    "monthShortMay": "май",
+    "monthShortJun": "июнь",
+    "monthShortJul": "июль",
+    "monthShortAug": "авг.",
+    "monthShortSep": "сент.",
+    "monthShortOct": "окт.",
+    "monthShortNov": "нояб.",
+    "monthShortDec": "дек."
+}

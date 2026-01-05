@@ -7,7 +7,9 @@ import 'forgot_password.dart';
 import '../data/auth_service.dart';
 import '../../habits/presentation/habits_screen.dart';
 import '../../settings/presentation/language_screen.dart';
-
+import '/l10n/app_localizations.dart';
+import 'package:ecohabit/main.dart';
+import 'package:ecohabit/core/locale/locale_controller.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -35,15 +37,16 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Future<void> _handleSignIn() async {
+    final t = AppLocalizations.of(context)!;
     final identifier = _identifierController.text.trim();
     final password = _passwordController.text.trim();
 
     // Local validation
     setState(() {
       _identifierError =
-      identifier.isEmpty ? 'Please enter email or username' : null;
+      identifier.isEmpty ? t.errEnterEmailOrUsername : null;
       _passwordError =
-      password.isEmpty ? 'Please enter your password' : null;
+      password.isEmpty ? t.errEnterPassword : null;
       _error = null;
     });
 
@@ -101,6 +104,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final bgColor = const Color(0xFF111015); // dark background
     final fieldColor = const Color(0xFF1E1C22);
     final borderColor = Colors.white12;
@@ -119,17 +124,20 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(999),
                     onTap: () async {
-                      // Opens the language picker; returns code if you kept Navigator.pop(code)
-                      final result = await Navigator.of(context).push<String>(
-                        MaterialPageRoute(
-                          builder: (_) => const LanguageScreen(),
-                        ),
+                      final code = await Navigator.of(context).push<String>(
+                        MaterialPageRoute(builder: (_) => const LanguageScreen()),
                       );
 
-                      // If you later wire localization, apply it here using your state manager.
-                      // For now, you can just keep the selection or ignore.
-                      debugPrint('Selected language: $result');
+                      if (!mounted) return;
+                      if (code == null) return;
+
+                      if (code == 'system') {
+                        await localeController.setLocale(null); // follow system
+                      } else {
+                        await localeController.setLocale(Locale(code));
+                      }
                     },
+
                     child: Container(
                       width: 38,
                       height: 38,
@@ -162,7 +170,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                 // Sign In title
                 Text(
-                  'Sign In',
+                  t.signInTitle,
                   style: GoogleFonts.poppins(
                     fontSize: 28,
                     fontWeight: FontWeight.w600,
@@ -188,7 +196,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Email or Username',
+                    t.emailOrUsername,
                     style: GoogleFonts.poppins(
                       fontSize: 13,
                       color: Colors.grey[300],
@@ -198,7 +206,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(height: 8),
                 _AuthTextField(
                   controller: _identifierController,
-                  hintText: 'Enter email or username',
+                  hintText: t.emailOrUsername,
                   fieldColor: fieldColor,
                   borderColor: borderColor,
                   prefixIcon: Icons.person_outline,
@@ -223,7 +231,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Password',
+                    t.password,
                     style: GoogleFonts.poppins(
                       fontSize: 13,
                       color: Colors.grey[300],
@@ -233,7 +241,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(height: 8),
                 _AuthTextField(
                   controller: _passwordController,
-                  hintText: 'Password',
+                  hintText: t.password,
                   fieldColor: fieldColor,
                   borderColor: borderColor,
                   prefixIcon: Icons.vpn_key_outlined,
@@ -283,7 +291,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     child: Text(
-                      'Forgot Password?',
+                      t.forgotPassword,
                       style: GoogleFonts.poppins(
                         fontSize: 12,
                         color: Colors.grey[400],
@@ -316,7 +324,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     )
                         : Text(
-                      'Sign in',
+                      t.signInTitle,
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -340,7 +348,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Text(
-                        'Or continue with',
+                        t.orContinueWith,
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           color: Colors.grey[400],
@@ -380,7 +388,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account yet? ",
+                      t.dontHaveAccount,
                       style: GoogleFonts.poppins(
                         fontSize: 12,
                         color: Colors.grey[400],
@@ -395,7 +403,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         );
                       },
                       child: Text(
-                        'Sign Up',
+                        t.signUp,
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           color: const Color(0xFF77F7E2),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart'
 as color_picker;
 import 'package:google_fonts/google_fonts.dart';
+import '/l10n/app_localizations.dart';
 
 import '../../../notifications/notification_service.dart';
 
@@ -143,7 +144,30 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
 
   int _colorToInt(Color color) => color.toARGB32();
 
+  String _goalUnitLabel(AppLocalizations t, String unit) {
+    switch (unit) {
+      case 'time':
+        return t.createHabitUnitTime;
+      case 'minute':
+        return t.createHabitUnitMinute;
+      case 'hour':
+        return t.createHabitUnitHour;
+      case 'kg':
+        return t.createHabitUnitKg;
+      case 'km':
+        return t.createHabitUnitKm;
+      case 'l':
+        return t.createHabitUnitL;
+      case 'oz':
+        return t.createHabitUnitOz;
+      default:
+        return unit;
+    }
+  }
+
   Future<void> _openColorPicker() async {
+    final t = AppLocalizations.of(context)!;
+
     const presetColors = <Color>[
       Color(0xFF5CE1E6),
       Color(0xFF6C5CE7),
@@ -186,7 +210,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     title: Text(
-                      'Color Picker',
+                      t.createHabitColorPicker,
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -218,12 +242,12 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.of(dialogCtx).pop(),
-                        child: const Text('Cancel'),
+                        child: Text(t.createHabitCancel),
                       ),
                       TextButton(
                         onPressed: () =>
                             Navigator.of(dialogCtx).pop(dialogColor),
-                        child: const Text('Done'),
+                        child: Text(t.createHabitDone),
                       ),
                     ],
                   );
@@ -258,7 +282,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
-                        'Pick a color',
+                        t.createHabitPickColorTitle,
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -295,7 +319,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                'Color Picker',
+                                t.createHabitColorPicker,
                                 style: GoogleFonts.poppins(
                                   fontSize: 13,
                                   color: Colors.white,
@@ -366,7 +390,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                             ),
                           ),
                           child: Text(
-                            'Continue',
+                            t.createHabitContinue,
                             style: GoogleFonts.poppins(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
@@ -386,11 +410,13 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
   }
 
   Future<void> _saveHabit() async {
+    final t = AppLocalizations.of(context)!;
+
     final title = _titleController.text.trim();
     final description = _descriptionController.text.trim();
 
     setState(() {
-      _titleError = title.isEmpty ? 'Please enter a title' : null;
+      _titleError = title.isEmpty ? t.createHabitTitleRequired : null;
       _error = null;
     });
 
@@ -399,7 +425,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       setState(() {
-        _error = 'You must be signed in to create a habit.';
+        _error = t.createHabitMustBeSignedIn;
       });
       return;
     }
@@ -450,7 +476,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
         'goalEnabled': _goalEnabled,
         'goalValue': _goalEnabled ? _goalValue : null,
         'goalUnit': _goalEnabled ? _goalUnit : null,
-        'goalText': _goalEnabled ? '$_goalValue $_goalUnit per day' : null,
+        'goalText': _goalEnabled ? t.createHabitGoalText(_goalValue, _goalUnit) : null,
       };
 
       final existingProgress =
@@ -473,10 +499,8 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
         payload['createdAt'] = FieldValue.serverTimestamp();
 
         // If you want the calendar to start at the CURRENT month:
-        payload['historyStartMonth'] = Timestamp.fromDate(DateTime(now.year, now.month, 1));
-
-        // If you want the calendar to start at the LAST 3 months + current month (recommended):
-        // payload['historyStartMonth'] = Timestamp.fromDate(DateTime(now.year, now.month - 3, 1));
+        payload['historyStartMonth'] =
+            Timestamp.fromDate(DateTime(now.year, now.month, 1));
 
         payload['completedDates'] = <String>[];
         payload['progressByDate'] = <String, dynamic>{};
@@ -502,7 +526,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = 'Failed to save habit. Please try again.';
+        _error = t.createHabitFailedToSave;
       });
     } finally {
       if (mounted) {
@@ -510,7 +534,6 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
       }
     }
   }
-
 
   Future<void> _pickReminderTime() async {
     final picked = await showTimePicker(
@@ -534,19 +557,22 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
     }
   }
 
-  String _formatTimeOfDay(TimeOfDay time) {
+  String _formatTimeOfDay(TimeOfDay time, AppLocalizations t) {
     final hour = time.hourOfPeriod == 0 ? 12 : time.hourOfPeriod;
     final minute = time.minute.toString().padLeft(2, '0');
-    final period = time.period == DayPeriod.am ? 'AM' : 'PM';
+    final period = time.period == DayPeriod.am ? t.createHabitAm : t.createHabitPm;
     return '$hour:$minute $period';
   }
 
-  String get _goalLabel {
+  String _goalLabel(AppLocalizations t) {
     final plural = _goalValue == 1 ? '' : 's';
-    return '$_goalValue $_goalUnit$plural per day';
+    final unitLabel = _goalUnitLabel(t, _goalUnit);
+    return t.createHabitGoalLabelText(_goalValue, unitLabel, plural);
   }
 
   Future<void> _openGoalPicker() async {
+    final t = AppLocalizations.of(context)!;
+
     int tempValue = _goalValue;
     String tempUnit = _goalUnit;
     final valueOptions = List<int>.generate(50, (index) => index + 1);
@@ -579,7 +605,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'Goal',
+                t.createHabitGoalLabel,
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -634,7 +660,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                             final unit = _goalUnits[index];
                             return Center(
                               child: Text(
-                                unit,
+                                _goalUnitLabel(t, unit),
                                 style: GoogleFonts.poppins(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -647,7 +673,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                       ),
                     ),
                     Text(
-                      'per day',
+                      t.createHabitPerDay,
                       style: GoogleFonts.poppins(
                         fontSize: 14,
                         color: Colors.grey[400],
@@ -677,7 +703,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                       ),
                     ),
                     child: Text(
-                      'Set goal',
+                      t.createHabitSetGoal,
                       style: GoogleFonts.poppins(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -695,6 +721,8 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     const bgColor = Color(0xFF000000);
     const cardColor = Color(0xFF15151A);
     const fieldColor = Color(0xFF1E1C22);
@@ -707,7 +735,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
-          _isEdit ? 'Edit Habit' : 'Create Habit',
+          _isEdit ? t.createHabitEditTitle : t.createHabitCreateTitle,
           style: GoogleFonts.poppins(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -734,10 +762,10 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
 
               // Title
               _LabeledField(
-                label: 'Title',
+                label: t.createHabitTitleLabel,
                 child: _TextFieldBox(
                   controller: _titleController,
-                  hintText: 'Title',
+                  hintText: t.createHabitTitleHint,
                   fieldColor: fieldColor,
                   borderColor: borderColor,
                 ),
@@ -756,10 +784,10 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
 
               // Description
               _LabeledField(
-                label: 'Description',
+                label: t.createHabitDescriptionLabel,
                 child: _TextFieldBox(
                   controller: _descriptionController,
-                  hintText: 'Description',
+                  hintText: t.createHabitDescriptionHint,
                   maxLines: 3,
                   fieldColor: fieldColor,
                   borderColor: borderColor,
@@ -769,7 +797,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
 
               // Color
               _LabeledField(
-                label: 'Color',
+                label: t.createHabitColorLabel,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(10),
                   onTap: _openColorPicker,
@@ -784,7 +812,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                     child: Row(
                       children: [
                         Text(
-                          'Color',
+                          t.createHabitColorLabel,
                           style: GoogleFonts.poppins(
                             fontSize: 14,
                             color: Colors.grey[300],
@@ -808,8 +836,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
 
               // Repeat card
               Container(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 decoration: BoxDecoration(
                   color: cardColor,
                   borderRadius: BorderRadius.circular(16),
@@ -820,7 +847,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                     Row(
                       children: [
                         Text(
-                          'Repeat',
+                          t.createHabitRepeatLabel,
                           style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -867,26 +894,24 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                       child: Row(
                         children: [
                           _RepeatChip(
-                            label: 'Daily',
+                            label: t.createHabitDaily,
                             selected: _repeatType == HabitRepeatType.daily,
                             onTap: () {
                               setState(() => _repeatType = HabitRepeatType.daily);
                             },
                           ),
                           _RepeatChip(
-                            label: 'Weekly',
+                            label: t.createHabitWeekly,
                             selected: _repeatType == HabitRepeatType.weekly,
                             onTap: () {
-                              setState(
-                                      () => _repeatType = HabitRepeatType.weekly);
+                              setState(() => _repeatType = HabitRepeatType.weekly);
                             },
                           ),
                           _RepeatChip(
-                            label: 'Monthly',
+                            label: t.createHabitMonthly,
                             selected: _repeatType == HabitRepeatType.monthly,
                             onTap: () {
-                              setState(
-                                      () => _repeatType = HabitRepeatType.monthly);
+                              setState(() => _repeatType = HabitRepeatType.monthly);
                             },
                           ),
                         ],
@@ -903,7 +928,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
 
               // Reminder & Goal
               _ToggleRow(
-                label: 'Reminder',
+                label: t.createHabitReminderLabel,
                 value: _reminderEnabled,
                 onChanged: (v) async {
                   setState(() => _reminderEnabled = v);
@@ -929,7 +954,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Send a notification at',
+                        t.createHabitSendNotificationAt,
                         style: GoogleFonts.poppins(
                           fontSize: 13,
                           color: Colors.grey[400],
@@ -939,7 +964,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                       Row(
                         children: [
                           Text(
-                            _formatTimeOfDay(_reminderTime),
+                            _formatTimeOfDay(_reminderTime, t),
                             style: GoogleFonts.poppins(
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
@@ -963,7 +988,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                             icon: const Icon(Icons.notifications_active_outlined,
                                 size: 18),
                             label: Text(
-                              'Pick time',
+                              t.createHabitPickTime,
                               style: GoogleFonts.poppins(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
@@ -974,7 +999,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        'You\'ll get "It\'s time for your habit." with your habit name.',
+                        t.createHabitReminderInfo,
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           color: Colors.grey[500],
@@ -986,7 +1011,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
               ],
               const SizedBox(height: 12),
               _ToggleRow(
-                label: 'Goal',
+                label: t.createHabitGoalLabel,
                 value: _goalEnabled,
                 onChanged: (v) => setState(() => _goalEnabled = v),
               ),
@@ -1009,7 +1034,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                       Row(
                         children: [
                           Text(
-                            'Goal',
+                            t.createHabitGoalLabel,
                             style: GoogleFonts.poppins(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -1020,7 +1045,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                           TextButton(
                             onPressed: _openGoalPicker,
                             child: Text(
-                              'Edit',
+                              t.createHabitEdit,
                               style: GoogleFonts.poppins(
                                 fontSize: 13,
                                 color: const Color(0xFF5CE1E6),
@@ -1031,7 +1056,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        _goalLabel,
+                        _goalLabel(t),
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -1040,7 +1065,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Track times, minutes, hours, kg, km, liters, or ounces.',
+                        t.createHabitTrackUnitsHelp,
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           color: Colors.grey[500],
@@ -1076,7 +1101,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                     ),
                   )
                       : Text(
-                    _isEdit ? 'Save changes' : 'Save',
+                    _isEdit ? t.createHabitSaveChanges : t.createHabitSave,
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -1093,13 +1118,25 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
   }
 
   Widget _buildRepeatBody() {
+    final t = AppLocalizations.of(context)!;
+
     switch (_repeatType) {
       case HabitRepeatType.daily:
+        final labels = [
+          t.createHabitMonShort,
+          t.createHabitTueShort,
+          t.createHabitWedShort,
+          t.createHabitThuShort,
+          t.createHabitFriShort,
+          t.createHabitSatShort,
+          t.createHabitSunShort,
+        ];
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'On these days',
+              t.createHabitOnTheseDays,
               style: GoogleFonts.poppins(
                 fontSize: 13,
                 color: Colors.grey[300],
@@ -1109,7 +1146,6 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
             Wrap(
               spacing: 8,
               children: List.generate(7, (index) {
-                const labels = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
                 final dayIndex = index + 1;
                 final selected = _selectedWeekdays.contains(dayIndex);
                 return GestureDetector(
@@ -1151,11 +1187,15 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
         );
 
       case HabitRepeatType.weekly:
+        final freqText = _weeklyFrequency == 7
+            ? t.createHabitEveryday
+            : t.createHabitDaysPerWeek(_weeklyFrequency);
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Frequency',
+              t.createHabitFrequency,
               style: GoogleFonts.poppins(
                 fontSize: 13,
                 color: Colors.grey[300],
@@ -1165,9 +1205,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
             Row(
               children: [
                 Text(
-                  _weeklyFrequency == 7
-                      ? 'Everyday'
-                      : '$_weeklyFrequency days per week',
+                  freqText,
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     color: Colors.grey[400],
@@ -1178,8 +1216,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                   icon: Icons.remove,
                   onTap: () {
                     setState(() {
-                      _weeklyFrequency =
-                          (_weeklyFrequency - 1).clamp(1, 7);
+                      _weeklyFrequency = (_weeklyFrequency - 1).clamp(1, 7);
                     });
                   },
                 ),
@@ -1205,8 +1242,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                   icon: Icons.add,
                   onTap: () {
                     setState(() {
-                      _weeklyFrequency =
-                          (_weeklyFrequency + 1).clamp(1, 7);
+                      _weeklyFrequency = (_weeklyFrequency + 1).clamp(1, 7);
                     });
                   },
                 ),
@@ -1220,7 +1256,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'On this day each month',
+              t.createHabitOnThisDayEachMonth,
               style: GoogleFonts.poppins(
                 fontSize: 13,
                 color: Colors.grey[300],
@@ -1231,8 +1267,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
               height: 220,
               child: GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate:
-                const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 7,
                   mainAxisSpacing: 6,
                   crossAxisSpacing: 6,
@@ -1365,8 +1400,7 @@ class _TextFieldBox extends StatelessWidget {
           fontSize: 13,
           color: Colors.grey[500],
         ),
-        contentPadding:
-        const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: borderColor),

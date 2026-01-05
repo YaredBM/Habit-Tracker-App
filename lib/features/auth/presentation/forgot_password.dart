@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '/l10n/app_localizations.dart';
 
 import '../data/auth_service.dart';
 import 'sign_in_screen.dart';
@@ -35,6 +36,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   Future<void> _handleDone() async {
+    final t = AppLocalizations.of(context)!;
+
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
     final confirmPassword = _confirmPasswordController.text.trim();
@@ -42,11 +45,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     // Local validation
     setState(() {
       _emailError =
-      email.isEmpty ? 'Please enter your email or username' : null;
+      email.isEmpty ? t.forgotPasswordEmailRequired : null;
       _passwordError =
-      password.isEmpty ? 'Please enter a new password' : null;
+      password.isEmpty ? t.forgotPasswordNewPasswordRequired : null;
       _confirmPasswordError =
-      confirmPassword.isEmpty ? 'Please confirm your password' : null;
+      confirmPassword.isEmpty ? t.forgotPasswordConfirmPasswordRequired : null;
       _error = null;
     });
 
@@ -58,7 +61,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
     if (password != confirmPassword) {
       setState(() {
-        _confirmPasswordError = 'Passwords do not match';
+        _confirmPasswordError = t.forgotPasswordPasswordsDoNotMatch;
       });
       return;
     }
@@ -74,9 +77,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'Password reset email sent. Please check your inbox.',
+            t.forgotPasswordResetEmailSent,
           ),
         ),
       );
@@ -90,21 +93,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       setState(() {
         switch (e.code) {
           case 'user-not-found':
-            _error = 'No account found for that email.';
+            _error = t.forgotPasswordNoAccountFound;
             break;
           case 'invalid-email':
-            _error = 'Please enter a valid email.';
+            _error = t.forgotPasswordInvalidEmail;
             break;
           case 'network-request-failed':
-            _error = 'Network error. Please try again.';
+            _error = t.forgotPasswordNetworkError;
             break;
           default:
-            _error = e.message ?? 'Failed to send reset email.';
+            _error = e.message ?? t.forgotPasswordFailedToSendResetEmail;
         }
       });
     } catch (_) {
       setState(() {
-        _error = 'Something went wrong. Please try again.';
+        _error = t.forgotPasswordGenericError;
       });
     } finally {
       if (mounted) {
@@ -115,6 +118,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final bgColor = const Color(0xFF111015);
     final fieldColor = const Color(0xFF1E1C22);
     final borderColor = Colors.white12;
@@ -149,7 +154,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                 // Title
                 Text(
-                  'New password',
+                  t.forgotPasswordTitle,
                   style: GoogleFonts.poppins(
                     fontSize: 28,
                     fontWeight: FontWeight.w600,
@@ -175,7 +180,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Email',
+                    t.forgotPasswordEmailLabel,
                     style: GoogleFonts.poppins(
                       fontSize: 13,
                       color: Colors.grey[300],
@@ -185,7 +190,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 const SizedBox(height: 8),
                 _AuthTextField(
                   controller: _emailController,
-                  hintText: 'Enter email or username',
+                  hintText: t.forgotPasswordEmailHint,
                   fieldColor: fieldColor,
                   borderColor: borderColor,
                   prefixIcon: Icons.person_outline,
@@ -210,7 +215,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'New Password',
+                    t.forgotPasswordNewPasswordLabel,
                     style: GoogleFonts.poppins(
                       fontSize: 13,
                       color: Colors.grey[300],
@@ -220,7 +225,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 const SizedBox(height: 8),
                 _AuthTextField(
                   controller: _passwordController,
-                  hintText: 'Password',
+                  hintText: t.forgotPasswordPasswordHint,
                   fieldColor: fieldColor,
                   borderColor: borderColor,
                   prefixIcon: Icons.vpn_key_outlined,
@@ -259,7 +264,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Confirm Password',
+                    t.forgotPasswordConfirmPasswordLabel,
                     style: GoogleFonts.poppins(
                       fontSize: 13,
                       color: Colors.grey[300],
@@ -269,7 +274,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 const SizedBox(height: 8),
                 _AuthTextField(
                   controller: _confirmPasswordController,
-                  hintText: 'Password',
+                  hintText: t.forgotPasswordPasswordHint,
                   fieldColor: fieldColor,
                   borderColor: borderColor,
                   prefixIcon: Icons.vpn_key_outlined,
@@ -326,7 +331,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ),
                     )
                         : Text(
-                      'Done',
+                      t.forgotPasswordDoneButton,
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

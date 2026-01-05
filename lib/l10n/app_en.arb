@@ -1,0 +1,640 @@
+{
+  "@@locale": "en",
+  "signInTitle": "Sign In",
+  "emailOrUsername": "Email or Username",
+  "enterEmailOrUsername": "Enter email or username",
+  "password": "Password",
+  "forgotPassword": "Forgot Password?",
+  "orContinueWith": "Or continue with",
+  "signInButton": "Sign in",
+  "dontHaveAccount": "Don't have an account yet? ",
+  "signUp": "Sign Up",
+  "errEnterEmailOrUsername": "Please enter email or username",
+  "errEnterPassword": "Please enter your password",
+  "chooseLanguageTitle": "Choose Language",
+  "continueButton": "Continue",
+  "languageEnglish": "English",
+  "languageGerman": "Deutsch",
+  "languageSpanish": "Español",
+  "languageRussian": "Русский",
+  "languageTurkish": "Türkçe",
+  "languageFrench": "Français",
+  "signUpTitle": "Sign Up",
+  "signUpButton": "Sign Up",
+  "signUpEmailLabel": "Email",
+  "signUpEmailHint": "Enter email",
+  "signUpUsernameLabel": "Create Username",
+  "signUpUsernameHint": "Enter username",
+  "signUpPasswordLabel": "Create Password",
+  "signUpPasswordHint": "Password",
+  "signUpOrContinueWith": "Or continue with",
+  "signUpEmailRequired": "Please enter your email",
+  "signUpUsernameRequired": "Please enter a username",
+  "signUpPasswordRequired": "Please enter a password",
+  "signUpErrorDefault": "Sign up error",
+  "signUpErrorGeneric": "Something went wrong. Please try again.",
+
+    "forgotPasswordTitle": "New password",
+    "forgotPasswordEmailLabel": "Email",
+    "forgotPasswordEmailHint": "Enter email or username",
+    "forgotPasswordNewPasswordLabel": "New Password",
+    "forgotPasswordConfirmPasswordLabel": "Confirm Password",
+    "forgotPasswordPasswordHint": "Password",
+    "forgotPasswordDoneButton": "Done",
+    "forgotPasswordEmailRequired": "Please enter your email or username",
+    "forgotPasswordNewPasswordRequired": "Please enter a new password",
+    "forgotPasswordConfirmPasswordRequired": "Please confirm your password",
+    "forgotPasswordPasswordsDoNotMatch": "Passwords do not match",
+    "forgotPasswordResetEmailSent": "Password reset email sent. Please check your inbox.",
+    "forgotPasswordNoAccountFound": "No account found for that email.",
+    "forgotPasswordInvalidEmail": "Please enter a valid email.",
+    "forgotPasswordNetworkError": "Network error. Please try again.",
+    "forgotPasswordFailedToSendResetEmail": "Failed to send reset email.",
+    "forgotPasswordGenericError": "Something went wrong. Please try again.",
+
+    "exploreTitle": "Explore",
+    "exploreMostPopularRoutines": "Most Popular Routines",
+    "exploreBecomeBetterYou": "Become Better You",
+
+    "exploreHeroHeadline": "Intelligent\nProjects are\nhere",
+    "exploreHeroSubtitle": "Create Projects with AI\nTeammates, Notes, Tasks and\nFiles",
+    "exploreHeroCta": "Create free project",
+
+    "exploreRoutineTag": "ROUTINE",
+    "exploreHabitsTitle": "Habits",
+
+    "exploreCopyHabitsButton": "Copy {count} habits",
+    "@exploreCopyHabitsButton": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "explorePleaseSignInToCopyHabits": "Please sign in to copy habits.",
+
+    "exploreCopiedHabitsSnack": "Copied {count} habits",
+    "@exploreCopiedHabitsSnack": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "exploreCouldNotCopyHabits": "Could not copy habits. Try again.",
+
+    "exploreConfirmCopyTitle": "Copy habits?",
+    "exploreConfirmCopySubtitle": "{count} habits will be created.",
+    "@exploreConfirmCopySubtitle": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "exploreYes": "Yes",
+    "exploreCancel": "Cancel",
+
+    "exploreRoutineProcrastinationTitle": "Overcome\nProcrastination",
+    "exploreRoutineProcrastinationDescription": "Procrastination can sabotage your productivity and hinder your success, but it doesn’t have to dictate your future. This routine offers evidence-based strategies to help you overcome procrastination and build momentum.",
+
+    "exploreRoutineAnxietyTitle": "Relieve\nAnxiety",
+    "exploreRoutineAnxietyDescription": "A practical routine to lower baseline stress and reduce anxious spirals with small daily actions.",
+
+    "exploreRoutineFocusBoostTitle": "Focus\nBoost",
+    "exploreRoutineFocusBoostDescription": "Strengthen your focus with a compact routine designed for deep work.",
+
+    "exploreRoutineMorningMomentumTitle": "Morning\nMomentum",
+    "exploreRoutineMorningMomentumDescription": "Start the day with momentum and a clear plan.",
+
+    "exploreHabitPomodoroTitle": "Pomodoro Technique",
+    "exploreHabitPomodoroSubtitle": "Use focused 25-min blocks with short breaks.",
+    "exploreHabitTimeBlockingTitle": "Time Blocking",
+    "exploreHabitTimeBlockingSubtitle": "Schedule your day into clear task windows.",
+    "exploreHabitEatThatFrogTitle": "Eat That Frog",
+    "exploreHabitEatThatFrogSubtitle": "Do the hardest task first to reduce avoidance.",
+    "exploreHabitBreakTasksTitle": "Break Tasks into Smaller Steps",
+    "exploreHabitBreakTasksSubtitle": "Turn big tasks into small, actionable steps.",
+    "exploreHabitSmartGoalsTitle": "Set SMART Goals",
+    "exploreHabitSmartGoalsSubtitle": "Specific, Measurable, Achievable, Relevant, Time-bound.",
+
+    "exploreHabitBoxBreathingTitle": "Box Breathing",
+    "exploreHabitBoxBreathingSubtitle": "4-4-4-4 breathing cycle.",
+    "exploreHabitShortWalkTitle": "Short Walk",
+    "exploreHabitShortWalkSubtitle": "10 minutes outside if possible.",
+    "exploreHabitJournalDumpTitle": "Journal Dump",
+    "exploreHabitJournalDumpSubtitle": "Write thoughts without filtering.",
+    "exploreHabitLimitCaffeineTitle": "Limit Caffeine",
+    "exploreHabitLimitCaffeineSubtitle": "Reduce triggers after noon.",
+    "exploreHabitSleepWindDownTitle": "Sleep Wind-down",
+    "exploreHabitSleepWindDownSubtitle": "Consistent pre-sleep ritual.",
+
+    "exploreHabitNoPhoneStartTitle": "No-Phone Start",
+    "exploreHabitNoPhoneStartSubtitle": "First 30 mins without scrolling.",
+    "exploreHabitDeepWorkBlockTitle": "Deep Work Block",
+    "exploreHabitDeepWorkBlockSubtitle": "One 45–60 min focus sprint.",
+    "exploreHabitSingleTaskListTitle": "Single Task List",
+    "exploreHabitSingleTaskListSubtitle": "Pick 1–3 outcomes max.",
+    "exploreHabitHydrateTitle": "Hydrate",
+    "exploreHabitHydrateSubtitle": "Water before coffee.",
+
+    "exploreHabitMakeBedTitle": "Make the Bed",
+    "exploreHabitMakeBedSubtitle": "Quick win to start.",
+    "exploreHabitTop3PrioritiesTitle": "Top 3 Priorities",
+    "exploreHabitTop3PrioritiesSubtitle": "Write the day’s outcomes.",
+    "exploreHabitStretchTitle": "Stretch",
+    "exploreHabitStretchSubtitle": "2–5 minutes full body.",
+    "exploreHabitProteinBreakfastTitle": "Protein Breakfast",
+    "exploreHabitProteinBreakfastSubtitle": "Stable energy.",
+
+    "exploreRoutineCreativityBoostTitle": "Creativity\nBoosting\nRoutine",
+    "exploreRoutineCreativityBoostDescription": "A simple routine to increase creative output and reduce friction.",
+
+    "exploreRoutineProductivityEnhancerTitle": "Productivity\nEnhancer\nRoutine",
+    "exploreRoutineProductivityEnhancerDescription": "Improve output with better planning and execution habits.",
+
+    "exploreRoutineBuildConfidenceTitle": "Build\nConfidence",
+    "exploreRoutineBuildConfidenceDescription": "Small daily actions to build confidence and consistency.",
+
+    "exploreRoutineBetterSleepTitle": "Better\nSleep",
+    "exploreRoutineBetterSleepDescription": "A calming routine to improve sleep quality and recovery.",
+
+    "exploreHabitIdeaCaptureTitle": "Idea Capture",
+    "exploreHabitIdeaCaptureSubtitle": "Write 5 ideas daily.",
+    "exploreHabitCreateBeforeConsumeTitle": "Create Before Consume",
+    "exploreHabitCreateBeforeConsumeSubtitle": "Make first, scroll later.",
+    "exploreHabitInputWalkTitle": "Input Walk",
+    "exploreHabitInputWalkSubtitle": "Take a walk for inspiration.",
+    "exploreHabitDailySketchTitle": "Daily Sketch",
+    "exploreHabitDailySketchSubtitle": "2 minutes, no pressure.",
+
+    "exploreHabitPlanTomorrowTitle": "Plan Tomorrow",
+    "exploreHabitPlanTomorrowSubtitle": "End-of-day 5-minute plan.",
+    "exploreHabitInboxZeroTitle": "Inbox Zero",
+    "exploreHabitInboxZeroSubtitle": "Clear messages in one block.",
+    "exploreHabitTwoMinuteRuleTitle": "Two-Minute Rule",
+    "exploreHabitTwoMinuteRuleSubtitle": "Do it now if it’s quick.",
+    "exploreHabitShutdownRitualTitle": "Shutdown Ritual",
+    "exploreHabitShutdownRitualSubtitle": "Close loops, end work cleanly.",
+
+    "exploreHabitDailyWinTitle": "Daily Win",
+    "exploreHabitDailyWinSubtitle": "Record one win every day.",
+    "exploreHabitPracticeSkillTitle": "Practice Skill",
+    "exploreHabitPracticeSkillSubtitle": "10 minutes deliberate practice.",
+    "exploreHabitPostureResetTitle": "Posture Reset",
+    "exploreHabitPostureResetSubtitle": "2x daily check-in.",
+    "exploreHabitPositiveReframeTitle": "Positive Reframe",
+    "exploreHabitPositiveReframeSubtitle": "Rewrite the story in your head.",
+
+    "exploreHabitNoScreensTitle": "No Screens",
+    "exploreHabitNoScreensSubtitle": "Avoid screens 30 mins before bed.",
+    "exploreHabitCoolRoomTitle": "Cool Room",
+    "exploreHabitCoolRoomSubtitle": "Lower temp for better sleep.",
+    "exploreHabitReadTitle": "Read",
+    "exploreHabitReadSubtitle": "10 pages of a book.",
+    "exploreHabitSameBedtimeTitle": "Same Bedtime",
+    "exploreHabitSameBedtimeSubtitle": "Consistency beats perfection.",
+
+
+    "createHabitCreateTitle": "Create Habit",
+    "createHabitEditTitle": "Edit Habit",
+
+    "createHabitColorPicker": "Color Picker",
+    "createHabitPickColorTitle": "Pick a color",
+    "createHabitContinue": "Continue",
+    "createHabitCancel": "Cancel",
+    "createHabitDone": "Done",
+
+    "createHabitTitleLabel": "Title",
+    "createHabitTitleHint": "Title",
+    "createHabitDescriptionLabel": "Description",
+    "createHabitDescriptionHint": "Description",
+    "createHabitColorLabel": "Color",
+
+    "createHabitRepeatLabel": "Repeat",
+    "createHabitDaily": "Daily",
+    "createHabitWeekly": "Weekly",
+    "createHabitMonthly": "Monthly",
+
+    "createHabitReminderLabel": "Reminder",
+    "createHabitSendNotificationAt": "Send a notification at",
+    "createHabitPickTime": "Pick time",
+    "createHabitReminderInfo": "You'll get \"It's time for your habit.\" with your habit name.",
+
+    "createHabitGoalLabel": "Goal",
+    "createHabitEdit": "Edit",
+    "createHabitPerDay": "per day",
+    "createHabitSetGoal": "Set goal",
+    "createHabitTrackUnitsHelp": "Track times, minutes, hours, kg, km, liters, or ounces.",
+
+    "createHabitSave": "Save",
+    "createHabitSaveChanges": "Save changes",
+
+    "createHabitTitleRequired": "Please enter a title",
+    "createHabitMustBeSignedIn": "You must be signed in to create a habit.",
+    "createHabitFailedToSave": "Failed to save habit. Please try again.",
+
+    "createHabitOnTheseDays": "On these days",
+    "createHabitFrequency": "Frequency",
+    "createHabitEveryday": "Everyday",
+    "createHabitDaysPerWeek": "{count} days per week",
+    "@createHabitDaysPerWeek": {
+    "placeholders": {
+    "count": { "type": "int" }
+    }
+    },
+    "createHabitOnThisDayEachMonth": "On this day each month",
+
+    "createHabitMonShort": "M",
+    "createHabitTueShort": "T",
+    "createHabitWedShort": "W",
+    "createHabitThuShort": "T",
+    "createHabitFriShort": "F",
+    "createHabitSatShort": "S",
+    "createHabitSunShort": "S",
+
+    "createHabitAm": "AM",
+    "createHabitPm": "PM",
+
+    "createHabitGoalLabelText": "{value} {unit}{plural} per day",
+    "@createHabitGoalLabelText": {
+    "placeholders": {
+    "value": { "type": "int" },
+    "unit": { "type": "String" },
+    "plural": { "type": "String" }
+    }
+    },
+
+    "createHabitGoalText": "{value} {unit} per day",
+    "@createHabitGoalText": {
+    "placeholders": {
+    "value": { "type": "int" },
+    "unit": { "type": "String" }
+    }
+    },
+
+    "createHabitUnitTime": "time",
+    "createHabitUnitMinute": "minute",
+    "createHabitUnitHour": "hour",
+    "createHabitUnitKg": "kg",
+    "createHabitUnitKm": "km",
+    "createHabitUnitL": "l",
+    "createHabitUnitOz": "oz",
+
+    "habitDetailPleaseSignInHabits": "Please sign in to view habits.",
+    "habitDetailPleaseSignInNotes": "Please sign in to view notes.",
+    "habitDetailDefaultHabitTitle": "Habit",
+
+    "habitDetailUpdateProgress": "Update progress",
+
+    "habitDetailMarkedIncompleteDay": "Marked incomplete for that day",
+    "habitDetailMarkedCompleteDay": "Marked complete for that day",
+    "habitDetailCouldNotUpdateDay": "Could not update that day. Try again.",
+
+    "habitDetailDeleteHabitTitle": "Delete habit?",
+    "habitDetailDeleteHabitMessage": "This will remove the habit and its history.",
+    "habitDetailCancel": "Cancel",
+    "habitDetailDelete": "Delete",
+
+    "habitDetailStatScore": "Score",
+    "habitDetailStatTotal": "Total",
+    "habitDetailStatBestStreak": "Best Streak",
+    "habitDetailStatStreak": "Streak",
+
+    "habitDetailScoreTitle": "Score",
+    "habitDetailAnalytics": "Analytics",
+    "habitDetailNoDataYet": "No data yet",
+
+    "habitDetailHistory": "History",
+
+    "habitDetailNotes": "Notes",
+    "habitDetailAddNote": "Add Note",
+    "habitDetailCouldNotLoadNotes": "Could not load notes.",
+    "habitDetailLoading": "Loading…",
+    "habitDetailNoNotesYet": "No notes yet",
+
+    "habitDetailDeleteNoteTitle": "Delete note?",
+    "habitDetailDeleteNoteMessage": "This will remove it from both the habit and the journal.",
+    "habitDetailNoteDeleted": "Note deleted",
+    "habitDetailNoteSaved": "Note saved",
+    "habitDetailCouldNotSaveNote": "Could not save note. Try again.",
+    "habitDetailCouldNotSaveNoteWithCode": "Could not save note: {code}",
+    "@habitDetailCouldNotSaveNoteWithCode": {
+      "placeholders": {
+        "code": { "type": "String" }
+      }
+    },
+
+    "habitDetailToday": "Today",
+    "habitDetailTodayTime": "Today, {time}",
+    "@habitDetailTodayTime": {
+      "placeholders": {
+        "time": { "type": "String" }
+      }
+    },
+
+  "habitDetailWhatHappenedToday": "What happened today?",
+
+  "habitDetailPickerCancel": "Cancel",
+  "habitDetailPickerDone": "Done",
+
+  "habitDetailMonthJanShort": "Jan",
+  "habitDetailMonthFebShort": "Feb",
+  "habitDetailMonthMarShort": "Mar",
+  "habitDetailMonthAprShort": "Apr",
+  "habitDetailMonthMayShort": "May",
+  "habitDetailMonthJunShort": "Jun",
+  "habitDetailMonthJulShort": "Jul",
+  "habitDetailMonthAugShort": "Aug",
+  "habitDetailMonthSepShort": "Sep",
+  "habitDetailMonthOctShort": "Oct",
+  "habitDetailMonthNovShort": "Nov",
+  "habitDetailMonthDecShort": "Dec",
+
+    "habitsTitle": "Habits",
+
+    "habitsSnackHabitCompletedCorrectly": "Habit completed correctly",
+    "habitsSnackProgressUpdated": "Progress updated",
+    "habitsSnackCouldNotUpdateProgress": "Could not update progress. Try again.",
+    "habitsSnackHabitDeleted": "Habit deleted",
+
+    "habitsBottomNavHome": "Home",
+    "habitsBottomNavAnalytics": "Analytics",
+    "habitsBottomNavExplore": "Explore",
+
+    "habitsTabToday": "Today",
+    "habitsTabWeekly": "Weekly",
+    "habitsTabOverall": "Overall",
+
+    "habitsNotSignedInTitle": "Not signed in",
+    "habitsNotSignedInSubtitle": "Please sign in to create habits.",
+
+    "habitsGoodJobTitle": "Good Job!",
+    "habitsAllSetAndDone": "All set and done.",
+    "habitsGreatButton": "Great!",
+
+    "habitsProgressCountCompleted": "{count} completed",
+    "@habitsProgressCountCompleted": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "habitsCompletedShown": "Completed shown",
+    "habitsCompletedHidden": "Completed hidden",
+    "habitsShowCompleted": "Show Completed",
+
+    "habitsCompletionSheetPerDay": "{current} / {goal} {unit}{plural} per day",
+    "@habitsCompletionSheetPerDay": {
+      "placeholders": {
+        "current": { "type": "int" },
+        "goal": { "type": "int" },
+        "unit": { "type": "String" },
+        "plural": { "type": "String" }
+      }
+    },
+
+    "habitsCompletionSheetMarkCompleted": "Mark completed",
+    "habitsCompletionSheetSaveProgress": "Save progress",
+    "habitsCompletionSheetHint": "Tap + or - to register the times or units you set.",
+
+    "habitsDefaultHabitTitle": "Habit",
+
+    "habitsEmptyTitle": "No habits for today",
+    "habitsEmptySubtitle": "There is no habit for today. Create one?",
+    "habitsEmptyCreateButton": "+ Create",
+
+    "habitsWeeklyCompletedCount": "{count} completed",
+    "@habitsWeeklyCompletedCount": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "habitsOverallEveryday": "Everyday",
+    "habitsOverallWeeklyHabit": "Weekly habit",
+    "habitsOverallMonthlyHabit": "Monthly habit",
+
+    "habitsGoalUnitTime": "time",
+
+    "journalSignInPrompt": "Please sign in to view your journal.",
+    "journalTitle": "Journal",
+
+    "journalEmptyTitle": "No notes yet",
+    "journalEmptySubtitle": "Add a note to get started",
+    "journalAddButton": "+ Add",
+
+    "journalComposerHint": "What happened today?",
+    "journalToday": "Today",
+
+    "commonCancel": "Cancel",
+    "commonDone": "Done",
+
+    "journalDeleteNoteTitle": "Delete note?",
+    "journalDeleteNoteBody": "This action cannot be undone.",
+    "commonDelete": "Delete",
+
+    "journalSignInPrompt": "Please sign in to view your journal.",
+    "journalTitle": "Journal",
+
+    "journalEmptyTitle": "No notes yet",
+    "journalEmptySubtitle": "Add a note to get started",
+    "journalAddButton": "+ Add",
+
+    "journalComposerHint": "What happened today?",
+    "journalToday": "Today",
+
+    "commonCancel": "Cancel",
+    "commonDone": "Done",
+
+    "journalDeleteNoteTitle": "Delete note?",
+    "journalDeleteNoteBody": "This action cannot be undone.",
+    "commonDelete": "Delete",
+
+    "monthJanuary": "January",
+    "monthFebruary": "February",
+    "monthMarch": "March",
+    "monthApril": "April",
+    "monthMay": "May",
+    "monthJune": "June",
+    "monthJuly": "July",
+    "monthAugust": "August",
+    "monthSeptember": "September",
+    "monthOctober": "October",
+    "monthNovember": "November",
+    "monthDecember": "December",
+
+    "monthJanuaryShort": "Jan",
+    "monthFebruaryShort": "Feb",
+    "monthMarchShort": "Mar",
+    "monthAprilShort": "Apr",
+    "monthMayShort": "May",
+    "monthJuneShort": "Jun",
+    "monthJulyShort": "Jul",
+    "monthAugustShort": "Aug",
+    "monthSeptemberShort": "Sep",
+    "monthOctoberShort": "Oct",
+    "monthNovemberShort": "Nov",
+    "monthDecemberShort": "Dec",
+
+    "weekdayMonShort": "Mon",
+    "weekdayTueShort": "Tue",
+    "weekdayWedShort": "Wed",
+    "weekdayThuShort": "Thu",
+    "weekdayFriShort": "Fri",
+    "weekdaySatShort": "Sat",
+    "weekdaySunShort": "Sun",
+
+    "accountTitle": "My account",
+
+    "accountUsernameLabel": "Username",
+    "accountPasswordLabel": "Password",
+    "accountEmailLabel": "Email",
+
+    "accountPasswordLeaveBlankHint": "Leave blank to keep current",
+
+    "accountUsernameEmptyError": "Please enter a username.",
+    "accountUsernameTooShortError": "Too short.",
+    "accountEmailEmptyError": "Please enter an email.",
+    "accountEmailInvalidError": "Invalid email.",
+
+    "accountEmailVerified": "Email verified",
+    "accountEmailNotVerified": "Email not verified",
+    "accountSendButton": "Send",
+
+    "accountVerificationEmailSent": "Verification email sent.",
+    "accountVerificationEmailFailed": "Could not send verification email.",
+
+    "accountMyHabits": "My habits",
+    "accountDeleteAccount": "Delete account",
+
+    "accountSaving": "Saving...",
+    "accountSaveChanges": "Save changes",
+    "accountLogOut": "Log Out",
+
+    "accountChangesSaved": "Changes saved.",
+    "accountChangesSavedEmailVerificationHint": "Changes saved. Check your inbox if email verification was sent.",
+    "accountCouldNotSaveChanges": "Could not save changes. Try again.",
+
+    "accountDeleteDialogTitle": "Delete account?",
+    "accountDeleteDialogBody": "This will permanently remove your account data.",
+    "accountDeletedSnackbar": "Account deleted.",
+    "accountCouldNotDelete": "Could not delete account.",
+
+    "accountRequiresRecentLoginError": "For security, please log in again and retry this change.",
+    "accountEmailAlreadyInUseError": "That email is already in use.",
+    "accountInvalidEmailError": "Please enter a valid email address.",
+    "accountWeakPasswordError": "Password should be at least 6 characters.",
+    "accountWeakPasswordGenericError": "That password is too weak.",
+    "accountAuthGenericError": "Authentication error.",
+
+    "commonCancel": "Cancel",
+    "commonDelete": "Delete",
+    "commonDone": "Done",
+
+    "hubVersionLabel": "Version: {version}",
+    "@hubVersionLabel": {
+      "description": "Displayed at the bottom of the hub screen",
+      "placeholders": {
+        "version": { "type": "String" }
+      }
+    },
+
+    "hubProTitle": "EcoHabit Pro",
+    "hubProPlanLabel": "Pro Yearly",
+
+    "hubMenuSettings": "Settings",
+    "hubMenuAnalytics": "Analytics",
+    "hubMenuJournal": "Journal",
+    "hubMenuAccount": "Account",
+    "hubMenuBackup": "Backup",
+
+    "proPlanTitle": "EcoHabit Pro",
+    "proPlanDefaultLabel": "Pro Yearly",
+
+    "proPlanSubscribedPrefix": "You are subscribed to",
+    "proPlanUpgradePrefix": "Upgrade to",
+
+    "proPlanFreeHeader": "FREE",
+    "proPlanProHeader": "PRO",
+
+    "proFeatureUnlimitedHabits": "Unlimited Habits",
+    "proFeatureRoutineAi": "Routine AI",
+    "proFeatureAnalytics": "Analytics",
+    "proFeatureGoalSetting": "Goal setting",
+    "proFeatureJournaling": "Journaling",
+    "proFeatureColorPicker": "Color Picker",
+    "proFeatureBackupHabits": "Backup habits",
+
+    "commonClose": "Close",
+
+    "settingsTitle": "Settings",
+
+    "settingsThemeTitle": "Theme",
+    "settingsThemeLight": "Light",
+    "settingsThemeDark": "Dark",
+
+    "settingsAccentColorTitle": "Accent color",
+
+    "settingsStartWeekOnTitle": "Start week on",
+    "settingsStartWeekSaturday": "Saturday",
+    "settingsStartWeekSunday": "Sunday",
+    "settingsStartWeekMonday": "Monday",
+
+    "settingsHabitTabsOrderTitle": "Habit tabs order",
+    "settingsHabitTabsOrderHint": "Long press an item to reorder",
+
+    "habitsTabToday": "Today",
+    "habitsTabWeekly": "Weekly",
+    "habitsTabOverall": "Overall",
+
+    "analyticsTitle": "Analytics",
+    "analyticsSignInPrompt": "Please sign in to view analytics.",
+    "analyticsNoHabitsYet": "No habits yet",
+    "analyticsHabitFallbackTitle": "Habit",
+
+    "analyticsAllHabitsTab": "All habits",
+
+    "analyticsAverageScore": "Average Score",
+    "analyticsHabitsCompletedTitle": "Habits completed",
+    "analyticsTotalCompletedHabitsSubtitle": "Total completed habits",
+    "analyticsHabitHeatmapTitle": "Habit heatmap",
+
+    "analyticsStreakTitle": "Streak",
+    "analyticsBestStreak": "Best streak",
+    "analyticsCurrentStreak": "Current streak",
+
+    "analyticsWeeklyCompletionsTitle": "Weekly Completions",
+    "analyticsScoreTitle": "Score",
+    "analyticsNoData": "No data",
+
+    "analyticsThisWeek": "This week",
+    "analyticsThisMonth": "This month",
+
+    "weekdayShortMon": "Mon",
+    "weekdayShortTue": "Tue",
+    "weekdayShortWed": "Wed",
+    "weekdayShortThu": "Thu",
+    "weekdayShortFri": "Fri",
+    "weekdayShortSat": "Sat",
+    "weekdayShortSun": "Sun",
+
+    "weekdayVeryShortMon": "M",
+    "weekdayVeryShortTue": "T",
+    "weekdayVeryShortWed": "W",
+    "weekdayVeryShortThu": "T",
+    "weekdayVeryShortFri": "F",
+    "weekdayVeryShortSat": "S",
+    "weekdayVeryShortSun": "S",
+
+    "monthShortJan": "Jan",
+    "monthShortFeb": "Feb",
+    "monthShortMar": "Mar",
+    "monthShortApr": "Apr",
+    "monthShortMay": "May",
+    "monthShortJun": "Jun",
+    "monthShortJul": "Jul",
+    "monthShortAug": "Aug",
+    "monthShortSep": "Sep",
+    "monthShortOct": "Oct",
+    "monthShortNov": "Nov",
+    "monthShortDec": "Dec"
+
+}

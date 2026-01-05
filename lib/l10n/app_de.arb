@@ -1,0 +1,639 @@
+{
+  "@@locale": "de",
+  "signInTitle": "Anmelden",
+  "emailOrUsername": "E-Mail oder Benutzername",
+  "enterEmailOrUsername": "E-Mail oder Benutzernamen eingeben",
+  "password": "Passwort",
+  "forgotPassword": "Passwort vergessen?",
+  "orContinueWith": "Oder fortfahren mit",
+  "signInButton": "Anmelden",
+  "dontHaveAccount": "Noch kein Konto? ",
+  "signUp": "Registrieren",
+  "errEnterEmailOrUsername": "Bitte E-Mail oder Benutzernamen eingeben",
+  "errEnterPassword": "Bitte geben Sie Ihr Passwort ein",
+  "chooseLanguageTitle": "Sprache auswählen",
+  "continueButton": "Weiter",
+  "languageEnglish": "Englisch",
+  "languageGerman": "Deutsch",
+  "languageSpanish": "Spanisch",
+  "languageRussian": "Russisch",
+  "languageTurkish": "Türkisch",
+  "languageFrench": "Französisch",
+  "signUpTitle": "Registrieren",
+  "signUpButton": "Registrieren",
+  "signUpEmailLabel": "E-Mail",
+  "signUpEmailHint": "E-Mail eingeben",
+  "signUpUsernameLabel": "Benutzernamen erstellen",
+  "signUpUsernameHint": "Benutzernamen eingeben",
+  "signUpPasswordLabel": "Passwort erstellen",
+  "signUpPasswordHint": "Passwort",
+  "signUpOrContinueWith": "Oder fortfahren mit",
+  "signUpEmailRequired": "Bitte geben Sie Ihre E-Mail ein",
+  "signUpUsernameRequired": "Bitte geben Sie einen Benutzernamen ein",
+  "signUpPasswordRequired": "Bitte geben Sie ein Passwort ein",
+  "signUpErrorDefault": "Registrierungsfehler",
+  "signUpErrorGeneric": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+
+    "forgotPasswordTitle": "Neues Passwort",
+    "forgotPasswordEmailLabel": "E-Mail",
+    "forgotPasswordEmailHint": "E-Mail oder Benutzernamen eingeben",
+    "forgotPasswordNewPasswordLabel": "Neues Passwort",
+    "forgotPasswordConfirmPasswordLabel": "Passwort bestätigen",
+    "forgotPasswordPasswordHint": "Passwort",
+    "forgotPasswordDoneButton": "Fertig",
+    "forgotPasswordEmailRequired": "Bitte geben Sie Ihre E-Mail oder Ihren Benutzernamen ein",
+    "forgotPasswordNewPasswordRequired": "Bitte geben Sie ein neues Passwort ein",
+    "forgotPasswordConfirmPasswordRequired": "Bitte bestätigen Sie Ihr Passwort",
+    "forgotPasswordPasswordsDoNotMatch": "Passwörter stimmen nicht überein",
+    "forgotPasswordResetEmailSent": "E-Mail zum Zurücksetzen des Passworts gesendet. Bitte prüfen Sie Ihren Posteingang.",
+    "forgotPasswordNoAccountFound": "Kein Konto für diese E-Mail gefunden.",
+    "forgotPasswordInvalidEmail": "Bitte geben Sie eine gültige E-Mail ein.",
+    "forgotPasswordNetworkError": "Netzwerkfehler. Bitte versuchen Sie es erneut.",
+    "forgotPasswordFailedToSendResetEmail": "E-Mail zum Zurücksetzen konnte nicht gesendet werden.",
+    "forgotPasswordGenericError": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+
+    "exploreTitle": "Entdecken",
+    "exploreMostPopularRoutines": "Beliebteste Routinen",
+    "exploreBecomeBetterYou": "Werde die beste Version von dir",
+
+    "exploreHeroHeadline": "Intelligente\nProjekte sind\nhier",
+    "exploreHeroSubtitle": "Erstelle Projekte mit KI-\nTeamkollegen, Notizen, Aufgaben und\nDateien",
+    "exploreHeroCta": "Kostenloses Projekt erstellen",
+
+    "exploreRoutineTag": "ROUTINE",
+    "exploreHabitsTitle": "Gewohnheiten",
+
+    "exploreCopyHabitsButton": "{count} Gewohnheiten kopieren",
+    "@exploreCopyHabitsButton": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "explorePleaseSignInToCopyHabits": "Bitte melden Sie sich an, um Gewohnheiten zu kopieren.",
+
+    "exploreCopiedHabitsSnack": "{count} Gewohnheiten kopiert",
+    "@exploreCopiedHabitsSnack": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "exploreCouldNotCopyHabits": "Gewohnheiten konnten nicht kopiert werden. Bitte versuchen Sie es erneut.",
+
+    "exploreConfirmCopyTitle": "Gewohnheiten kopieren?",
+    "exploreConfirmCopySubtitle": "{count} Gewohnheiten werden erstellt.",
+    "@exploreConfirmCopySubtitle": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "exploreYes": "Ja",
+    "exploreCancel": "Abbrechen",
+
+    "exploreRoutineProcrastinationTitle": "Prokrastination\nüberwinden",
+    "exploreRoutineProcrastinationDescription": "Prokrastination kann Ihre Produktivität sabotieren und Ihren Erfolg behindern, aber sie muss nicht Ihre Zukunft bestimmen. Diese Routine bietet evidenzbasierte Strategien, um Prokrastination zu überwinden und Momentum aufzubauen.",
+
+    "exploreRoutineAnxietyTitle": "Angst\nlindern",
+    "exploreRoutineAnxietyDescription": "Eine praktische Routine, um Grundstress zu senken und Angstspiralen mit kleinen täglichen Handlungen zu reduzieren.",
+
+    "exploreRoutineFocusBoostTitle": "Fokus-\nBoost",
+    "exploreRoutineFocusBoostDescription": "Stärken Sie Ihren Fokus mit einer kompakten Routine für Deep Work.",
+
+    "exploreRoutineMorningMomentumTitle": "Morgen-\nMomentum",
+    "exploreRoutineMorningMomentumDescription": "Starten Sie den Tag mit Schwung und einem klaren Plan.",
+
+    "exploreHabitPomodoroTitle": "Pomodoro-Technik",
+    "exploreHabitPomodoroSubtitle": "Nutzen Sie fokussierte 25-Min.-Blöcke mit kurzen Pausen.",
+    "exploreHabitTimeBlockingTitle": "Time Blocking",
+    "exploreHabitTimeBlockingSubtitle": "Planen Sie Ihren Tag in klaren Aufgabenfenstern.",
+    "exploreHabitEatThatFrogTitle": "Eat That Frog",
+    "exploreHabitEatThatFrogSubtitle": "Erledigen Sie die schwierigste Aufgabe zuerst, um Vermeidung zu reduzieren.",
+    "exploreHabitBreakTasksTitle": "Aufgaben in kleinere Schritte aufteilen",
+    "exploreHabitBreakTasksSubtitle": "Machen Sie aus großen Aufgaben kleine, umsetzbare Schritte.",
+    "exploreHabitSmartGoalsTitle": "SMART-Ziele setzen",
+    "exploreHabitSmartGoalsSubtitle": "Spezifisch, messbar, erreichbar, relevant, terminiert.",
+
+    "exploreHabitBoxBreathingTitle": "Box Breathing",
+    "exploreHabitBoxBreathingSubtitle": "4-4-4-4 Atemzyklus.",
+    "exploreHabitShortWalkTitle": "Kurzer Spaziergang",
+    "exploreHabitShortWalkSubtitle": "10 Minuten draußen, wenn möglich.",
+    "exploreHabitJournalDumpTitle": "Gedanken-Download",
+    "exploreHabitJournalDumpSubtitle": "Schreiben Sie Gedanken ungefiltert auf.",
+    "exploreHabitLimitCaffeineTitle": "Koffein begrenzen",
+    "exploreHabitLimitCaffeineSubtitle": "Trigger nach Mittag reduzieren.",
+    "exploreHabitSleepWindDownTitle": "Abendroutine",
+    "exploreHabitSleepWindDownSubtitle": "Konstantes Einschlafritual.",
+
+    "exploreHabitNoPhoneStartTitle": "Start ohne Handy",
+    "exploreHabitNoPhoneStartSubtitle": "Die ersten 30 Minuten ohne Scrollen.",
+    "exploreHabitDeepWorkBlockTitle": "Deep-Work-Block",
+    "exploreHabitDeepWorkBlockSubtitle": "Ein 45–60-Min.-Fokus-Sprint.",
+    "exploreHabitSingleTaskListTitle": "Single-Task-Liste",
+    "exploreHabitSingleTaskListSubtitle": "Wählen Sie max. 1–3 Ergebnisse.",
+    "exploreHabitHydrateTitle": "Hydrieren",
+    "exploreHabitHydrateSubtitle": "Wasser vor dem Kaffee.",
+
+    "exploreHabitMakeBedTitle": "Bett machen",
+    "exploreHabitMakeBedSubtitle": "Schneller Gewinn zum Start.",
+    "exploreHabitTop3PrioritiesTitle": "Top-3-Prioritäten",
+    "exploreHabitTop3PrioritiesSubtitle": "Schreiben Sie die Ergebnisse des Tages auf.",
+    "exploreHabitStretchTitle": "Dehnen",
+    "exploreHabitStretchSubtitle": "2–5 Minuten Ganzkörper.",
+    "exploreHabitProteinBreakfastTitle": "Proteinfrühstück",
+    "exploreHabitProteinBreakfastSubtitle": "Stabile Energie.",
+
+    "exploreRoutineCreativityBoostTitle": "Routine\nfür mehr\nKreativität",
+    "exploreRoutineCreativityBoostDescription": "Eine einfache Routine, um kreativen Output zu steigern und Reibung zu reduzieren.",
+
+    "exploreRoutineProductivityEnhancerTitle": "Routine\nzur\nProduktivitätssteigerung",
+    "exploreRoutineProductivityEnhancerDescription": "Steigern Sie Ihren Output mit besseren Planungs- und Umsetzungsgewohnheiten.",
+
+    "exploreRoutineBuildConfidenceTitle": "Selbst-\nvertrauen\naufbauen",
+    "exploreRoutineBuildConfidenceDescription": "Kleine tägliche Handlungen, um Selbstvertrauen und Konsistenz aufzubauen.",
+
+    "exploreRoutineBetterSleepTitle": "Besser\nschlafen",
+    "exploreRoutineBetterSleepDescription": "Eine beruhigende Routine zur Verbesserung der Schlafqualität und Erholung.",
+
+    "exploreHabitIdeaCaptureTitle": "Ideen festhalten",
+    "exploreHabitIdeaCaptureSubtitle": "Schreiben Sie täglich 5 Ideen auf.",
+    "exploreHabitCreateBeforeConsumeTitle": "Erst erstellen, dann konsumieren",
+    "exploreHabitCreateBeforeConsumeSubtitle": "Erst machen, dann scrollen.",
+    "exploreHabitInputWalkTitle": "Inspirations-Spaziergang",
+    "exploreHabitInputWalkSubtitle": "Gehen Sie spazieren, um Inspiration zu sammeln.",
+    "exploreHabitDailySketchTitle": "Tägliche Skizze",
+    "exploreHabitDailySketchSubtitle": "2 Minuten, ohne Druck.",
+
+    "exploreHabitPlanTomorrowTitle": "Morgen planen",
+    "exploreHabitPlanTomorrowSubtitle": "5-Minuten-Plan am Tagesende.",
+    "exploreHabitInboxZeroTitle": "Inbox Zero",
+    "exploreHabitInboxZeroSubtitle": "Nachrichten in einem Block abarbeiten.",
+    "exploreHabitTwoMinuteRuleTitle": "Zwei-Minuten-Regel",
+    "exploreHabitTwoMinuteRuleSubtitle": "Wenn es schnell geht: sofort erledigen.",
+    "exploreHabitShutdownRitualTitle": "Shutdown-Ritual",
+    "exploreHabitShutdownRitualSubtitle": "Offene Schleifen schließen, Arbeit sauber beenden.",
+
+    "exploreHabitDailyWinTitle": "Täglicher Erfolg",
+    "exploreHabitDailyWinSubtitle": "Notieren Sie jeden Tag einen Erfolg.",
+    "exploreHabitPracticeSkillTitle": "Fähigkeit üben",
+    "exploreHabitPracticeSkillSubtitle": "10 Minuten gezieltes Üben.",
+    "exploreHabitPostureResetTitle": "Haltungs-Reset",
+    "exploreHabitPostureResetSubtitle": "2× täglicher Check-in.",
+    "exploreHabitPositiveReframeTitle": "Positive Neubewertung",
+    "exploreHabitPositiveReframeSubtitle": "Schreiben Sie die Geschichte in Ihrem Kopf um.",
+
+    "exploreHabitNoScreensTitle": "Keine Bildschirme",
+    "exploreHabitNoScreensSubtitle": "30 Minuten vor dem Schlafengehen keine Bildschirme.",
+    "exploreHabitCoolRoomTitle": "Kühles Zimmer",
+    "exploreHabitCoolRoomSubtitle": "Temperatur senken für besseren Schlaf.",
+    "exploreHabitReadTitle": "Lesen",
+    "exploreHabitReadSubtitle": "10 Seiten eines Buches.",
+    "exploreHabitSameBedtimeTitle": "Gleiche Schlafenszeit",
+    "exploreHabitSameBedtimeSubtitle": "Konsistenz schlägt Perfektion.",
+
+
+    "createHabitCreateTitle": "Gewohnheit erstellen",
+    "createHabitEditTitle": "Gewohnheit bearbeiten",
+
+    "createHabitColorPicker": "Farbauswahl",
+    "createHabitPickColorTitle": "Farbe auswählen",
+    "createHabitContinue": "Weiter",
+    "createHabitCancel": "Abbrechen",
+    "createHabitDone": "Fertig",
+
+    "createHabitTitleLabel": "Titel",
+    "createHabitTitleHint": "Titel",
+    "createHabitDescriptionLabel": "Beschreibung",
+    "createHabitDescriptionHint": "Beschreibung",
+    "createHabitColorLabel": "Farbe",
+
+    "createHabitRepeatLabel": "Wiederholen",
+    "createHabitDaily": "Täglich",
+    "createHabitWeekly": "Wöchentlich",
+    "createHabitMonthly": "Monatlich",
+
+    "createHabitReminderLabel": "Erinnerung",
+    "createHabitSendNotificationAt": "Benachrichtigung senden um",
+    "createHabitPickTime": "Uhrzeit auswählen",
+    "createHabitReminderInfo": "Sie erhalten „Zeit für Ihre Gewohnheit.“ zusammen mit dem Namen Ihrer Gewohnheit.",
+
+    "createHabitGoalLabel": "Ziel",
+    "createHabitEdit": "Bearbeiten",
+    "createHabitPerDay": "pro Tag",
+    "createHabitSetGoal": "Ziel festlegen",
+    "createHabitTrackUnitsHelp": "Erfassen Sie Male, Minuten, Stunden, kg, km, Liter oder Unzen.",
+
+    "createHabitSave": "Speichern",
+    "createHabitSaveChanges": "Änderungen speichern",
+
+    "createHabitTitleRequired": "Bitte geben Sie einen Titel ein",
+    "createHabitMustBeSignedIn": "Sie müssen angemeldet sein, um eine Gewohnheit zu erstellen.",
+    "createHabitFailedToSave": "Gewohnheit konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+
+    "createHabitOnTheseDays": "An diesen Tagen",
+    "createHabitFrequency": "Häufigkeit",
+    "createHabitEveryday": "Jeden Tag",
+    "createHabitDaysPerWeek": "{count} Tage pro Woche",
+    "@createHabitDaysPerWeek": {
+    "placeholders": {
+    "count": { "type": "int" }
+    }
+    },
+    "createHabitOnThisDayEachMonth": "An diesem Tag jeden Monat",
+
+    "createHabitMonShort": "M",
+    "createHabitTueShort": "D",
+    "createHabitWedShort": "M",
+    "createHabitThuShort": "D",
+    "createHabitFriShort": "F",
+    "createHabitSatShort": "S",
+    "createHabitSunShort": "S",
+
+    "createHabitAm": "AM",
+    "createHabitPm": "PM",
+
+    "createHabitGoalLabelText": "{value} {unit}{plural} pro Tag",
+    "@createHabitGoalLabelText": {
+    "placeholders": {
+    "value": { "type": "int" },
+    "unit": { "type": "String" },
+    "plural": { "type": "String" }
+    }
+    },
+
+    "createHabitGoalText": "{value} {unit} pro Tag",
+    "@createHabitGoalText": {
+    "placeholders": {
+    "value": { "type": "int" },
+    "unit": { "type": "String" }
+    }
+    },
+
+    "createHabitUnitTime": "Mal",
+    "createHabitUnitMinute": "Minute",
+    "createHabitUnitHour": "Stunde",
+    "createHabitUnitKg": "kg",
+    "createHabitUnitKm": "km",
+    "createHabitUnitL": "l",
+    "createHabitUnitOz": "oz",
+
+    "habitDetailPleaseSignInHabits": "Bitte melden Sie sich an, um Gewohnheiten anzusehen.",
+    "habitDetailPleaseSignInNotes": "Bitte melden Sie sich an, um Notizen anzusehen.",
+    "habitDetailDefaultHabitTitle": "Gewohnheit",
+
+    "habitDetailUpdateProgress": "Fortschritt aktualisieren",
+
+    "habitDetailMarkedIncompleteDay": "Für diesen Tag als nicht erledigt markiert",
+    "habitDetailMarkedCompleteDay": "Für diesen Tag als erledigt markiert",
+    "habitDetailCouldNotUpdateDay": "Dieser Tag konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
+
+    "habitDetailDeleteHabitTitle": "Gewohnheit löschen?",
+    "habitDetailDeleteHabitMessage": "Dadurch werden die Gewohnheit und ihr Verlauf entfernt.",
+    "habitDetailCancel": "Abbrechen",
+    "habitDetailDelete": "Löschen",
+
+    "habitDetailStatScore": "Punkte",
+    "habitDetailStatTotal": "Gesamt",
+    "habitDetailStatBestStreak": "Beste Serie",
+    "habitDetailStatStreak": "Serie",
+
+    "habitDetailScoreTitle": "Punkte",
+    "habitDetailAnalytics": "Analysen",
+    "habitDetailNoDataYet": "Noch keine Daten",
+
+    "habitDetailHistory": "Verlauf",
+
+    "habitDetailNotes": "Notizen",
+    "habitDetailAddNote": "Notiz hinzufügen",
+    "habitDetailCouldNotLoadNotes": "Notizen konnten nicht geladen werden.",
+    "habitDetailLoading": "Wird geladen…",
+    "habitDetailNoNotesYet": "Noch keine Notizen",
+
+    "habitDetailDeleteNoteTitle": "Notiz löschen?",
+    "habitDetailDeleteNoteMessage": "Sie wird sowohl aus der Gewohnheit als auch aus dem Journal entfernt.",
+    "habitDetailNoteDeleted": "Notiz gelöscht",
+    "habitDetailNoteSaved": "Notiz gespeichert",
+    "habitDetailCouldNotSaveNote": "Notiz konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+    "habitDetailCouldNotSaveNoteWithCode": "Notiz konnte nicht gespeichert werden: {code}",
+    "@habitDetailCouldNotSaveNoteWithCode": {
+      "placeholders": {
+        "code": { "type": "String" }
+      }
+    },
+
+    "habitDetailToday": "Heute",
+    "habitDetailTodayTime": "Heute, {time}",
+    "@habitDetailTodayTime": {
+      "placeholders": {
+        "time": { "type": "String" }
+      }
+    },
+
+    "habitDetailWhatHappenedToday": "Was ist heute passiert?",
+
+    "habitDetailPickerCancel": "Abbrechen",
+    "habitDetailPickerDone": "Fertig",
+
+    "habitDetailMonthJanShort": "Jan",
+    "habitDetailMonthFebShort": "Feb",
+    "habitDetailMonthMarShort": "Mär",
+    "habitDetailMonthAprShort": "Apr",
+    "habitDetailMonthMayShort": "Mai",
+    "habitDetailMonthJunShort": "Jun",
+    "habitDetailMonthJulShort": "Jul",
+    "habitDetailMonthAugShort": "Aug",
+    "habitDetailMonthSepShort": "Sep",
+    "habitDetailMonthOctShort": "Okt",
+    "habitDetailMonthNovShort": "Nov",
+    "habitDetailMonthDecShort": "Dez",
+
+    "habitsTitle": "Gewohnheiten",
+
+    "habitsSnackHabitCompletedCorrectly": "Gewohnheit korrekt abgeschlossen",
+    "habitsSnackProgressUpdated": "Fortschritt aktualisiert",
+    "habitsSnackCouldNotUpdateProgress": "Fortschritt konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
+    "habitsSnackHabitDeleted": "Gewohnheit gelöscht",
+
+    "habitsBottomNavHome": "Start",
+    "habitsBottomNavAnalytics": "Analysen",
+    "habitsBottomNavExplore": "Entdecken",
+
+    "habitsTabToday": "Heute",
+    "habitsTabWeekly": "Wöchentlich",
+    "habitsTabOverall": "Insgesamt",
+
+    "habitsNotSignedInTitle": "Nicht angemeldet",
+    "habitsNotSignedInSubtitle": "Bitte melden Sie sich an, um Gewohnheiten zu erstellen.",
+
+    "habitsGoodJobTitle": "Gut gemacht!",
+    "habitsAllSetAndDone": "Alles erledigt.",
+    "habitsGreatButton": "Super!",
+
+    "habitsProgressCountCompleted": "{count} erledigt",
+    "@habitsProgressCountCompleted": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "habitsCompletedShown": "Erledigte werden angezeigt",
+    "habitsCompletedHidden": "Erledigte werden ausgeblendet",
+    "habitsShowCompleted": "Erledigte anzeigen",
+
+    "habitsCompletionSheetPerDay": "{current} / {goal} {unit}{plural} pro Tag",
+    "@habitsCompletionSheetPerDay": {
+      "placeholders": {
+        "current": { "type": "int" },
+        "goal": { "type": "int" },
+        "unit": { "type": "String" },
+        "plural": { "type": "String" }
+      }
+    },
+
+    "habitsCompletionSheetMarkCompleted": "Als erledigt markieren",
+    "habitsCompletionSheetSaveProgress": "Fortschritt speichern",
+    "habitsCompletionSheetHint": "Tippen Sie auf + oder -, um die festgelegten Male oder Einheiten zu erfassen.",
+
+    "habitsDefaultHabitTitle": "Gewohnheit",
+
+    "habitsEmptyTitle": "Keine Gewohnheiten für heute",
+    "habitsEmptySubtitle": "Für heute gibt es keine Gewohnheit. Eine erstellen?",
+    "habitsEmptyCreateButton": "+ Erstellen",
+
+    "habitsWeeklyCompletedCount": "{count} erledigt",
+    "@habitsWeeklyCompletedCount": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "habitsOverallEveryday": "Jeden Tag",
+    "habitsOverallWeeklyHabit": "Wöchentliche Gewohnheit",
+    "habitsOverallMonthlyHabit": "Monatliche Gewohnheit",
+
+    "habitsGoalUnitTime": "Mal",
+
+    "journalSignInPrompt": "Bitte melden Sie sich an, um Ihr Journal anzusehen.",
+    "journalTitle": "Journal",
+
+    "journalEmptyTitle": "Noch keine Notizen",
+    "journalEmptySubtitle": "Fügen Sie eine Notiz hinzu, um zu starten",
+    "journalAddButton": "+ Hinzufügen",
+
+    "journalComposerHint": "Was ist heute passiert?",
+    "journalToday": "Heute",
+
+    "commonCancel": "Abbrechen",
+    "commonDone": "Fertig",
+
+    "journalDeleteNoteTitle": "Notiz löschen?",
+    "journalDeleteNoteBody": "Diese Aktion kann nicht rückgängig gemacht werden.",
+    "commonDelete": "Löschen",
+
+    "journalSignInPrompt": "Bitte melden Sie sich an, um Ihr Journal anzusehen.",
+    "journalTitle": "Journal",
+
+    "journalEmptyTitle": "Noch keine Notizen",
+    "journalEmptySubtitle": "Fügen Sie eine Notiz hinzu, um zu starten",
+    "journalAddButton": "+ Hinzufügen",
+
+    "journalComposerHint": "Was ist heute passiert?",
+    "journalToday": "Heute",
+
+    "commonCancel": "Abbrechen",
+    "commonDone": "Fertig",
+
+    "journalDeleteNoteTitle": "Notiz löschen?",
+    "journalDeleteNoteBody": "Diese Aktion kann nicht rückgängig gemacht werden.",
+    "commonDelete": "Löschen",
+
+    "monthJanuary": "Januar",
+    "monthFebruary": "Februar",
+    "monthMarch": "März",
+    "monthApril": "April",
+    "monthMay": "Mai",
+    "monthJune": "Juni",
+    "monthJuly": "Juli",
+    "monthAugust": "August",
+    "monthSeptember": "September",
+    "monthOctober": "Oktober",
+    "monthNovember": "November",
+    "monthDecember": "Dezember",
+
+    "monthJanuaryShort": "Jan",
+    "monthFebruaryShort": "Feb",
+    "monthMarchShort": "Mär",
+    "monthAprilShort": "Apr",
+    "monthMayShort": "Mai",
+    "monthJuneShort": "Jun",
+    "monthJulyShort": "Jul",
+    "monthAugustShort": "Aug",
+    "monthSeptemberShort": "Sep",
+    "monthOctoberShort": "Okt",
+    "monthNovemberShort": "Nov",
+    "monthDecemberShort": "Dez",
+
+    "weekdayMonShort": "Mo",
+    "weekdayTueShort": "Di",
+    "weekdayWedShort": "Mi",
+    "weekdayThuShort": "Do",
+    "weekdayFriShort": "Fr",
+    "weekdaySatShort": "Sa",
+    "weekdaySunShort": "So",
+
+    "accountTitle": "Mein Konto",
+
+    "accountUsernameLabel": "Benutzername",
+    "accountPasswordLabel": "Passwort",
+    "accountEmailLabel": "E-Mail",
+
+    "accountPasswordLeaveBlankHint": "Leer lassen, um das aktuelle beizubehalten",
+
+    "accountUsernameEmptyError": "Bitte geben Sie einen Benutzernamen ein.",
+    "accountUsernameTooShortError": "Zu kurz.",
+    "accountEmailEmptyError": "Bitte geben Sie eine E-Mail ein.",
+    "accountEmailInvalidError": "Ungültige E-Mail.",
+
+    "accountEmailVerified": "E-Mail verifiziert",
+    "accountEmailNotVerified": "E-Mail nicht verifiziert",
+    "accountSendButton": "Senden",
+
+    "accountVerificationEmailSent": "Bestätigungs-E-Mail gesendet.",
+    "accountVerificationEmailFailed": "Bestätigungs-E-Mail konnte nicht gesendet werden.",
+
+    "accountMyHabits": "Meine Gewohnheiten",
+    "accountDeleteAccount": "Konto löschen",
+
+    "accountSaving": "Wird gespeichert...",
+    "accountSaveChanges": "Änderungen speichern",
+    "accountLogOut": "Abmelden",
+
+    "accountChangesSaved": "Änderungen gespeichert.",
+    "accountChangesSavedEmailVerificationHint": "Änderungen gespeichert. Prüfen Sie Ihren Posteingang, falls eine Bestätigungs-E-Mail gesendet wurde.",
+    "accountCouldNotSaveChanges": "Änderungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+
+    "accountDeleteDialogTitle": "Konto löschen?",
+    "accountDeleteDialogBody": "Dadurch werden Ihre Kontodaten dauerhaft entfernt.",
+    "accountDeletedSnackbar": "Konto gelöscht.",
+    "accountCouldNotDelete": "Konto konnte nicht gelöscht werden.",
+
+    "accountRequiresRecentLoginError": "Aus Sicherheitsgründen melden Sie sich bitte erneut an und versuchen Sie diese Änderung erneut.",
+    "accountEmailAlreadyInUseError": "Diese E-Mail wird bereits verwendet.",
+    "accountInvalidEmailError": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    "accountWeakPasswordError": "Das Passwort sollte mindestens 6 Zeichen lang sein.",
+    "accountWeakPasswordGenericError": "Dieses Passwort ist zu schwach.",
+    "accountAuthGenericError": "Authentifizierungsfehler.",
+
+    "commonCancel": "Abbrechen",
+    "commonDelete": "Löschen",
+    "commonDone": "Fertig",
+
+    "hubVersionLabel": "Version: {version}",
+    "@hubVersionLabel": {
+      "description": "Wird unten auf dem Hub-Bildschirm angezeigt",
+      "placeholders": {
+        "version": { "type": "String" }
+      }
+    },
+
+    "hubProTitle": "EcoHabit Pro",
+    "hubProPlanLabel": "Pro jährlich",
+
+    "hubMenuSettings": "Einstellungen",
+    "hubMenuAnalytics": "Analysen",
+    "hubMenuJournal": "Journal",
+    "hubMenuAccount": "Konto",
+    "hubMenuBackup": "Backup",
+
+    "proPlanTitle": "EcoHabit Pro",
+    "proPlanDefaultLabel": "Pro jährlich",
+
+    "proPlanSubscribedPrefix": "Sie sind abonniert:",
+    "proPlanUpgradePrefix": "Upgraden auf",
+
+    "proPlanFreeHeader": "KOSTENLOS",
+    "proPlanProHeader": "PRO",
+
+    "proFeatureUnlimitedHabits": "Unbegrenzte Gewohnheiten",
+    "proFeatureRoutineAi": "Routine-KI",
+    "proFeatureAnalytics": "Analysen",
+    "proFeatureGoalSetting": "Zielsetzung",
+    "proFeatureJournaling": "Journaling",
+    "proFeatureColorPicker": "Farbauswahl",
+    "proFeatureBackupHabits": "Gewohnheiten sichern",
+
+    "commonClose": "Schließen",
+
+    "settingsTitle": "Einstellungen",
+
+    "settingsThemeTitle": "Design",
+    "settingsThemeLight": "Hell",
+    "settingsThemeDark": "Dunkel",
+
+    "settingsAccentColorTitle": "Akzentfarbe",
+
+    "settingsStartWeekOnTitle": "Woche beginnen am",
+    "settingsStartWeekSaturday": "Samstag",
+    "settingsStartWeekSunday": "Sonntag",
+    "settingsStartWeekMonday": "Montag",
+
+    "settingsHabitTabsOrderTitle": "Reihenfolge der Gewohnheits-Tabs",
+    "settingsHabitTabsOrderHint": "Element lange drücken, um die Reihenfolge zu ändern",
+
+    "habitsTabToday": "Heute",
+    "habitsTabWeekly": "Wöchentlich",
+    "habitsTabOverall": "Insgesamt",
+
+    "analyticsTitle": "Analysen",
+    "analyticsSignInPrompt": "Bitte melden Sie sich an, um Analysen anzusehen.",
+    "analyticsNoHabitsYet": "Noch keine Gewohnheiten",
+    "analyticsHabitFallbackTitle": "Gewohnheit",
+
+    "analyticsAllHabitsTab": "Alle Gewohnheiten",
+
+    "analyticsAverageScore": "Durchschnittliche Punktzahl",
+    "analyticsHabitsCompletedTitle": "Erledigte Gewohnheiten",
+    "analyticsTotalCompletedHabitsSubtitle": "Gesamtzahl erledigter Gewohnheiten",
+    "analyticsHabitHeatmapTitle": "Gewohnheiten-Heatmap",
+
+    "analyticsStreakTitle": "Serie",
+    "analyticsBestStreak": "Beste Serie",
+    "analyticsCurrentStreak": "Aktuelle Serie",
+
+    "analyticsWeeklyCompletionsTitle": "Wöchentliche Erledigungen",
+    "analyticsScoreTitle": "Punkte",
+    "analyticsNoData": "Keine Daten",
+
+    "analyticsThisWeek": "Diese Woche",
+    "analyticsThisMonth": "Diesen Monat",
+
+    "weekdayShortMon": "Mo",
+    "weekdayShortTue": "Di",
+    "weekdayShortWed": "Mi",
+    "weekdayShortThu": "Do",
+    "weekdayShortFri": "Fr",
+    "weekdayShortSat": "Sa",
+    "weekdayShortSun": "So",
+
+    "weekdayVeryShortMon": "M",
+    "weekdayVeryShortTue": "D",
+    "weekdayVeryShortWed": "M",
+    "weekdayVeryShortThu": "D",
+    "weekdayVeryShortFri": "F",
+    "weekdayVeryShortSat": "S",
+    "weekdayVeryShortSun": "S",
+
+    "monthShortJan": "Jan",
+    "monthShortFeb": "Feb",
+    "monthShortMar": "Mär",
+    "monthShortApr": "Apr",
+    "monthShortMay": "Mai",
+    "monthShortJun": "Jun",
+    "monthShortJul": "Jul",
+    "monthShortAug": "Aug",
+    "monthShortSep": "Sep",
+    "monthShortOct": "Okt",
+    "monthShortNov": "Nov",
+    "monthShortDec": "Dez"
+}

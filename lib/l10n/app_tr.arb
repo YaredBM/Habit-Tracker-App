@@ -1,0 +1,639 @@
+{
+  "@@locale": "tr",
+  "signInTitle": "Giriş Yap",
+  "emailOrUsername": "E-posta veya Kullanıcı Adı",
+  "enterEmailOrUsername": "E-posta veya kullanıcı adını girin",
+  "password": "Şifre",
+  "forgotPassword": "Şifrenizi mi unuttunuz?",
+  "orContinueWith": "Veya şununla devam et",
+  "signInButton": "Giriş yap",
+  "dontHaveAccount": "Henüz hesabınız yok mu? ",
+  "signUp": "Kayıt Ol",
+  "errEnterEmailOrUsername": "Lütfen e-posta veya kullanıcı adı girin",
+  "errEnterPassword": "Lütfen şifrenizi girin",
+  "chooseLanguageTitle": "Dil Seçin",
+  "continueButton": "Devam",
+  "languageEnglish": "İngilizce",
+  "languageGerman": "Almanca",
+  "languageSpanish": "İspanyolca",
+  "languageRussian": "Rusça",
+  "languageTurkish": "Türkçe",
+  "languageFrench": "Fransızca",
+  "signUpTitle": "Kayıt Ol",
+  "signUpButton": "Kayıt Ol",
+  "signUpEmailLabel": "E-posta",
+  "signUpEmailHint": "E-posta girin",
+  "signUpUsernameLabel": "Kullanıcı Adı Oluştur",
+  "signUpUsernameHint": "Kullanıcı adı girin",
+  "signUpPasswordLabel": "Şifre Oluştur",
+  "signUpPasswordHint": "Şifre",
+  "signUpOrContinueWith": "Veya şununla devam et",
+  "signUpEmailRequired": "Lütfen e-postanızı girin",
+  "signUpUsernameRequired": "Lütfen bir kullanıcı adı girin",
+  "signUpPasswordRequired": "Lütfen bir şifre girin",
+  "signUpErrorDefault": "Kayıt olma hatası",
+  "signUpErrorGeneric": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+
+    "forgotPasswordTitle": "Yeni şifre",
+    "forgotPasswordEmailLabel": "E-posta",
+    "forgotPasswordEmailHint": "E-posta veya kullanıcı adını girin",
+    "forgotPasswordNewPasswordLabel": "Yeni Şifre",
+    "forgotPasswordConfirmPasswordLabel": "Şifreyi Onayla",
+    "forgotPasswordPasswordHint": "Şifre",
+    "forgotPasswordDoneButton": "Bitti",
+    "forgotPasswordEmailRequired": "Lütfen e-posta veya kullanıcı adınızı girin",
+    "forgotPasswordNewPasswordRequired": "Lütfen yeni bir şifre girin",
+    "forgotPasswordConfirmPasswordRequired": "Lütfen şifrenizi onaylayın",
+    "forgotPasswordPasswordsDoNotMatch": "Şifreler eşleşmiyor",
+    "forgotPasswordResetEmailSent": "Şifre sıfırlama e-postası gönderildi. Lütfen gelen kutunuzu kontrol edin.",
+    "forgotPasswordNoAccountFound": "Bu e-posta için hesap bulunamadı.",
+    "forgotPasswordInvalidEmail": "Lütfen geçerli bir e-posta girin.",
+    "forgotPasswordNetworkError": "Ağ hatası. Lütfen tekrar deneyin.",
+    "forgotPasswordFailedToSendResetEmail": "Şifre sıfırlama e-postası gönderilemedi.",
+    "forgotPasswordGenericError": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+
+    "exploreTitle": "Keşfet",
+    "exploreMostPopularRoutines": "En Popüler Rutinler",
+    "exploreBecomeBetterYou": "Daha İyi Bir Sen Ol",
+
+    "exploreHeroHeadline": "Akıllı\nProjeler\nburada",
+    "exploreHeroSubtitle": "Yapay zekâ ekip arkadaşları,\nnotlar, görevler ve\ndosyalarla projeler oluşturun",
+    "exploreHeroCta": "Ücretsiz proje oluştur",
+
+    "exploreRoutineTag": "RUTİN",
+    "exploreHabitsTitle": "Alışkanlıklar",
+
+    "exploreCopyHabitsButton": "{count} alışkanlığı kopyala",
+    "@exploreCopyHabitsButton": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "explorePleaseSignInToCopyHabits": "Alışkanlıkları kopyalamak için lütfen giriş yapın.",
+
+    "exploreCopiedHabitsSnack": "{count} alışkanlık kopyalandı",
+    "@exploreCopiedHabitsSnack": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "exploreCouldNotCopyHabits": "Alışkanlıklar kopyalanamadı. Tekrar deneyin.",
+
+    "exploreConfirmCopyTitle": "Alışkanlıklar kopyalansın mı?",
+    "exploreConfirmCopySubtitle": "{count} alışkanlık oluşturulacak.",
+    "@exploreConfirmCopySubtitle": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "exploreYes": "Evet",
+    "exploreCancel": "İptal",
+
+    "exploreRoutineProcrastinationTitle": "Ertelemeyi\nAşın",
+    "exploreRoutineProcrastinationDescription": "Erteleme, üretkenliğinizi sabote edebilir ve başarınızı engelleyebilir; ancak geleceğinizi belirlemek zorunda değildir. Bu rutin, ertelemeyi aşmanıza ve ivme kazanmanıza yardımcı olacak kanıta dayalı stratejiler sunar.",
+
+    "exploreRoutineAnxietyTitle": "Kaygıyı\nAzaltın",
+    "exploreRoutineAnxietyDescription": "Küçük günlük eylemlerle temel stresi azaltmak ve kaygılı döngüleri hafifletmek için pratik bir rutin.",
+
+    "exploreRoutineFocusBoostTitle": "Odak\nArtışı",
+    "exploreRoutineFocusBoostDescription": "Derin çalışma için tasarlanmış kompakt bir rutinle odağınızı güçlendirin.",
+
+    "exploreRoutineMorningMomentumTitle": "Sabah\nİvmesi",
+    "exploreRoutineMorningMomentumDescription": "Güne ivmeyle ve net bir planla başlayın.",
+
+    "exploreHabitPomodoroTitle": "Pomodoro Tekniği",
+    "exploreHabitPomodoroSubtitle": "Kısa molalarla odaklı 25 dakikalık bloklar kullanın.",
+    "exploreHabitTimeBlockingTitle": "Zaman Bloklama",
+    "exploreHabitTimeBlockingSubtitle": "Gününüzü net görev aralıklarına planlayın.",
+    "exploreHabitEatThatFrogTitle": "Eat That Frog",
+    "exploreHabitEatThatFrogSubtitle": "Kaçınmayı azaltmak için en zor işi önce yapın.",
+    "exploreHabitBreakTasksTitle": "Görevleri Daha Küçük Adımlara Bölün",
+    "exploreHabitBreakTasksSubtitle": "Büyük görevleri küçük, uygulanabilir adımlara dönüştürün.",
+    "exploreHabitSmartGoalsTitle": "SMART Hedefler Belirleyin",
+    "exploreHabitSmartGoalsSubtitle": "Spesifik, Ölçülebilir, Ulaşılabilir, İlgili, Zaman sınırlı.",
+
+    "exploreHabitBoxBreathingTitle": "Kutu Nefesi",
+    "exploreHabitBoxBreathingSubtitle": "4-4-4-4 nefes döngüsü.",
+    "exploreHabitShortWalkTitle": "Kısa Yürüyüş",
+    "exploreHabitShortWalkSubtitle": "Mümkünse dışarıda 10 dakika.",
+    "exploreHabitJournalDumpTitle": "Düşünce Dökümü",
+    "exploreHabitJournalDumpSubtitle": "Düşüncelerinizi filtrelemeden yazın.",
+    "exploreHabitLimitCaffeineTitle": "Kafeini Sınırlayın",
+    "exploreHabitLimitCaffeineSubtitle": "Öğleden sonra tetikleyicileri azaltın.",
+    "exploreHabitSleepWindDownTitle": "Uykuya Hazırlık",
+    "exploreHabitSleepWindDownSubtitle": "Tutarlı bir uyku öncesi ritüel.",
+
+    "exploreHabitNoPhoneStartTitle": "Telefonsuz Başlangıç",
+    "exploreHabitNoPhoneStartSubtitle": "İlk 30 dakika kaydırma yok.",
+    "exploreHabitDeepWorkBlockTitle": "Derin Çalışma Bloğu",
+    "exploreHabitDeepWorkBlockSubtitle": "45–60 dakikalık bir odak sprinti.",
+    "exploreHabitSingleTaskListTitle": "Tek Görev Listesi",
+    "exploreHabitSingleTaskListSubtitle": "En fazla 1–3 sonuç seçin.",
+    "exploreHabitHydrateTitle": "Su İçin",
+    "exploreHabitHydrateSubtitle": "Kahveden önce su.",
+
+    "exploreHabitMakeBedTitle": "Yatağı Toplayın",
+    "exploreHabitMakeBedSubtitle": "Başlangıç için hızlı bir kazanım.",
+    "exploreHabitTop3PrioritiesTitle": "İlk 3 Öncelik",
+    "exploreHabitTop3PrioritiesSubtitle": "Günün sonuçlarını yazın.",
+    "exploreHabitStretchTitle": "Esneme",
+    "exploreHabitStretchSubtitle": "Tüm vücut 2–5 dakika.",
+    "exploreHabitProteinBreakfastTitle": "Protein Kahvaltısı",
+    "exploreHabitProteinBreakfastSubtitle": "Dengeli enerji.",
+
+    "exploreRoutineCreativityBoostTitle": "Yaratıcılığı\nArtıran\nRutin",
+    "exploreRoutineCreativityBoostDescription": "Yaratıcı üretimi artırmak ve sürtünmeyi azaltmak için basit bir rutin.",
+
+    "exploreRoutineProductivityEnhancerTitle": "Üretkenliği\nArtıran\nRutin",
+    "exploreRoutineProductivityEnhancerDescription": "Daha iyi planlama ve uygulama alışkanlıklarıyla çıktıyı artırın.",
+
+    "exploreRoutineBuildConfidenceTitle": "Özgüven\nİnşa Edin",
+    "exploreRoutineBuildConfidenceDescription": "Özgüven ve tutarlılık oluşturmak için küçük günlük eylemler.",
+
+    "exploreRoutineBetterSleepTitle": "Daha İyi\nUyku",
+    "exploreRoutineBetterSleepDescription": "Uyku kalitesini ve toparlanmayı iyileştirmek için sakinleştirici bir rutin.",
+
+    "exploreHabitIdeaCaptureTitle": "Fikir Yakalama",
+    "exploreHabitIdeaCaptureSubtitle": "Her gün 5 fikir yazın.",
+    "exploreHabitCreateBeforeConsumeTitle": "Tüketmeden Önce Üretin",
+    "exploreHabitCreateBeforeConsumeSubtitle": "Önce üretin, sonra kaydırın.",
+    "exploreHabitInputWalkTitle": "İlham Yürüyüşü",
+    "exploreHabitInputWalkSubtitle": "İlham için yürüyüşe çıkın.",
+    "exploreHabitDailySketchTitle": "Günlük Eskiz",
+    "exploreHabitDailySketchSubtitle": "2 dakika, baskı yok.",
+
+    "exploreHabitPlanTomorrowTitle": "Yarını Planlayın",
+    "exploreHabitPlanTomorrowSubtitle": "Gün sonu 5 dakikalık plan.",
+    "exploreHabitInboxZeroTitle": "Sıfır Gelen Kutusu",
+    "exploreHabitInboxZeroSubtitle": "Mesajları tek bir blokta temizleyin.",
+    "exploreHabitTwoMinuteRuleTitle": "İki Dakika Kuralı",
+    "exploreHabitTwoMinuteRuleSubtitle": "Hızlıysa hemen yapın.",
+    "exploreHabitShutdownRitualTitle": "Kapanış Ritüeli",
+    "exploreHabitShutdownRitualSubtitle": "Açık döngüleri kapatın, işi temiz bitirin.",
+
+    "exploreHabitDailyWinTitle": "Günün Kazanımı",
+    "exploreHabitDailyWinSubtitle": "Her gün bir kazanım kaydedin.",
+    "exploreHabitPracticeSkillTitle": "Beceri Pratiği",
+    "exploreHabitPracticeSkillSubtitle": "10 dakika bilinçli pratik.",
+    "exploreHabitPostureResetTitle": "Duruş Sıfırlama",
+    "exploreHabitPostureResetSubtitle": "Günde 2 kez kontrol.",
+    "exploreHabitPositiveReframeTitle": "Olumlu Yeniden Çerçeveleme",
+    "exploreHabitPositiveReframeSubtitle": "Kafanızdaki hikâyeyi yeniden yazın.",
+
+    "exploreHabitNoScreensTitle": "Ekransız",
+    "exploreHabitNoScreensSubtitle": "Yatmadan 30 dakika önce ekranlardan kaçının.",
+    "exploreHabitCoolRoomTitle": "Serin Oda",
+    "exploreHabitCoolRoomSubtitle": "Daha iyi uyku için sıcaklığı düşürün.",
+    "exploreHabitReadTitle": "Oku",
+    "exploreHabitReadSubtitle": "Bir kitabın 10 sayfası.",
+    "exploreHabitSameBedtimeTitle": "Aynı Yatış Saati",
+    "exploreHabitSameBedtimeSubtitle": "Tutarlılık mükemmellikten üstündür.",
+
+
+    "createHabitCreateTitle": "Alışkanlık Oluştur",
+    "createHabitEditTitle": "Alışkanlığı Düzenle",
+
+    "createHabitColorPicker": "Renk Seçici",
+    "createHabitPickColorTitle": "Bir renk seçin",
+    "createHabitContinue": "Devam",
+    "createHabitCancel": "İptal",
+    "createHabitDone": "Bitti",
+
+    "createHabitTitleLabel": "Başlık",
+    "createHabitTitleHint": "Başlık",
+    "createHabitDescriptionLabel": "Açıklama",
+    "createHabitDescriptionHint": "Açıklama",
+    "createHabitColorLabel": "Renk",
+
+    "createHabitRepeatLabel": "Tekrar",
+    "createHabitDaily": "Günlük",
+    "createHabitWeekly": "Haftalık",
+    "createHabitMonthly": "Aylık",
+
+    "createHabitReminderLabel": "Hatırlatıcı",
+    "createHabitSendNotificationAt": "Şu saatte bildirim gönder",
+    "createHabitPickTime": "Saat seçin",
+    "createHabitReminderInfo": "Alışkanlık adınızla birlikte \"Alışkanlığınızın zamanı.\" mesajını alacaksınız.",
+
+    "createHabitGoalLabel": "Hedef",
+    "createHabitEdit": "Düzenle",
+    "createHabitPerDay": "günde",
+    "createHabitSetGoal": "Hedef belirle",
+    "createHabitTrackUnitsHelp": "Tekrar sayısı, dakika, saat, kg, km, litre veya ons takip edin.",
+
+    "createHabitSave": "Kaydet",
+    "createHabitSaveChanges": "Değişiklikleri kaydet",
+
+    "createHabitTitleRequired": "Lütfen bir başlık girin",
+    "createHabitMustBeSignedIn": "Bir alışkanlık oluşturmak için giriş yapmalısınız.",
+    "createHabitFailedToSave": "Alışkanlık kaydedilemedi. Lütfen tekrar deneyin.",
+
+    "createHabitOnTheseDays": "Bu günlerde",
+    "createHabitFrequency": "Sıklık",
+    "createHabitEveryday": "Her gün",
+    "createHabitDaysPerWeek": "Haftada {count} gün",
+    "@createHabitDaysPerWeek": {
+    "placeholders": {
+    "count": { "type": "int" }
+    }
+    },
+    "createHabitOnThisDayEachMonth": "Her ay bu günde",
+
+    "createHabitMonShort": "P",
+    "createHabitTueShort": "S",
+    "createHabitWedShort": "Ç",
+    "createHabitThuShort": "P",
+    "createHabitFriShort": "C",
+    "createHabitSatShort": "C",
+    "createHabitSunShort": "P",
+
+    "createHabitAm": "AM",
+    "createHabitPm": "PM",
+
+    "createHabitGoalLabelText": "Günde {value} {unit}{plural}",
+    "@createHabitGoalLabelText": {
+    "placeholders": {
+    "value": { "type": "int" },
+    "unit": { "type": "String" },
+    "plural": { "type": "String" }
+    }
+    },
+
+    "createHabitGoalText": "Günde {value} {unit}",
+    "@createHabitGoalText": {
+    "placeholders": {
+    "value": { "type": "int" },
+    "unit": { "type": "String" }
+    }
+    },
+
+    "createHabitUnitTime": "kez",
+    "createHabitUnitMinute": "dakika",
+    "createHabitUnitHour": "saat",
+    "createHabitUnitKg": "kg",
+    "createHabitUnitKm": "km",
+    "createHabitUnitL": "l",
+    "createHabitUnitOz": "oz",
+
+    "habitDetailPleaseSignInHabits": "Alışkanlıkları görüntülemek için lütfen giriş yapın.",
+    "habitDetailPleaseSignInNotes": "Notları görüntülemek için lütfen giriş yapın.",
+    "habitDetailDefaultHabitTitle": "Alışkanlık",
+
+    "habitDetailUpdateProgress": "İlerlemeyi güncelle",
+
+    "habitDetailMarkedIncompleteDay": "O gün için tamamlanmadı olarak işaretlendi",
+    "habitDetailMarkedCompleteDay": "O gün için tamamlandı olarak işaretlendi",
+    "habitDetailCouldNotUpdateDay": "O gün güncellenemedi. Tekrar deneyin.",
+
+    "habitDetailDeleteHabitTitle": "Alışkanlık silinsin mi?",
+    "habitDetailDeleteHabitMessage": "Bu işlem alışkanlığı ve geçmişini kaldırır.",
+    "habitDetailCancel": "İptal",
+    "habitDetailDelete": "Sil",
+
+    "habitDetailStatScore": "Puan",
+    "habitDetailStatTotal": "Toplam",
+    "habitDetailStatBestStreak": "En iyi seri",
+    "habitDetailStatStreak": "Seri",
+
+    "habitDetailScoreTitle": "Puan",
+    "habitDetailAnalytics": "Analizler",
+    "habitDetailNoDataYet": "Henüz veri yok",
+
+    "habitDetailHistory": "Geçmiş",
+
+    "habitDetailNotes": "Notlar",
+    "habitDetailAddNote": "Not ekle",
+    "habitDetailCouldNotLoadNotes": "Notlar yüklenemedi.",
+    "habitDetailLoading": "Yükleniyor…",
+    "habitDetailNoNotesYet": "Henüz not yok",
+
+    "habitDetailDeleteNoteTitle": "Not silinsin mi?",
+    "habitDetailDeleteNoteMessage": "Bu, notu hem alışkanlıktan hem de günlükten kaldırır.",
+    "habitDetailNoteDeleted": "Not silindi",
+    "habitDetailNoteSaved": "Not kaydedildi",
+    "habitDetailCouldNotSaveNote": "Not kaydedilemedi. Tekrar deneyin.",
+    "habitDetailCouldNotSaveNoteWithCode": "Not kaydedilemedi: {code}",
+    "@habitDetailCouldNotSaveNoteWithCode": {
+      "placeholders": {
+        "code": { "type": "String" }
+      }
+    },
+
+    "habitDetailToday": "Bugün",
+    "habitDetailTodayTime": "Bugün, {time}",
+    "@habitDetailTodayTime": {
+      "placeholders": {
+        "time": { "type": "String" }
+      }
+    },
+
+    "habitDetailWhatHappenedToday": "Bugün ne oldu?",
+
+    "habitDetailPickerCancel": "İptal",
+    "habitDetailPickerDone": "Bitti",
+
+    "habitDetailMonthJanShort": "Oca",
+    "habitDetailMonthFebShort": "Şub",
+    "habitDetailMonthMarShort": "Mar",
+    "habitDetailMonthAprShort": "Nis",
+    "habitDetailMonthMayShort": "May",
+    "habitDetailMonthJunShort": "Haz",
+    "habitDetailMonthJulShort": "Tem",
+    "habitDetailMonthAugShort": "Ağu",
+    "habitDetailMonthSepShort": "Eyl",
+    "habitDetailMonthOctShort": "Eki",
+    "habitDetailMonthNovShort": "Kas",
+    "habitDetailMonthDecShort": "Ara",
+
+    "habitsTitle": "Alışkanlıklar",
+
+    "habitsSnackHabitCompletedCorrectly": "Alışkanlık doğru şekilde tamamlandı",
+    "habitsSnackProgressUpdated": "İlerleme güncellendi",
+    "habitsSnackCouldNotUpdateProgress": "İlerleme güncellenemedi. Tekrar deneyin.",
+    "habitsSnackHabitDeleted": "Alışkanlık silindi",
+
+    "habitsBottomNavHome": "Ana Sayfa",
+    "habitsBottomNavAnalytics": "Analizler",
+    "habitsBottomNavExplore": "Keşfet",
+
+    "habitsTabToday": "Bugün",
+    "habitsTabWeekly": "Haftalık",
+    "habitsTabOverall": "Genel",
+
+    "habitsNotSignedInTitle": "Giriş yapılmadı",
+    "habitsNotSignedInSubtitle": "Alışkanlık oluşturmak için lütfen giriş yapın.",
+
+    "habitsGoodJobTitle": "Aferin!",
+    "habitsAllSetAndDone": "Hepsi hazır.",
+    "habitsGreatButton": "Harika!",
+
+    "habitsProgressCountCompleted": "{count} tamamlandı",
+    "@habitsProgressCountCompleted": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "habitsCompletedShown": "Tamamlananlar gösteriliyor",
+    "habitsCompletedHidden": "Tamamlananlar gizlendi",
+    "habitsShowCompleted": "Tamamlananları Göster",
+
+    "habitsCompletionSheetPerDay": "Günde {current} / {goal} {unit}{plural}",
+    "@habitsCompletionSheetPerDay": {
+      "placeholders": {
+        "current": { "type": "int" },
+        "goal": { "type": "int" },
+        "unit": { "type": "String" },
+        "plural": { "type": "String" }
+      }
+    },
+
+    "habitsCompletionSheetMarkCompleted": "Tamamlandı olarak işaretle",
+    "habitsCompletionSheetSaveProgress": "İlerlemeyi kaydet",
+    "habitsCompletionSheetHint": "Belirlediğiniz tekrarları veya birimleri kaydetmek için + veya -’a dokunun.",
+
+    "habitsDefaultHabitTitle": "Alışkanlık",
+
+    "habitsEmptyTitle": "Bugün için alışkanlık yok",
+    "habitsEmptySubtitle": "Bugün için alışkanlık yok. Bir tane oluşturulsun mu?",
+    "habitsEmptyCreateButton": "+ Oluştur",
+
+    "habitsWeeklyCompletedCount": "{count} tamamlandı",
+    "@habitsWeeklyCompletedCount": {
+      "placeholders": {
+        "count": { "type": "int" }
+      }
+    },
+
+    "habitsOverallEveryday": "Her gün",
+    "habitsOverallWeeklyHabit": "Haftalık alışkanlık",
+    "habitsOverallMonthlyHabit": "Aylık alışkanlık",
+
+    "habitsGoalUnitTime": "kez",
+
+    "journalSignInPrompt": "Günlüğünüzü görüntülemek için lütfen giriş yapın.",
+    "journalTitle": "Günlük",
+
+    "journalEmptyTitle": "Henüz not yok",
+    "journalEmptySubtitle": "Başlamak için bir not ekleyin",
+    "journalAddButton": "+ Ekle",
+
+    "journalComposerHint": "Bugün ne oldu?",
+    "journalToday": "Bugün",
+
+    "commonCancel": "İptal",
+    "commonDone": "Bitti",
+
+    "journalDeleteNoteTitle": "Not silinsin mi?",
+    "journalDeleteNoteBody": "Bu işlem geri alınamaz.",
+    "commonDelete": "Sil",
+
+    "journalSignInPrompt": "Günlüğünüzü görüntülemek için lütfen giriş yapın.",
+    "journalTitle": "Günlük",
+
+    "journalEmptyTitle": "Henüz not yok",
+    "journalEmptySubtitle": "Başlamak için bir not ekleyin",
+    "journalAddButton": "+ Ekle",
+
+    "journalComposerHint": "Bugün ne oldu?",
+    "journalToday": "Bugün",
+
+    "commonCancel": "İptal",
+    "commonDone": "Bitti",
+
+    "journalDeleteNoteTitle": "Not silinsin mi?",
+    "journalDeleteNoteBody": "Bu işlem geri alınamaz.",
+    "commonDelete": "Sil",
+
+    "monthJanuary": "Ocak",
+    "monthFebruary": "Şubat",
+    "monthMarch": "Mart",
+    "monthApril": "Nisan",
+    "monthMay": "Mayıs",
+    "monthJune": "Haziran",
+    "monthJuly": "Temmuz",
+    "monthAugust": "Ağustos",
+    "monthSeptember": "Eylül",
+    "monthOctober": "Ekim",
+    "monthNovember": "Kasım",
+    "monthDecember": "Aralık",
+
+    "monthJanuaryShort": "Oca",
+    "monthFebruaryShort": "Şub",
+    "monthMarchShort": "Mar",
+    "monthAprilShort": "Nis",
+    "monthMayShort": "May",
+    "monthJuneShort": "Haz",
+    "monthJulyShort": "Tem",
+    "monthAugustShort": "Ağu",
+    "monthSeptemberShort": "Eyl",
+    "monthOctoberShort": "Eki",
+    "monthNovemberShort": "Kas",
+    "monthDecemberShort": "Ara",
+
+    "weekdayMonShort": "Pzt",
+    "weekdayTueShort": "Sal",
+    "weekdayWedShort": "Çar",
+    "weekdayThuShort": "Per",
+    "weekdayFriShort": "Cum",
+    "weekdaySatShort": "Cmt",
+    "weekdaySunShort": "Paz",
+
+    "accountTitle": "Hesabım",
+
+    "accountUsernameLabel": "Kullanıcı adı",
+    "accountPasswordLabel": "Şifre",
+    "accountEmailLabel": "E-posta",
+
+    "accountPasswordLeaveBlankHint": "Mevcut olanı korumak için boş bırakın",
+
+    "accountUsernameEmptyError": "Lütfen bir kullanıcı adı girin.",
+    "accountUsernameTooShortError": "Çok kısa.",
+    "accountEmailEmptyError": "Lütfen bir e-posta girin.",
+    "accountEmailInvalidError": "Geçersiz e-posta.",
+
+    "accountEmailVerified": "E-posta doğrulandı",
+    "accountEmailNotVerified": "E-posta doğrulanmadı",
+    "accountSendButton": "Gönder",
+
+    "accountVerificationEmailSent": "Doğrulama e-postası gönderildi.",
+    "accountVerificationEmailFailed": "Doğrulama e-postası gönderilemedi.",
+
+    "accountMyHabits": "Alışkanlıklarım",
+    "accountDeleteAccount": "Hesabı sil",
+
+    "accountSaving": "Kaydediliyor...",
+    "accountSaveChanges": "Değişiklikleri kaydet",
+    "accountLogOut": "Çıkış Yap",
+
+    "accountChangesSaved": "Değişiklikler kaydedildi.",
+    "accountChangesSavedEmailVerificationHint": "Değişiklikler kaydedildi. Doğrulama e-postası gönderildiyse gelen kutunuzu kontrol edin.",
+    "accountCouldNotSaveChanges": "Değişiklikler kaydedilemedi. Tekrar deneyin.",
+
+    "accountDeleteDialogTitle": "Hesap silinsin mi?",
+    "accountDeleteDialogBody": "Bu, hesap verilerinizi kalıcı olarak kaldırır.",
+    "accountDeletedSnackbar": "Hesap silindi.",
+    "accountCouldNotDelete": "Hesap silinemedi.",
+
+    "accountRequiresRecentLoginError": "Güvenlik için lütfen yeniden giriş yapın ve bu değişikliği tekrar deneyin.",
+    "accountEmailAlreadyInUseError": "Bu e-posta zaten kullanımda.",
+    "accountInvalidEmailError": "Lütfen geçerli bir e-posta adresi girin.",
+    "accountWeakPasswordError": "Şifre en az 6 karakter olmalıdır.",
+    "accountWeakPasswordGenericError": "Bu şifre çok zayıf.",
+    "accountAuthGenericError": "Kimlik doğrulama hatası.",
+
+    "commonCancel": "İptal",
+    "commonDelete": "Sil",
+    "commonDone": "Bitti",
+
+    "hubVersionLabel": "Sürüm: {version}",
+    "@hubVersionLabel": {
+      "description": "Hub ekranının alt kısmında gösterilir",
+      "placeholders": {
+        "version": { "type": "String" }
+      }
+    },
+
+    "hubProTitle": "EcoHabit Pro",
+    "hubProPlanLabel": "Pro Yıllık",
+
+    "hubMenuSettings": "Ayarlar",
+    "hubMenuAnalytics": "Analizler",
+    "hubMenuJournal": "Günlük",
+    "hubMenuAccount": "Hesap",
+    "hubMenuBackup": "Yedekleme",
+
+    "proPlanTitle": "EcoHabit Pro",
+    "proPlanDefaultLabel": "Pro Yıllık",
+
+    "proPlanSubscribedPrefix": "Şuna abonesiniz:",
+    "proPlanUpgradePrefix": "Şuna yükselt:",
+
+    "proPlanFreeHeader": "ÜCRETSİZ",
+    "proPlanProHeader": "PRO",
+
+    "proFeatureUnlimitedHabits": "Sınırsız Alışkanlık",
+    "proFeatureRoutineAi": "Rutin Yapay Zekâ",
+    "proFeatureAnalytics": "Analizler",
+    "proFeatureGoalSetting": "Hedef belirleme",
+    "proFeatureJournaling": "Günlük tutma",
+    "proFeatureColorPicker": "Renk Seçici",
+    "proFeatureBackupHabits": "Alışkanlıkları yedekle",
+
+    "commonClose": "Kapat",
+
+    "settingsTitle": "Ayarlar",
+
+    "settingsThemeTitle": "Tema",
+    "settingsThemeLight": "Açık",
+    "settingsThemeDark": "Koyu",
+
+    "settingsAccentColorTitle": "Vurgu rengi",
+
+    "settingsStartWeekOnTitle": "Haftayı şu gün başlat",
+    "settingsStartWeekSaturday": "Cumartesi",
+    "settingsStartWeekSunday": "Pazar",
+    "settingsStartWeekMonday": "Pazartesi",
+
+    "settingsHabitTabsOrderTitle": "Alışkanlık sekmeleri sırası",
+    "settingsHabitTabsOrderHint": "Sıralamak için bir öğeye uzun basın",
+
+    "habitsTabToday": "Bugün",
+    "habitsTabWeekly": "Haftalık",
+    "habitsTabOverall": "Genel",
+
+    "analyticsTitle": "Analizler",
+    "analyticsSignInPrompt": "Analizleri görüntülemek için lütfen giriş yapın.",
+    "analyticsNoHabitsYet": "Henüz alışkanlık yok",
+    "analyticsHabitFallbackTitle": "Alışkanlık",
+
+    "analyticsAllHabitsTab": "Tüm alışkanlıklar",
+
+    "analyticsAverageScore": "Ortalama Puan",
+    "analyticsHabitsCompletedTitle": "Tamamlanan alışkanlıklar",
+    "analyticsTotalCompletedHabitsSubtitle": "Toplam tamamlanan alışkanlık",
+    "analyticsHabitHeatmapTitle": "Alışkanlık ısı haritası",
+
+    "analyticsStreakTitle": "Seri",
+    "analyticsBestStreak": "En iyi seri",
+    "analyticsCurrentStreak": "Mevcut seri",
+
+    "analyticsWeeklyCompletionsTitle": "Haftalık Tamamlamalar",
+    "analyticsScoreTitle": "Puan",
+    "analyticsNoData": "Veri yok",
+
+    "analyticsThisWeek": "Bu hafta",
+    "analyticsThisMonth": "Bu ay",
+
+    "weekdayShortMon": "Pzt",
+    "weekdayShortTue": "Sal",
+    "weekdayShortWed": "Çar",
+    "weekdayShortThu": "Per",
+    "weekdayShortFri": "Cum",
+    "weekdayShortSat": "Cmt",
+    "weekdayShortSun": "Paz",
+
+    "weekdayVeryShortMon": "P",
+    "weekdayVeryShortTue": "S",
+    "weekdayVeryShortWed": "Ç",
+    "weekdayVeryShortThu": "P",
+    "weekdayVeryShortFri": "C",
+    "weekdayVeryShortSat": "C",
+    "weekdayVeryShortSun": "P",
+
+    "monthShortJan": "Oca",
+    "monthShortFeb": "Şub",
+    "monthShortMar": "Mar",
+    "monthShortApr": "Nis",
+    "monthShortMay": "May",
+    "monthShortJun": "Haz",
+    "monthShortJul": "Tem",
+    "monthShortAug": "Ağu",
+    "monthShortSep": "Eyl",
+    "monthShortOct": "Eki",
+    "monthShortNov": "Kas",
+    "monthShortDec": "Ara"
+}

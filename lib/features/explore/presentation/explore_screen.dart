@@ -5,12 +5,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '/l10n/app_localizations.dart';
 
 class ExploreScreen extends StatelessWidget {
   const ExploreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     const bg = Color(0xFF0B0B0E);
     return Scaffold(
       backgroundColor: bg,
@@ -29,14 +32,14 @@ class ExploreScreen extends StatelessWidget {
               const SizedBox(height: 18),
 
               _Section(
-                title: 'Most Popular Routines',
-                routines: _ExploreData.mostPopular,
+                title: t.exploreMostPopularRoutines,
+                routines: _ExploreData.mostPopular(t),
               ),
               const SizedBox(height: 18),
 
               _Section(
-                title: 'Become Better You',
-                routines: _ExploreData.becomeBetter,
+                title: t.exploreBecomeBetterYou,
+                routines: _ExploreData.becomeBetter(t),
               ),
             ],
           ),
@@ -52,6 +55,8 @@ class _TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Row(
       children: [
         InkWell(
@@ -71,7 +76,7 @@ class _TopBar extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Text(
-          'Explore',
+          t.exploreTitle,
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.w700,
@@ -104,6 +109,8 @@ class _HeroExploreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(22),
       child: Container(
@@ -140,7 +147,7 @@ class _HeroExploreCard extends StatelessWidget {
                 children: [
                   const Spacer(),
                   Text(
-                    'Intelligent\nProjects are\nhere',
+                    t.exploreHeroHeadline,
                     style: GoogleFonts.poppins(
                       fontSize: 22,
                       fontWeight: FontWeight.w800,
@@ -150,7 +157,7 @@ class _HeroExploreCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Create Projects with AI\nTeammates, Notes, Tasks and\nFiles',
+                    t.exploreHeroSubtitle,
                     style: GoogleFonts.poppins(
                       fontSize: 12.5,
                       height: 1.2,
@@ -161,7 +168,7 @@ class _HeroExploreCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Create free project',
+                        t.exploreHeroCta,
                         style: GoogleFonts.poppins(
                           fontSize: 12.5,
                           fontWeight: FontWeight.w600,
@@ -231,6 +238,8 @@ class _RoutineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return InkWell(
       borderRadius: BorderRadius.circular(18),
       onTap: onTap,
@@ -239,7 +248,6 @@ class _RoutineCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // inside _RoutineCard build():
             Image.asset(
               routine.imageAsset,
               fit: BoxFit.cover,
@@ -262,7 +270,7 @@ class _RoutineCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'ROUTINE',
+                    t.exploreRoutineTag,
                     style: GoogleFonts.poppins(
                       fontSize: 10,
                       fontWeight: FontWeight.w800,
@@ -338,6 +346,8 @@ class _RoutineDetailsBodyState extends State<_RoutineDetailsBody> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final r = widget.routine;
     final bottomInset = MediaQuery.of(context).padding.bottom;
 
@@ -403,7 +413,7 @@ class _RoutineDetailsBodyState extends State<_RoutineDetailsBody> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'ROUTINE',
+                          t.exploreRoutineTag,
                           style: GoogleFonts.poppins(
                             fontSize: 11,
                             fontWeight: FontWeight.w800,
@@ -462,7 +472,7 @@ class _RoutineDetailsBodyState extends State<_RoutineDetailsBody> {
                     const SizedBox(height: 16),
 
                     Text(
-                      'Habits',
+                      t.exploreHabitsTitle,
                       style: GoogleFonts.poppins(
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
@@ -526,7 +536,7 @@ class _RoutineDetailsBodyState extends State<_RoutineDetailsBody> {
                     ),
                   ),
                   child: Text(
-                    'Copy ${_selected.length} habits',
+                    t.exploreCopyHabitsButton(_selected.length),
                     style: GoogleFonts.poppins(
                       fontSize: 13.5,
                       fontWeight: FontWeight.w700,
@@ -546,10 +556,12 @@ class _RoutineDetailsBodyState extends State<_RoutineDetailsBody> {
     required _RoutineTemplate routine,
     required List<int> selectedIndexes,
   }) async {
+    final t = AppLocalizations.of(context)!;
+
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please sign in to copy habits.')),
+        SnackBar(content: Text(t.explorePleaseSignInToCopyHabits)),
       );
       return;
     }
@@ -563,7 +575,6 @@ class _RoutineDetailsBodyState extends State<_RoutineDetailsBody> {
     for (final idx in selectedIndexes) {
       final h = routine.habits[idx];
 
-      // Match your app's habit schema
       final docRef = habitsCol.doc();
       final color = _seededAccent(random);
 
@@ -597,17 +608,16 @@ class _RoutineDetailsBodyState extends State<_RoutineDetailsBody> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Copied ${selectedIndexes.length} habits'),
+          content: Text(t.exploreCopiedHabitsSnack(selectedIndexes.length)),
           duration: const Duration(milliseconds: 900),
         ),
       );
 
-      // Close the details sheet after copy
       Navigator.of(context).pop();
     } catch (_) {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Could not copy habits. Try again.')),
+        SnackBar(content: Text(t.exploreCouldNotCopyHabits)),
       );
     }
   }
@@ -713,6 +723,8 @@ class _HabitRow extends StatelessWidget {
 
 class _ConfirmCopySheet {
   static Future<bool?> show(BuildContext context, int count) {
+    final t = AppLocalizations.of(context)!;
+
     return showModalBottomSheet<bool>(
       context: context,
       backgroundColor: Colors.transparent,
@@ -744,7 +756,7 @@ class _ConfirmCopySheet {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Copy habits?',
+                    t.exploreConfirmCopyTitle,
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       fontWeight: FontWeight.w800,
@@ -753,7 +765,7 @@ class _ConfirmCopySheet {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    '$count habits will be created.',
+                    t.exploreConfirmCopySubtitle(count),
                     style: GoogleFonts.poppins(
                       fontSize: 12,
                       color: Colors.white.withValues(alpha: 0.55),
@@ -774,7 +786,7 @@ class _ConfirmCopySheet {
                             ),
                           ),
                           child: Text(
-                            'Yes',
+                            t.exploreYes,
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w700,
                             ),
@@ -788,7 +800,7 @@ class _ConfirmCopySheet {
                     child: TextButton(
                       onPressed: () => Navigator.of(context).pop(false),
                       child: Text(
-                        'Cancel',
+                        t.exploreCancel,
                         style: GoogleFonts.poppins(
                           color: Colors.white.withValues(alpha: 0.55),
                           fontWeight: FontWeight.w600,
@@ -809,140 +821,114 @@ class _ConfirmCopySheet {
 /// --------- Data ---------
 
 class _ExploreData {
-  static final mostPopular = <_RoutineTemplate>[
+  static List<_RoutineTemplate> mostPopular(AppLocalizations t) => <_RoutineTemplate>[
     _RoutineTemplate(
-      title: 'Overcome\nProcrastination',
-      subtitle: 'Routine',
+      title: t.exploreRoutineProcrastinationTitle,
+      subtitle: t.exploreRoutineTag,
       rating: 4.7,
       imageAsset: 'lib/assets/routine_procrastination.jpg',
-      description:
-      'Procrastination can sabotage your productivity and hinder your success, '
-          'but it doesn’t have to dictate your future. This routine offers evidence-based '
-          'strategies to help you overcome procrastination and build momentum.',
-      habits: const [
-        _HabitTemplate(
-          title: 'Pomodoro Technique',
-          subtitle: 'Use focused 25-min blocks with short breaks.',
-        ),
-        _HabitTemplate(
-          title: 'Time Blocking',
-          subtitle: 'Schedule your day into clear task windows.',
-        ),
-        _HabitTemplate(
-          title: 'Eat That Frog',
-          subtitle: 'Do the hardest task first to reduce avoidance.',
-        ),
-        _HabitTemplate(
-          title: 'Break Tasks into Smaller Steps',
-          subtitle: 'Turn big tasks into small, actionable steps.',
-        ),
-        _HabitTemplate(
-          title: 'Set SMART Goals',
-          subtitle: 'Specific, Measurable, Achievable, Relevant, Time-bound.',
-        ),
+      description: t.exploreRoutineProcrastinationDescription,
+      habits: <_HabitTemplate>[
+        _HabitTemplate(title: t.exploreHabitPomodoroTitle, subtitle: t.exploreHabitPomodoroSubtitle),
+        _HabitTemplate(title: t.exploreHabitTimeBlockingTitle, subtitle: t.exploreHabitTimeBlockingSubtitle),
+        _HabitTemplate(title: t.exploreHabitEatThatFrogTitle, subtitle: t.exploreHabitEatThatFrogSubtitle),
+        _HabitTemplate(title: t.exploreHabitBreakTasksTitle, subtitle: t.exploreHabitBreakTasksSubtitle),
+        _HabitTemplate(title: t.exploreHabitSmartGoalsTitle, subtitle: t.exploreHabitSmartGoalsSubtitle),
       ],
     ),
     _RoutineTemplate(
-      title: 'Relieve\nAnxiety',
-      subtitle: 'Routine',
+      title: t.exploreRoutineAnxietyTitle,
+      subtitle: t.exploreRoutineTag,
       rating: 4.6,
       imageAsset: 'lib/assets/anxiety_relief.jpg',
-      description:
-      'A practical routine to lower baseline stress and reduce anxious spirals '
-          'with small daily actions.',
-      habits: const [
-        _HabitTemplate(title: 'Box Breathing', subtitle: '4-4-4-4 breathing cycle.'),
-        _HabitTemplate(title: 'Short Walk', subtitle: '10 minutes outside if possible.'),
-        _HabitTemplate(title: 'Journal Dump', subtitle: 'Write thoughts without filtering.'),
-        _HabitTemplate(title: 'Limit Caffeine', subtitle: 'Reduce triggers after noon.'),
-        _HabitTemplate(title: 'Sleep Wind-down', subtitle: 'Consistent pre-sleep ritual.'),
+      description: t.exploreRoutineAnxietyDescription,
+      habits: <_HabitTemplate>[
+        _HabitTemplate(title: t.exploreHabitBoxBreathingTitle, subtitle: t.exploreHabitBoxBreathingSubtitle),
+        _HabitTemplate(title: t.exploreHabitShortWalkTitle, subtitle: t.exploreHabitShortWalkSubtitle),
+        _HabitTemplate(title: t.exploreHabitJournalDumpTitle, subtitle: t.exploreHabitJournalDumpSubtitle),
+        _HabitTemplate(title: t.exploreHabitLimitCaffeineTitle, subtitle: t.exploreHabitLimitCaffeineSubtitle),
+        _HabitTemplate(title: t.exploreHabitSleepWindDownTitle, subtitle: t.exploreHabitSleepWindDownSubtitle),
       ],
     ),
     _RoutineTemplate(
-      title: 'Focus\nBoost',
-      subtitle: 'Routine',
+      title: t.exploreRoutineFocusBoostTitle,
+      subtitle: t.exploreRoutineTag,
       rating: 4.5,
       imageAsset: 'lib/assets/focus_boost.jpg',
-      description:
-      'Strengthen your focus with a compact routine designed for deep work.',
-      habits: const [
-        _HabitTemplate(title: 'No-Phone Start', subtitle: 'First 30 mins without scrolling.'),
-        _HabitTemplate(title: 'Deep Work Block', subtitle: 'One 45–60 min focus sprint.'),
-        _HabitTemplate(title: 'Single Task List', subtitle: 'Pick 1–3 outcomes max.'),
-        _HabitTemplate(title: 'Hydrate', subtitle: 'Water before coffee.'),
+      description: t.exploreRoutineFocusBoostDescription,
+      habits: <_HabitTemplate>[
+        _HabitTemplate(title: t.exploreHabitNoPhoneStartTitle, subtitle: t.exploreHabitNoPhoneStartSubtitle),
+        _HabitTemplate(title: t.exploreHabitDeepWorkBlockTitle, subtitle: t.exploreHabitDeepWorkBlockSubtitle),
+        _HabitTemplate(title: t.exploreHabitSingleTaskListTitle, subtitle: t.exploreHabitSingleTaskListSubtitle),
+        _HabitTemplate(title: t.exploreHabitHydrateTitle, subtitle: t.exploreHabitHydrateSubtitle),
       ],
     ),
     _RoutineTemplate(
-      title: 'Morning\nMomentum',
-      subtitle: 'Routine',
+      title: t.exploreRoutineMorningMomentumTitle,
+      subtitle: t.exploreRoutineTag,
       rating: 4.4,
       imageAsset: 'lib/assets/morning_momentum.jpg',
-      description:
-      'Start the day with momentum and a clear plan.',
-      habits: const [
-        _HabitTemplate(title: 'Make the Bed', subtitle: 'Quick win to start.'),
-        _HabitTemplate(title: 'Top 3 Priorities', subtitle: 'Write the day’s outcomes.'),
-        _HabitTemplate(title: 'Stretch', subtitle: '2–5 minutes full body.'),
-        _HabitTemplate(title: 'Protein Breakfast', subtitle: 'Stable energy.'),
+      description: t.exploreRoutineMorningMomentumDescription,
+      habits: <_HabitTemplate>[
+        _HabitTemplate(title: t.exploreHabitMakeBedTitle, subtitle: t.exploreHabitMakeBedSubtitle),
+        _HabitTemplate(title: t.exploreHabitTop3PrioritiesTitle, subtitle: t.exploreHabitTop3PrioritiesSubtitle),
+        _HabitTemplate(title: t.exploreHabitStretchTitle, subtitle: t.exploreHabitStretchSubtitle),
+        _HabitTemplate(title: t.exploreHabitProteinBreakfastTitle, subtitle: t.exploreHabitProteinBreakfastSubtitle),
       ],
     ),
   ];
 
-  static final becomeBetter = <_RoutineTemplate>[
+  static List<_RoutineTemplate> becomeBetter(AppLocalizations t) => <_RoutineTemplate>[
     _RoutineTemplate(
-      title: 'Creativity\nBoosting\nRoutine',
-      subtitle: 'Routine',
+      title: t.exploreRoutineCreativityBoostTitle,
+      subtitle: t.exploreRoutineTag,
       rating: 4.5,
       imageAsset: 'lib/assets/creativity_boosting.jpg',
-      description:
-      'A simple routine to increase creative output and reduce friction.',
-      habits: const [
-        _HabitTemplate(title: 'Idea Capture', subtitle: 'Write 5 ideas daily.'),
-        _HabitTemplate(title: 'Create Before Consume', subtitle: 'Make first, scroll later.'),
-        _HabitTemplate(title: 'Input Walk', subtitle: 'Take a walk for inspiration.'),
-        _HabitTemplate(title: 'Daily Sketch', subtitle: '2 minutes, no pressure.'),
+      description: t.exploreRoutineCreativityBoostDescription,
+      habits: <_HabitTemplate>[
+        _HabitTemplate(title: t.exploreHabitIdeaCaptureTitle, subtitle: t.exploreHabitIdeaCaptureSubtitle),
+        _HabitTemplate(title: t.exploreHabitCreateBeforeConsumeTitle, subtitle: t.exploreHabitCreateBeforeConsumeSubtitle),
+        _HabitTemplate(title: t.exploreHabitInputWalkTitle, subtitle: t.exploreHabitInputWalkSubtitle),
+        _HabitTemplate(title: t.exploreHabitDailySketchTitle, subtitle: t.exploreHabitDailySketchSubtitle),
       ],
     ),
     _RoutineTemplate(
-      title: 'Productivity\nEnhancer\nRoutine',
-      subtitle: 'Routine',
+      title: t.exploreRoutineProductivityEnhancerTitle,
+      subtitle: t.exploreRoutineTag,
       rating: 4.6,
       imageAsset: 'lib/assets/productivity_enhancer.jpeg',
-      description:
-      'Improve output with better planning and execution habits.',
-      habits: const [
-        _HabitTemplate(title: 'Plan Tomorrow', subtitle: 'End-of-day 5-minute plan.'),
-        _HabitTemplate(title: 'Inbox Zero', subtitle: 'Clear messages in one block.'),
-        _HabitTemplate(title: 'Two-Minute Rule', subtitle: 'Do it now if it’s quick.'),
-        _HabitTemplate(title: 'Shutdown Ritual', subtitle: 'Close loops, end work cleanly.'),
+      description: t.exploreRoutineProductivityEnhancerDescription,
+      habits: <_HabitTemplate>[
+        _HabitTemplate(title: t.exploreHabitPlanTomorrowTitle, subtitle: t.exploreHabitPlanTomorrowSubtitle),
+        _HabitTemplate(title: t.exploreHabitInboxZeroTitle, subtitle: t.exploreHabitInboxZeroSubtitle),
+        _HabitTemplate(title: t.exploreHabitTwoMinuteRuleTitle, subtitle: t.exploreHabitTwoMinuteRuleSubtitle),
+        _HabitTemplate(title: t.exploreHabitShutdownRitualTitle, subtitle: t.exploreHabitShutdownRitualSubtitle),
       ],
     ),
     _RoutineTemplate(
-      title: 'Build\nConfidence',
-      subtitle: 'Routine',
+      title: t.exploreRoutineBuildConfidenceTitle,
+      subtitle: t.exploreRoutineTag,
       rating: 4.4,
       imageAsset: 'lib/assets/build_confidence.jpg',
-      description:
-      'Small daily actions to build confidence and consistency.',
-      habits: const [
-        _HabitTemplate(title: 'Daily Win', subtitle: 'Record one win every day.'),
-        _HabitTemplate(title: 'Practice Skill', subtitle: '10 minutes deliberate practice.'),
-        _HabitTemplate(title: 'Posture Reset', subtitle: '2x daily check-in.'),
-        _HabitTemplate(title: 'Positive Reframe', subtitle: 'Rewrite the story in your head.'),
+      description: t.exploreRoutineBuildConfidenceDescription,
+      habits: <_HabitTemplate>[
+        _HabitTemplate(title: t.exploreHabitDailyWinTitle, subtitle: t.exploreHabitDailyWinSubtitle),
+        _HabitTemplate(title: t.exploreHabitPracticeSkillTitle, subtitle: t.exploreHabitPracticeSkillSubtitle),
+        _HabitTemplate(title: t.exploreHabitPostureResetTitle, subtitle: t.exploreHabitPostureResetSubtitle),
+        _HabitTemplate(title: t.exploreHabitPositiveReframeTitle, subtitle: t.exploreHabitPositiveReframeSubtitle),
       ],
     ),
     _RoutineTemplate(
-      title: 'Better\nSleep',
-      subtitle: 'Routine',
+      title: t.exploreRoutineBetterSleepTitle,
+      subtitle: t.exploreRoutineTag,
       rating: 4.7,
       imageAsset: 'lib/assets/better_sleep.jpeg',
-      description:
-      'A calming routine to improve sleep quality and recovery.',
-      habits: const [
-        _HabitTemplate(title: 'No Screens', subtitle: 'Avoid screens 30 mins before bed.'),
-        _HabitTemplate(title: 'Cool Room', subtitle: 'Lower temp for better sleep.'),
-        _HabitTemplate(title: 'Read', subtitle: '10 pages of a book.'),
-        _HabitTemplate(title: 'Same Bedtime', subtitle: 'Consistency beats perfection.'),
+      description: t.exploreRoutineBetterSleepDescription,
+      habits: <_HabitTemplate>[
+        _HabitTemplate(title: t.exploreHabitNoScreensTitle, subtitle: t.exploreHabitNoScreensSubtitle),
+        _HabitTemplate(title: t.exploreHabitCoolRoomTitle, subtitle: t.exploreHabitCoolRoomSubtitle),
+        _HabitTemplate(title: t.exploreHabitReadTitle, subtitle: t.exploreHabitReadSubtitle),
+        _HabitTemplate(title: t.exploreHabitSameBedtimeTitle, subtitle: t.exploreHabitSameBedtimeSubtitle),
       ],
     ),
   ];

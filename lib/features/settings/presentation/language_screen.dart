@@ -1,6 +1,9 @@
 // settings/presentation/language_screen.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '/l10n/app_localizations.dart';
+
+enum _LanguageLabel { english, german, spanish, russian, turkish, french }
 
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({
@@ -26,32 +29,32 @@ class _LanguageScreenState extends State<LanguageScreen> {
   final _languages = const <_LanguageOption>[
     _LanguageOption(
       code: 'en',
-      label: 'English',
+      label: _LanguageLabel.english,
       assetPath: 'lib/assets/uk_flag.png',
     ),
     _LanguageOption(
       code: 'de',
-      label: 'German',
+      label: _LanguageLabel.german,
       assetPath: 'lib/assets/de_flag.png',
     ),
     _LanguageOption(
       code: 'es',
-      label: 'Spanish',
+      label: _LanguageLabel.spanish,
       assetPath: 'lib/assets/es_flag.png',
     ),
     _LanguageOption(
       code: 'ru',
-      label: 'Russian',
+      label: _LanguageLabel.russian,
       assetPath: 'lib/assets/ru_flag.png',
     ),
     _LanguageOption(
       code: 'tr',
-      label: 'Turkish',
+      label: _LanguageLabel.turkish,
       assetPath: 'lib/assets/tr_flag.png',
     ),
     _LanguageOption(
       code: 'fr',
-      label: 'French',
+      label: _LanguageLabel.french,
       assetPath: 'lib/assets/fr_flag.png',
     ),
   ];
@@ -72,6 +75,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     const bg = Color(0xFF2A2A2E); // close to your screenshot background
     final w = MediaQuery.of(context).size.width;
 
@@ -104,7 +109,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Choose Language',
+                    t.chooseLanguageTitle,
                     style: GoogleFonts.poppins(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
@@ -163,7 +168,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                               ),
                             ),
                             child: Text(
-                              'Continue',
+                              t.continueButton,
                               style: GoogleFonts.poppins(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -200,8 +205,27 @@ class _LanguageTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final borderColor =
     selected ? const Color(0xFF5CE1E6) : Colors.white.withValues(alpha: 0.0);
+
+    final localizedLabel = () {
+      switch (option.label) {
+        case _LanguageLabel.english:
+          return t.languageEnglish;
+        case _LanguageLabel.german:
+          return t.languageGerman;
+        case _LanguageLabel.spanish:
+          return t.languageSpanish;
+        case _LanguageLabel.russian:
+          return t.languageRussian;
+        case _LanguageLabel.turkish:
+          return t.languageTurkish;
+        case _LanguageLabel.french:
+          return t.languageFrench;
+      }
+    }();
 
     return InkWell(
       onTap: onTap,
@@ -246,8 +270,7 @@ class _LanguageTile extends StatelessWidget {
                       width: 22,
                       height: 22,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF0F0F13)
-                            .withValues(alpha: 0.85),
+                        color: const Color(0xFF0F0F13).withValues(alpha: 0.85),
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: const Color(0xFF5CE1E6),
@@ -267,7 +290,7 @@ class _LanguageTile extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            option.label,
+            localizedLabel,
             style: GoogleFonts.poppins(
               fontSize: 12,
               color: Colors.white.withValues(alpha: 0.7),
@@ -288,7 +311,7 @@ class _LanguageOption {
   });
 
   final String code;
-  final String label;
+  final _LanguageLabel label;
   final String assetPath;
 }
 
@@ -301,19 +324,18 @@ class PointyHexagonClipper extends CustomClipper<Path> {
     final h = size.height;
 
     return Path()
-      ..moveTo(w * 0.5, 0)        // top point
-      ..lineTo(w, h * 0.25)       // upper-right
-      ..lineTo(w, h * 0.75)       // lower-right
-      ..lineTo(w * 0.5, h)        // bottom point
-      ..lineTo(0, h * 0.75)       // lower-left
-      ..lineTo(0, h * 0.25)       // upper-left
+      ..moveTo(w * 0.5, 0) // top point
+      ..lineTo(w, h * 0.25) // upper-right
+      ..lineTo(w, h * 0.75) // lower-right
+      ..lineTo(w * 0.5, h) // bottom point
+      ..lineTo(0, h * 0.75) // lower-left
+      ..lineTo(0, h * 0.25) // upper-left
       ..close();
   }
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }
-
 
 class _HexBorderPainter extends CustomPainter {
   _HexBorderPainter({

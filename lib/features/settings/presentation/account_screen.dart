@@ -1,10 +1,10 @@
-import 'dart:math' as math;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '/features/auth/presentation/sign_in_screen.dart';
+import '/l10n/app_localizations.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -12,8 +12,6 @@ class AccountScreen extends StatefulWidget {
   @override
   State<AccountScreen> createState() => _AccountScreenState();
 }
-
-
 
 class _AccountScreenState extends State<AccountScreen> {
   final _formKey = GlobalKey<FormState>();
@@ -35,7 +33,6 @@ class _AccountScreenState extends State<AccountScreen> {
     _passwordCtrl = TextEditingController();
 
     final user = FirebaseAuth.instance.currentUser;
-
     if (user == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).pushAndRemoveUntil(
@@ -54,22 +51,22 @@ class _AccountScreenState extends State<AccountScreen> {
     super.dispose();
   }
 
-
-
   Future<void> _saveChanges() async {
     final user = _user;
     if (user == null) return;
 
-    final messenger = ScaffoldMessenger.of(context);
-
     if (!_formKey.currentState!.validate()) return;
+
+    final t = AppLocalizations.of(context)!;
 
     final newName = _usernameCtrl.text.trim();
     final newEmail = _emailCtrl.text.trim();
     final newPassword = _passwordCtrl.text;
 
-    final nameChanged = newName.isNotEmpty && newName != (user.displayName ?? '');
-    final emailChanged = newEmail.isNotEmpty && newEmail != (user.email ?? '');
+    final nameChanged =
+        newName.isNotEmpty && newName != (user.displayName ?? '');
+    final emailChanged =
+        newEmail.isNotEmpty && newEmail != (user.email ?? '');
 
     setState(() => _isSaving = true);
 
@@ -80,15 +77,13 @@ class _AccountScreenState extends State<AccountScreen> {
 
       if (emailChanged) {
         await _updateEmailCompat(user, newEmail);
-
-        // Optional: also mirror to Firestore user profile
       }
 
       if (newPassword.isNotEmpty) {
         if (newPassword.length < 6) {
           throw FirebaseAuthException(
             code: 'weak-password',
-            message: 'Password should be at least 6 characters.',
+            message: t.accountWeakPasswordError,
           );
         }
         await user.updatePassword(newPassword);
@@ -97,7 +92,6 @@ class _AccountScreenState extends State<AccountScreen> {
       await user.reload();
       final refreshed = FirebaseAuth.instance.currentUser;
 
-      // Mirror basic profile to Firestore for your app UI
       if (refreshed != null) {
         await FirebaseFirestore.instance
             .collection('users')
@@ -110,73 +104,71 @@ class _AccountScreenState extends State<AccountScreen> {
       }
 
       if (!mounted) return;
+
       setState(() => _isSaving = false);
       _passwordCtrl.clear();
 
-      messenger.showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
             emailChanged
-                ? 'Changes saved. Check your inbox if email verification was sent.'
-                : 'Changes saved.',
+                ? t.accountChangesSavedEmailVerificationHint
+                : t.accountChangesSaved,
           ),
           duration: const Duration(milliseconds: 1200),
         ),
       );
     } on FirebaseAuthException catch (e) {
       if (!mounted) return;
+
       setState(() => _isSaving = false);
 
-      messenger.showSnackBar(
+      final msg = _friendlyAuthError(context, e);
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(_friendlyAuthError(e)),
+          content: Text(msg),
           duration: const Duration(milliseconds: 1600),
         ),
       );
     } catch (_) {
       if (!mounted) return;
+
       setState(() => _isSaving = false);
 
-      messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Could not save changes. Try again.'),
-        ),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(t.accountCouldNotSaveChanges)),
       );
     }
   }
 
-  /// Compatibility layer to handle API differences across firebase_auth versions.
-  ///
-  /// - Newer patterns may offer `verifyBeforeUpdateEmail`.
-  /// - Older patterns provide `updateEmail`.
-  /// We use `dynamic` to avoid compile-time errors when one method is missing.
+  /// Compatibility layer for firebase_auth API differences.
   Future<void> _updateEmailCompat(User user, String newEmail) async {
     final dyn = user as dynamic;
 
     try {
-      // Prefer verify-before-update if available
       await dyn.verifyBeforeUpdateEmail(newEmail);
       return;
     } on NoSuchMethodError {
       // Fall back
     }
 
-    // Try classic updateEmail
     await dyn.updateEmail(newEmail);
   }
 
-  String _friendlyAuthError(FirebaseAuthException e) {
+  String _friendlyAuthError(BuildContext context, FirebaseAuthException e) {
+    final t = AppLocalizations.of(context)!;
+
     switch (e.code) {
       case 'requires-recent-login':
-        return 'For security, please log in again and retry this change.';
+        return t.accountRequiresRecentLoginError;
       case 'email-already-in-use':
-        return 'That email is already in use.';
+        return t.accountEmailAlreadyInUseError;
       case 'invalid-email':
-        return 'Please enter a valid email address.';
+        return t.accountInvalidEmailError;
       case 'weak-password':
-        return e.message ?? 'That password is too weak.';
+        return e.message ?? t.accountWeakPasswordGenericError;
       default:
-        return e.message ?? 'Authentication error.';
+        return e.message ?? t.accountAuthGenericError;
     }
   }
 
@@ -194,36 +186,34 @@ class _AccountScreenState extends State<AccountScreen> {
     final user = _user;
     if (user == null) return;
 
-    final messenger = ScaffoldMessenger.of(context);
-    final nav = Navigator.of(context);
-
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) {
+        final t = AppLocalizations.of(ctx)!;
         return AlertDialog(
           backgroundColor: const Color(0xFF15151A),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
           title: Text(
-            'Delete account?',
+            t.accountDeleteDialogTitle,
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.w700,
               color: Colors.white,
             ),
           ),
           content: Text(
-            'This will permanently remove your account data.',
+            t.accountDeleteDialogBody,
             style: GoogleFonts.poppins(color: Colors.grey[300]),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(false),
-              child: const Text('Cancel'),
+              child: Text(t.commonCancel),
             ),
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(true),
-              child: const Text('Delete'),
+              child: Text(t.commonDelete),
             ),
           ],
         );
@@ -231,34 +221,40 @@ class _AccountScreenState extends State<AccountScreen> {
     ) ??
         false;
 
+    if (!mounted) return;
     if (!confirmed) return;
 
-    try {
-      // delete Firestore user doc (optional)
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).delete();
+    final t = AppLocalizations.of(context)!;
 
-      // delete auth account
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).delete();
       await user.delete();
 
       if (!mounted) return;
-      messenger.showSnackBar(
-        const SnackBar(content: Text('Account deleted.')),
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(t.accountDeletedSnackbar)),
       );
 
-      nav.pop();
+      Navigator.of(context).pop();
     } on FirebaseAuthException catch (e) {
-      messenger.showSnackBar(
-        SnackBar(content: Text(_friendlyAuthError(e))),
+      if (!mounted) return;
+      final msg = _friendlyAuthError(context, e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(msg)),
       );
     } catch (_) {
-      messenger.showSnackBar(
-        const SnackBar(content: Text('Could not delete account.')),
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(t.accountCouldNotDelete)),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       return const SignInScreen();
@@ -277,7 +273,7 @@ class _AccountScreenState extends State<AccountScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'My account',
+          t.accountTitle,
           style: GoogleFonts.poppins(
             fontSize: 22,
             fontWeight: FontWeight.w700,
@@ -298,11 +294,11 @@ class _AccountScreenState extends State<AccountScreen> {
                   child: TextFormField(
                     controller: _usernameCtrl,
                     style: GoogleFonts.poppins(color: Colors.white),
-                    decoration: _inputDecoration('Username'),
+                    decoration: _inputDecoration(t.accountUsernameLabel),
                     validator: (v) {
-                      final t = (v ?? '').trim();
-                      if (t.isEmpty) return 'Please enter a username.';
-                      if (t.length < 2) return 'Too short.';
+                      final s = (v ?? '').trim();
+                      if (s.isEmpty) return t.accountUsernameEmptyError;
+                      if (s.length < 2) return t.accountUsernameTooShortError;
                       return null;
                     },
                   ),
@@ -316,11 +312,13 @@ class _AccountScreenState extends State<AccountScreen> {
                     controller: _passwordCtrl,
                     obscureText: _obscurePassword,
                     style: GoogleFonts.poppins(color: Colors.white),
-                    decoration: _inputDecoration('Password').copyWith(
-                      hintText: 'Leave blank to keep current',
+                    decoration: _inputDecoration(t.accountPasswordLabel).copyWith(
+                      hintText: t.accountPasswordLeaveBlankHint,
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                           color: Colors.white.withValues(alpha: 0.7),
                           size: 20,
                         ),
@@ -339,11 +337,11 @@ class _AccountScreenState extends State<AccountScreen> {
                     controller: _emailCtrl,
                     keyboardType: TextInputType.emailAddress,
                     style: GoogleFonts.poppins(color: Colors.white),
-                    decoration: _inputDecoration('Email'),
+                    decoration: _inputDecoration(t.accountEmailLabel),
                     validator: (v) {
-                      final t = (v ?? '').trim();
-                      if (t.isEmpty) return 'Please enter an email.';
-                      if (!t.contains('@')) return 'Invalid email.';
+                      final s = (v ?? '').trim();
+                      if (s.isEmpty) return t.accountEmailEmptyError;
+                      if (!s.contains('@')) return t.accountEmailInvalidError;
                       return null;
                     },
                   ),
@@ -351,7 +349,6 @@ class _AccountScreenState extends State<AccountScreen> {
 
                 const SizedBox(height: 14),
 
-                // Optional quick info row
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(14),
@@ -368,8 +365,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       Expanded(
                         child: Text(
                           user.emailVerified
-                              ? 'Email verified'
-                              : 'Email not verified',
+                              ? t.accountEmailVerified
+                              : t.accountEmailNotVerified,
                           style: GoogleFonts.poppins(
                             fontSize: 12,
                             color: Colors.white.withValues(alpha: 0.75),
@@ -379,24 +376,25 @@ class _AccountScreenState extends State<AccountScreen> {
                       if (!user.emailVerified)
                         TextButton(
                           onPressed: () async {
-                            final messenger = ScaffoldMessenger.of(context);
                             try {
                               await user.sendEmailVerification();
-                              messenger.showSnackBar(
-                                const SnackBar(
-                                  content: Text('Verification email sent.'),
+                              if (!context.mounted) return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(t.accountVerificationEmailSent),
                                 ),
                               );
                             } catch (_) {
-                              messenger.showSnackBar(
-                                const SnackBar(
-                                  content: Text('Could not send verification email.'),
+                              if (!context.mounted) return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(t.accountVerificationEmailFailed),
                                 ),
                               );
                             }
                           },
                           child: Text(
-                            'Send',
+                            t.accountSendButton,
                             style: GoogleFonts.poppins(fontSize: 12),
                           ),
                         ),
@@ -406,19 +404,17 @@ class _AccountScreenState extends State<AccountScreen> {
 
                 const SizedBox(height: 18),
 
-                // My habits / Delete account rows like your mock
                 _ActionRowCard(
-                  title: 'My habits',
+                  title: t.accountMyHabits,
                   color: cardColor,
                   borderColor: borderColor,
                   onTap: () {
-                    // If you have a habits list screen, push it here.
-                    // Navigator.of(context).push(MaterialPageRoute(builder: (_) => MyHabitsScreen()));
+                    // Push your habits screen here if needed.
                   },
                 ),
                 const SizedBox(height: 8),
                 _ActionRowCard(
-                  title: 'Delete account',
+                  title: t.accountDeleteAccount,
                   color: cardColor,
                   borderColor: borderColor,
                   onTap: _confirmDeleteAccount,
@@ -439,7 +435,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                     child: Text(
-                      _isSaving ? 'Saving...' : 'Save changes',
+                      _isSaving ? t.accountSaving : t.accountSaveChanges,
                       style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
@@ -456,7 +452,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Log Out',
+                        t.accountLogOut,
                         style: GoogleFonts.poppins(
                           fontSize: 13,
                           color: const Color(0xFFE36A6A),

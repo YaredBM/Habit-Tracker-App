@@ -7,11 +7,43 @@ import 'create_habit_screen.dart';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
+import '/l10n/app_localizations.dart';
 
 String _dateKey(DateTime d) =>
     '${d.year.toString().padLeft(4, '0')}-'
         '${d.month.toString().padLeft(2, '0')}-'
         '${d.day.toString().padLeft(2, '0')}';
+
+String _monthShort(AppLocalizations t, int month) {
+  switch (month) {
+    case 1:
+      return t.habitDetailMonthJanShort;
+    case 2:
+      return t.habitDetailMonthFebShort;
+    case 3:
+      return t.habitDetailMonthMarShort;
+    case 4:
+      return t.habitDetailMonthAprShort;
+    case 5:
+      return t.habitDetailMonthMayShort;
+    case 6:
+      return t.habitDetailMonthJunShort;
+    case 7:
+      return t.habitDetailMonthJulShort;
+    case 8:
+      return t.habitDetailMonthAugShort;
+    case 9:
+      return t.habitDetailMonthSepShort;
+    case 10:
+      return t.habitDetailMonthOctShort;
+    case 11:
+      return t.habitDetailMonthNovShort;
+    case 12:
+      return t.habitDetailMonthDecShort;
+    default:
+      return t.habitDetailMonthJanShort;
+  }
+}
 
 class HabitDetailScreen extends StatelessWidget {
   const HabitDetailScreen({
@@ -29,18 +61,18 @@ class HabitDetailScreen extends StatelessWidget {
   final Future<void> Function()? onDelete;
   final Future<void> Function()? onUpdateProgress;
 
-
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     final user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
-      return const Scaffold(
+      return Scaffold(
         backgroundColor: Colors.black,
         body: Center(
           child: Text(
-            'Please sign in to view habits.',
-            style: TextStyle(color: Colors.white),
+            t.habitDetailPleaseSignInHabits,
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       );
@@ -56,9 +88,10 @@ class HabitDetailScreen extends StatelessWidget {
     return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
       stream: docStream,
       builder: (context, snapshot) {
+        final t = AppLocalizations.of(context)!;
         final data = snapshot.data?.data() ?? initialData;
 
-        final title = data['title'] as String? ?? 'Habit';
+        final title = data['title'] as String? ?? t.habitDetailDefaultHabitTitle;
         final description = data['description'] as String?;
         final colorValue = data['color'] as int? ?? 0xFF5CE1E6;
         final completedDates =
@@ -75,16 +108,14 @@ class HabitDetailScreen extends StatelessWidget {
         final totalCompletions = completedSet.length;
         final score = _calculateScore(completedSet);
         final createdAtRaw = data['createdAt'];
-        final createdAt = createdAtRaw is Timestamp ? createdAtRaw.toDate() : DateTime.now();
+        final createdAt =
+        createdAtRaw is Timestamp ? createdAtRaw.toDate() : DateTime.now();
 
-// Stored month anchor (recommended to persist on habit creation)
+        // Stored month anchor (recommended to persist on habit creation)
         final hsmRaw = data['historyStartMonth'];
         final historyStartMonth = hsmRaw is Timestamp
             ? DateTime(hsmRaw.toDate().year, hsmRaw.toDate().month, 1)
             : DateTime(createdAt.year, createdAt.month, 1);
-
-
-
 
         return Scaffold(
           backgroundColor: Colors.black,
@@ -173,6 +204,7 @@ class HabitDetailScreen extends StatelessWidget {
                     historyStartMonth: historyStartMonth,
                     monthsBackFallback: 3, // last 3 months including current
                     onToggleDate: (date, isComplete) async {
+                      final t = AppLocalizations.of(context)!;
                       final messenger = ScaffoldMessenger.of(context);
                       final dateKey = _dateKey(date);
 
@@ -195,8 +227,8 @@ class HabitDetailScreen extends StatelessWidget {
                           SnackBar(
                             content: Text(
                               isComplete
-                                  ? 'Marked incomplete for that day'
-                                  : 'Marked complete for that day',
+                                  ? t.habitDetailMarkedIncompleteDay
+                                  : t.habitDetailMarkedCompleteDay,
                             ),
                             duration: const Duration(milliseconds: 900),
                           ),
@@ -204,9 +236,8 @@ class HabitDetailScreen extends StatelessWidget {
                       } catch (_) {
                         if (!context.mounted) return;
                         messenger.showSnackBar(
-                          const SnackBar(
-                            content:
-                            Text('Could not update that day. Try again.'),
+                          SnackBar(
+                            content: Text(t.habitDetailCouldNotUpdateDay),
                           ),
                         );
                       }
@@ -242,7 +273,7 @@ class HabitDetailScreen extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          'Update progress',
+                          t.habitDetailUpdateProgress,
                           style: GoogleFonts.poppins(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
@@ -261,6 +292,8 @@ class HabitDetailScreen extends StatelessWidget {
   }
 
   Future<bool> _confirmDelete(BuildContext context) async {
+    final t = AppLocalizations.of(context)!;
+
     return await showDialog<bool>(
       context: context,
       builder: (ctx) {
@@ -270,14 +303,14 @@ class HabitDetailScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           title: Text(
-            'Delete habit?',
+            t.habitDetailDeleteHabitTitle,
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.w700,
               color: Colors.white,
             ),
           ),
           content: Text(
-            'This will remove the habit and its history.',
+            t.habitDetailDeleteHabitMessage,
             style: GoogleFonts.poppins(
               color: Colors.grey[300],
             ),
@@ -285,11 +318,11 @@ class HabitDetailScreen extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(false),
-              child: const Text('Cancel'),
+              child: Text(t.habitDetailCancel),
             ),
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(true),
-              child: const Text('Delete'),
+              child: Text(t.habitDetailDelete),
             ),
           ],
         );
@@ -382,24 +415,37 @@ class _StatsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Row(
       children: [
         Expanded(
-          child: _StatCard(label: 'Score', value: '$score%', color: color),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: _StatCard(label: 'Total', value: '$total', color: color),
+          child: _StatCard(
+            label: t.habitDetailStatScore,
+            value: '$score%',
+            color: color,
+          ),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: _StatCard(
-              label: 'Best Streak', value: '$bestStreak', color: color),
+            label: t.habitDetailStatTotal,
+            value: '$total',
+            color: color,
+          ),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: _StatCard(
-            label: 'Streak',
+            label: t.habitDetailStatBestStreak,
+            value: '$bestStreak',
+            color: color,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: _StatCard(
+            label: t.habitDetailStatStreak,
             value: '$currentStreak',
             color: color,
           ),
@@ -471,8 +517,6 @@ class _ScoreSection extends StatelessWidget {
     final lastDayOfMonth = DateTime(now.year, now.month + 1, 0).day;
     final lastPlottableDay = now.day.clamp(1, lastDayOfMonth);
 
-    // We iterate through every day of the month up to the last day
-    // to build a smooth cumulative score line.
     final points = <_ChartPoint>[];
     int completedSoFar = 0;
 
@@ -482,35 +526,24 @@ class _ScoreSection extends StatelessWidget {
         completedSoFar++;
       }
 
-      // Don't plot future dates as 0, just stop or hold?
-      // For a "Score" graph, usually it's "Score to date".
-      // But to match the image which spans the full width:
-      // We calculate score based on "Expected days passed".
-
-      // Logic: Score = (Completions / Days Passed) * 100
       final double score = (completedSoFar / day * 100.0).clamp(0.0, 100.0);
-
       points.add(_ChartPoint(date: date, value: score));
     }
     return points;
   }
 
-  String _formatDate(int day, bool showMonth) {
+  String _formatDate(AppLocalizations t, int day, bool showMonth) {
     if (showMonth) {
       final now = DateTime.now();
-      const months = [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-      ];
-      return '$day\n${months[now.month - 1]}';
+      return '$day\n${_monthShort(t, now.month)}';
     }
     return '$day';
   }
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     final points = _points();
-    // Fixed ticks matching the image: 3, 10, 17, 24
     final tickDays = [3, 10, 17, 24];
 
     return Column(
@@ -519,7 +552,7 @@ class _ScoreSection extends StatelessWidget {
         Row(
           children: [
             Text(
-              'Score',
+              t.habitDetailScoreTitle,
               style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
@@ -538,7 +571,7 @@ class _ScoreSection extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    'Analytics',
+                    t.habitDetailAnalytics,
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       color: const Color(0xFF2E6FD0),
@@ -564,8 +597,10 @@ class _ScoreSection extends StatelessWidget {
           ),
           child: points.isEmpty
               ? Center(
-            child: Text('No data yet',
-                style: GoogleFonts.poppins(color: Colors.grey)),
+            child: Text(
+              t.habitDetailNoDataYet,
+              style: GoogleFonts.poppins(color: Colors.grey),
+            ),
           )
               : LayoutBuilder(
             builder: (context, constraints) {
@@ -574,7 +609,6 @@ class _ScoreSection extends StatelessWidget {
 
               return Stack(
                 children: [
-                  // Y-Axis Labels
                   Positioned(
                     left: 0,
                     top: 0,
@@ -593,7 +627,6 @@ class _ScoreSection extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // Chart Area
                   Positioned(
                     left: leftPadding,
                     top: 0,
@@ -607,7 +640,6 @@ class _ScoreSection extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // X-Axis Labels (Ticks)
                   Positioned(
                     left: leftPadding,
                     right: 0,
@@ -617,21 +649,19 @@ class _ScoreSection extends StatelessWidget {
                       builder: (ctx, box) {
                         return Stack(
                           children: tickDays.map((day) {
-                            // day-1 because index 0 is day 1
                             final index = day - 1;
-                            final totalPoints = points.length; // usually 30 or 31
-                            if (index >= totalPoints) return const SizedBox();
+                            final totalPoints = points.length;
+                            if (index >= totalPoints) {
+                              return const SizedBox();
+                            }
 
-                            // Percent across width
                             final percentX = index / (totalPoints - 1);
-
-                            // Alignment logic (-1 left, 1 right)
                             final alignX = (percentX * 2) - 1;
 
                             return Align(
                               alignment: Alignment(alignX, 0),
                               child: Text(
-                                _formatDate(day, day == 3), // Show month on first tick
+                                _formatDate(t, day, day == 3),
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.poppins(
                                   fontSize: 11,
@@ -676,7 +706,6 @@ class _ScoreLineChartPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (points.isEmpty) return;
 
-    // 1. Draw Horizontal Grid Lines
     final gridPaint = Paint()
       ..color = Colors.white.withValues(alpha: 0.1)
       ..strokeWidth = 1
@@ -688,8 +717,6 @@ class _ScoreLineChartPainter extends CustomPainter {
       _drawDashedLine(canvas, Offset(0, y), Offset(size.width, y), gridPaint);
     }
 
-    // 2. Draw Vertical Grid Lines at Ticks
-    // Logic: Map day to X position
     final totalDays = points.length;
     for (final day in tickDays) {
       if (day > totalDays) continue;
@@ -699,15 +726,12 @@ class _ScoreLineChartPainter extends CustomPainter {
       _drawDashedLine(canvas, Offset(x, 0), Offset(x, size.height), gridPaint);
     }
 
-    // 3. Prepare Line Path
     final path = Path();
     final fillPath = Path();
-    // Assuming uniform spacing for days 1..N
     final dx = totalDays > 1 ? size.width / (totalDays - 1) : 0.0;
 
     for (int i = 0; i < points.length; i++) {
       final p = points[i];
-      // Value 0..100 -> Y coordinate
       final normalized = 1.0 - (p.value / 100.0).clamp(0.0, 1.0);
       final x = dx * i;
       final y = size.height * normalized;
@@ -719,7 +743,8 @@ class _ScoreLineChartPainter extends CustomPainter {
       } else {
         final prevX = dx * (i - 1);
         final prevP = points[i - 1];
-        final prevY = size.height * (1.0 - (prevP.value / 100.0).clamp(0.0, 1.0));
+        final prevY = size.height *
+            (1.0 - (prevP.value / 100.0).clamp(0.0, 1.0));
 
         final cp1X = prevX + (x - prevX) / 2;
         final cp2X = prevX + (x - prevX) / 2;
@@ -732,7 +757,6 @@ class _ScoreLineChartPainter extends CustomPainter {
     fillPath.lineTo(size.width, size.height);
     fillPath.close();
 
-    // 4. Draw Gradient Fill
     final gradientShader = ui.Gradient.linear(
       Offset(0, 0),
       Offset(0, size.height),
@@ -747,7 +771,6 @@ class _ScoreLineChartPainter extends CustomPainter {
 
     canvas.drawPath(fillPath, fillPaint);
 
-    // 5. Draw the Line
     final linePaint = Paint()
       ..color = color
       ..strokeWidth = 2.5
@@ -757,7 +780,6 @@ class _ScoreLineChartPainter extends CustomPainter {
 
     canvas.drawPath(path, linePaint);
 
-    // 6. Draw Dots ONLY at Ticks
     final dotPaint = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
@@ -774,9 +796,7 @@ class _ScoreLineChartPainter extends CustomPainter {
       final x = dx * i;
       final y = size.height * normalized;
 
-      // Draw border first (to cut line)
       canvas.drawCircle(Offset(x, y), 5, dotBorderPaint);
-      // Draw actual dot
       canvas.drawCircle(Offset(x, y), 3.5, dotPaint);
     }
   }
@@ -787,7 +807,7 @@ class _ScoreLineChartPainter extends CustomPainter {
     double startX = p1.dx;
     double startY = p1.dy;
 
-    if (p1.dy == p2.dy) { // Horizontal
+    if (p1.dy == p2.dy) {
       while (startX < p2.dx) {
         canvas.drawLine(
           Offset(startX, startY),
@@ -796,7 +816,7 @@ class _ScoreLineChartPainter extends CustomPainter {
         );
         startX += dashWidth + dashSpace;
       }
-    } else { // Vertical
+    } else {
       while (startY < p2.dy) {
         canvas.drawLine(
           Offset(startX, startY),
@@ -845,12 +865,7 @@ class _HistorySection extends StatefulWidget {
   final Set<DateTime> completedDates;
   final void Function(DateTime date, bool isComplete) onToggleDate;
 
-  /// Persisted “anchor” month (first day of the month).
-  /// Recommended: set this when the habit is created.
   final DateTime historyStartMonth;
-
-  /// Minimum months to show including current month.
-  /// 3 => current + previous 2.
   final int monthsBackFallback;
 
   @override
@@ -863,7 +878,7 @@ class _HistorySectionState extends State<_HistorySection> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: 0); // 0 = current month
+    _pageController = PageController(initialPage: 0);
   }
 
   @override
@@ -878,7 +893,8 @@ class _HistorySectionState extends State<_HistorySection> {
   }
 
   String _headerLabelForMonth(DateTime month) {
-    return '${_monthName(month.month)} ${month.year}';
+    final t = AppLocalizations.of(context)!;
+    return '${_monthShort(t, month.month)} ${month.year}';
   }
 
   int _monthsBetweenInclusive(DateTime startMonth, DateTime endMonth) {
@@ -889,33 +905,31 @@ class _HistorySectionState extends State<_HistorySection> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
 
     final currentMonth = DateTime(now.year, now.month, 1);
 
-    // Ensure at least N months visible (N includes current month)
     final fallbackStartMonth = DateTime(
       now.year,
       now.month - (widget.monthsBackFallback - 1),
       1,
     );
 
-    // Earliest visible month:
-    // - If habit started long ago, show from historyStartMonth
-    // - If habit is new, show fallbackStartMonth (so you still can scroll back)
     final historyStartMonth = DateTime(
       widget.historyStartMonth.year,
       widget.historyStartMonth.month,
       1,
     );
 
-    final earliestMonth =
-    historyStartMonth.isBefore(fallbackStartMonth) ? historyStartMonth : fallbackStartMonth;
+    final earliestMonth = historyStartMonth.isBefore(fallbackStartMonth)
+        ? historyStartMonth
+        : fallbackStartMonth;
 
-    final totalMonths = _monthsBetweenInclusive(earliestMonth, currentMonth).clamp(1, 240);
+    final totalMonths =
+    _monthsBetweenInclusive(earliestMonth, currentMonth).clamp(1, 240);
 
-    // Normalize completed dates to date-only
     final normalizedCompleted = widget.completedDates
         .map((d) => DateTime(d.year, d.month, d.day))
         .toSet();
@@ -926,7 +940,7 @@ class _HistorySectionState extends State<_HistorySection> {
         Row(
           children: [
             Text(
-              'History',
+              t.habitDetailHistory,
               style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
@@ -937,24 +951,25 @@ class _HistorySectionState extends State<_HistorySection> {
             AnimatedBuilder(
               animation: _pageController,
               builder: (context, child) {
-                final page = _pageController.hasClients ? (_pageController.page ?? 0.0) : 0.0;
+                final page =
+                _pageController.hasClients ? (_pageController.page ?? 0.0) : 0.0;
                 final index = page.round().clamp(0, totalMonths - 1);
                 final month = _monthForPage(index);
                 return Text(
                   _headerLabelForMonth(month),
-                  style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey[400]),
+                  style:
+                  GoogleFonts.poppins(fontSize: 13, color: Colors.grey[400]),
                 );
               },
             ),
           ],
         ),
         const SizedBox(height: 12),
-
         SizedBox(
           height: 260,
           child: PageView.builder(
             controller: _pageController,
-            reverse: true, // ✅ past months on the LEFT, current on the RIGHT
+            reverse: true,
             itemCount: totalMonths,
             itemBuilder: (context, index) {
               final monthStart = _monthForPage(index);
@@ -1004,7 +1019,9 @@ class _HistorySectionState extends State<_HistorySection> {
                               : Colors.white.withValues(alpha: 0.06),
                           borderRadius: BorderRadius.circular(10),
                           border: isFuture
-                              ? Border.all(color: Colors.white.withValues(alpha: 0.08))
+                              ? Border.all(
+                            color: Colors.white.withValues(alpha: 0.08),
+                          )
                               : null,
                         ),
                         child: Text(
@@ -1031,19 +1048,6 @@ class _HistorySectionState extends State<_HistorySection> {
   }
 }
 
-
-
-
-
-// TOP-LEVEL helper (not inside any class)
-String _monthName(int month) {
-  const months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  ];
-  return months[(month - 1).clamp(0, 11)];
-}
-
 class _NotesSection extends StatelessWidget {
   const _NotesSection({
     required this.color,
@@ -1061,30 +1065,32 @@ class _NotesSection extends StatelessWidget {
     required String habitId,
     required String noteId,
   }) async {
+    final t = AppLocalizations.of(context)!;
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: const Color(0xFF15151A),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
-          'Delete note?',
+          t.habitDetailDeleteNoteTitle,
           style: GoogleFonts.poppins(
             fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
         ),
         content: Text(
-          'This will remove it from both the habit and the journal.',
+          t.habitDetailDeleteNoteMessage,
           style: GoogleFonts.poppins(color: Colors.grey[300]),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancel'),
+            child: Text(t.habitDetailCancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Delete'),
+            child: Text(t.habitDetailDelete),
           ),
         ],
       ),
@@ -1114,23 +1120,23 @@ class _NotesSection extends StatelessWidget {
 
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Note deleted'),
-          duration: Duration(milliseconds: 900),
+        SnackBar(
+          content: Text(t.habitDetailNoteDeleted),
+          duration: const Duration(milliseconds: 900),
         ),
       );
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     final user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
       return _notesShell(
         child: Text(
-          'Please sign in to view notes.',
+          t.habitDetailPleaseSignInNotes,
           style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey[400]),
         ),
       );
@@ -1145,13 +1151,21 @@ class _NotesSection extends StatelessWidget {
         .orderBy('entryDate', descending: true)
         .snapshots();
 
+    String formatDayHeader(DateTime day) {
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+      final isToday = day == today;
+      if (isToday) return t.habitDetailToday;
+      return '${_two(day.day)}/${_two(day.month)}/${day.year}';
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
             Text(
-              'Notes',
+              t.habitDetailNotes,
               style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
@@ -1178,21 +1192,12 @@ class _NotesSection extends StatelessWidget {
 
                 final selected = draft.date;
 
-                /**final noteData = <String, dynamic>{
-                  'text': text,
-                  'entryDate': Timestamp.fromDate(selected),
-                  'createdAt': FieldValue.serverTimestamp(),
-                  'updatedAt': FieldValue.serverTimestamp(),
-                  'habitId': habitId,
-                  'habitTitle': habitTitle,
-                };**/
-
                 try {
                   final db = FirebaseFirestore.instance;
                   final uid = user.uid;
 
-// Create ONE shared ID for both documents
-                  final noteId = db.collection('users').doc(uid).collection('journal').doc().id;
+                  final noteId =
+                      db.collection('users').doc(uid).collection('journal').doc().id;
 
                   final habitNoteRef = db
                       .collection('users')
@@ -1215,7 +1220,7 @@ class _NotesSection extends StatelessWidget {
                     'updatedAt': FieldValue.serverTimestamp(),
                     'habitId': habitId,
                     'habitTitle': habitTitle,
-                    'noteId': noteId, // optional but useful for debugging/migration
+                    'noteId': noteId,
                   };
 
                   final batch = db.batch();
@@ -1223,12 +1228,11 @@ class _NotesSection extends StatelessWidget {
                   batch.set(journalRef, noteData);
                   await batch.commit();
 
-
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Note saved'),
-                        duration: Duration(milliseconds: 900),
+                      SnackBar(
+                        content: Text(t.habitDetailNoteSaved),
+                        duration: const Duration(milliseconds: 900),
                       ),
                     );
                   }
@@ -1236,19 +1240,24 @@ class _NotesSection extends StatelessWidget {
                   debugPrint('Save note failed (${e.code}): ${e.message}');
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Could not save note: ${e.code}')),
+                      SnackBar(
+                        content: Text(t.habitDetailCouldNotSaveNoteWithCode(e.code)),
+                      ),
                     );
                   }
                 } catch (e) {
                   debugPrint('Save note failed: $e');
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Could not save note. Try again.')),
+                      SnackBar(content: Text(t.habitDetailCouldNotSaveNote)),
                     );
                   }
                 }
               },
-              child: Text('Add Note', style: GoogleFonts.poppins(color: color)),
+              child: Text(
+                t.habitDetailAddNote,
+                style: GoogleFonts.poppins(color: color),
+              ),
             ),
           ],
         ),
@@ -1257,10 +1266,12 @@ class _NotesSection extends StatelessWidget {
         StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream: notesStream,
           builder: (context, snap) {
+            final t = AppLocalizations.of(context)!;
+
             if (snap.hasError) {
               return _notesShell(
                 child: Text(
-                  'Could not load notes.',
+                  t.habitDetailCouldNotLoadNotes,
                   style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey[400]),
                 ),
               );
@@ -1269,7 +1280,7 @@ class _NotesSection extends StatelessWidget {
             if (snap.connectionState == ConnectionState.waiting) {
               return _notesShell(
                 child: Text(
-                  'Loading…',
+                  t.habitDetailLoading,
                   style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey[400]),
                 ),
               );
@@ -1279,19 +1290,19 @@ class _NotesSection extends StatelessWidget {
             if (docs.isEmpty) {
               return _notesShell(
                 child: Text(
-                  'No notes yet',
+                  t.habitDetailNoNotesYet,
                   style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey[400]),
                 ),
               );
             }
 
-            // Journal-style grouping by day (Today / dd/mm/yyyy)
             final groups = <DateTime, List<QueryDocumentSnapshot<Map<String, dynamic>>>>{};
             final order = <DateTime>[];
 
             for (final d in docs) {
               final data = d.data();
-              final ts = (data['entryDate'] as Timestamp?) ?? (data['createdAt'] as Timestamp?);
+              final ts =
+                  (data['entryDate'] as Timestamp?) ?? (data['createdAt'] as Timestamp?);
               final dt = ts?.toDate() ?? DateTime.now();
               final day = DateTime(dt.year, dt.month, dt.day);
 
@@ -1316,7 +1327,7 @@ class _NotesSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _formatDayHeader(day),
+                        formatDayHeader(day),
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -1359,7 +1370,11 @@ class _NotesSection extends StatelessWidget {
                                 visualDensity: VisualDensity.compact,
                                 padding: EdgeInsets.zero,
                                 constraints: const BoxConstraints(),
-                                icon: Icon(Icons.delete_outline, color: Colors.grey[400], size: 20),
+                                icon: Icon(
+                                  Icons.delete_outline,
+                                  color: Colors.grey[400],
+                                  size: 20,
+                                ),
                                 onPressed: () async {
                                   final user = FirebaseAuth.instance.currentUser;
                                   if (user == null) return;
@@ -1368,14 +1383,13 @@ class _NotesSection extends StatelessWidget {
                                     context: context,
                                     uid: user.uid,
                                     habitId: habitId,
-                                    noteId: doc.id, // IMPORTANT: doc.id must match the journal doc.id
+                                    noteId: doc.id,
                                   );
                                 },
                               ),
                             ],
                           ),
                         );
-
                       }),
                     ],
                   ),
@@ -1400,18 +1414,9 @@ class _NotesSection extends StatelessWidget {
     );
   }
 
-  String _formatDayHeader(DateTime day) {
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final isToday = day == today;
-    if (isToday) return 'Today';
-    return '${_two(day.day)}/${_two(day.month)}/${day.year}';
-  }
-
   String _formatTime(DateTime d) => '${_two(d.hour)}:${_two(d.minute)}';
   String _two(int n) => n.toString().padLeft(2, '0');
 }
-
 
 class _NoteDraft {
   _NoteDraft({required this.text, required this.date});
@@ -1464,6 +1469,7 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     final viewInsets = MediaQuery.of(context).viewInsets.bottom;
     final h = MediaQuery.of(context).size.height;
 
@@ -1476,7 +1482,7 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            height: h * 0.85, // prevents overflow
+            height: h * 0.85,
             decoration: const BoxDecoration(
               color: Color(0xFF0F0F13),
               borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
@@ -1485,7 +1491,6 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // top row (close)
                 Row(
                   children: [
                     const Spacer(),
@@ -1495,10 +1500,8 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
                     ),
                   ],
                 ),
-
-                // hint title
                 Text(
-                  'What happened today?',
+                  t.habitDetailWhatHappenedToday,
                   style: TextStyle(
                     color: Colors.grey.shade700,
                     fontSize: 16,
@@ -1507,7 +1510,6 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
                 ),
                 const SizedBox(height: 10),
 
-                // editor (fills remaining space)
                 Expanded(
                   child: TextField(
                     controller: _controller,
@@ -1524,7 +1526,6 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
 
                 const SizedBox(height: 14),
 
-                // bottom row: date chip + habit tag + save
                 Row(
                   children: [
                     GestureDetector(
@@ -1605,10 +1606,14 @@ class _AddNoteSheetState extends State<_AddNoteSheet> {
   }
 
   String _formatChipDate(DateTime d) {
+    final t = AppLocalizations.of(context)!;
     final now = DateTime.now();
     final isToday = now.year == d.year && now.month == d.month && now.day == d.day;
-    if (isToday) return 'Today, ${_two(d.hour)}:${_two(d.minute)}';
-    return '${_two(d.day)}/${_two(d.month)}/${d.year}  ${_two(d.hour)}:${_two(d.minute)}';
+
+    final time = '${_two(d.hour)}:${_two(d.minute)}';
+    if (isToday) return t.habitDetailTodayTime(time);
+
+    return '${_two(d.day)}/${_two(d.month)}/${d.year}  $time';
   }
 
   String _two(int n) => n.toString().padLeft(2, '0');
@@ -1635,6 +1640,8 @@ class _CupertinoDateTimePickerSheetState
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return SizedBox(
       height: 320,
       child: Column(
@@ -1645,14 +1652,17 @@ class _CupertinoDateTimePickerSheetState
               children: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Cancel', style: TextStyle(color: Colors.grey[400])),
+                  child: Text(
+                    t.habitDetailPickerCancel,
+                    style: TextStyle(color: Colors.grey[400]),
+                  ),
                 ),
                 const Spacer(),
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(_temp),
-                  child: const Text(
-                    'Done',
-                    style: TextStyle(
+                  child: Text(
+                    t.habitDetailPickerDone,
+                    style: const TextStyle(
                       color: Color(0xFF4C7DFF),
                       fontWeight: FontWeight.w700,
                     ),

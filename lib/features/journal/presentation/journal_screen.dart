@@ -5,7 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:intl/intl.dart';
+
+import '/l10n/app_localizations.dart';
 
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
@@ -37,13 +38,12 @@ class _JournalScreenState extends State<JournalScreen> {
 
     await showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Required for custom height
+      isScrollControlled: true,
       backgroundColor: Colors.black,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder: (ctx) {
-        // WRAPPER: Makes the sheet 85% of the screen height
         return FractionallySizedBox(
           heightFactor: 0.85,
           child: _JournalComposerSheet(
@@ -106,18 +106,18 @@ class _JournalScreenState extends State<JournalScreen> {
     Navigator.of(context).pop();
   }
 
-
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     final user = _user;
 
     if (user == null) {
-      return const Scaffold(
+      return Scaffold(
         backgroundColor: Colors.black,
         body: Center(
           child: Text(
-            'Please sign in to view your journal.',
-            style: TextStyle(color: Colors.white),
+            t.journalSignInPrompt,
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       );
@@ -133,7 +133,7 @@ class _JournalScreenState extends State<JournalScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'Journal',
+          t.journalTitle,
           style: GoogleFonts.poppins(
             fontSize: 22,
             fontWeight: FontWeight.w700,
@@ -150,6 +150,7 @@ class _JournalScreenState extends State<JournalScreen> {
       body: StreamBuilder<List<_JournalEntry>>(
         stream: _entriesStream(user.uid),
         builder: (context, snapshot) {
+          final t = AppLocalizations.of(context)!;
           final entries = snapshot.data ?? const <_JournalEntry>[];
 
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -164,7 +165,8 @@ class _JournalScreenState extends State<JournalScreen> {
             );
           }
 
-          final grouped = _groupByMonth(entries);
+          // ✅ localized grouping
+          final grouped = _groupByMonth(entries, t);
 
           return ListView(
             padding: const EdgeInsets.fromLTRB(20, 8, 20, 80),
@@ -192,7 +194,6 @@ class _JournalScreenState extends State<JournalScreen> {
           );
         },
       ),
-      // FAB REMOVED HERE
     );
   }
 }
@@ -208,6 +209,8 @@ class _EmptyJournalState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final textStyleTitle = GoogleFonts.poppins(
       fontSize: 16,
       fontWeight: FontWeight.w600,
@@ -227,9 +230,9 @@ class _EmptyJournalState extends StatelessWidget {
           children: [
             const _ZzzIcon(),
             const SizedBox(height: 16),
-            Text('No Notes yet', style: textStyleTitle),
+            Text(t.journalEmptyTitle, style: textStyleTitle),
             const SizedBox(height: 4),
-            Text('Add a note to get started', style: textStyleSub),
+            Text(t.journalEmptySubtitle, style: textStyleSub),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: onAdd,
@@ -237,14 +240,13 @@ class _EmptyJournalState extends StatelessWidget {
                 backgroundColor: const Color(0xFF4C7DFF),
                 foregroundColor: Colors.white,
                 elevation: 0,
-                padding:
-                const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
                 ),
               ),
               child: Text(
-                '+ Add',
+                t.journalAddButton,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -360,7 +362,6 @@ class _JournalListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dayBadge = _DayBadge(date: entry.entryDate);
     final timeText = _formatTime(entry.entryDate);
 
     return GestureDetector(
@@ -370,7 +371,7 @@ class _JournalListTile extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            dayBadge,
+            _DayBadge(date: entry.entryDate),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
@@ -443,7 +444,9 @@ class _DayBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final weekday = _weekdayShort(date.weekday).toUpperCase();
+    final t = AppLocalizations.of(context)!;
+
+    final weekday = _weekdayShort(t, date.weekday).toUpperCase();
     final day = date.day.toString();
 
     return Container(
@@ -521,9 +524,10 @@ class _JournalComposerSheetState extends State<_JournalComposerSheet> {
         now.day == _selectedDate.day;
   }
 
-  String get _dateChipLabel {
-    if (_isToday) return 'Today';
-    return _formatChipDateTime(_selectedDate);
+  String _dateChipLabel(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+    if (_isToday) return t.journalToday;
+    return _formatChipDateTime(t, _selectedDate);
   }
 
   Future<void> _pickDateTime() async {
@@ -554,7 +558,7 @@ class _JournalComposerSheetState extends State<_JournalComposerSheet> {
 
   @override
   Widget build(BuildContext context) {
-    // We only worry about bottom insets (keyboard), the height is handled by the parent
+    final t = AppLocalizations.of(context)!;
     final viewInsets = MediaQuery.of(context).viewInsets.bottom;
 
     return Padding(
@@ -565,10 +569,9 @@ class _JournalComposerSheetState extends State<_JournalComposerSheet> {
         bottom: math.max(20, viewInsets + 20),
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.max, // Fill the 85% height
+        mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Close button
           Align(
             alignment: Alignment.centerRight,
             child: IconButton(
@@ -579,14 +582,12 @@ class _JournalComposerSheetState extends State<_JournalComposerSheet> {
             ),
           ),
           const SizedBox(height: 10),
-
-          // Input area - EXPANDED to fill the space
           Expanded(
             child: TextField(
               controller: _controller,
               autofocus: true,
-              maxLines: null, // Allows infinite lines
-              expands: true, // Forces text field to fill the Expanded parent
+              maxLines: null,
+              expands: true,
               textAlignVertical: TextAlignVertical.top,
               style: GoogleFonts.poppins(
                 fontSize: 16,
@@ -594,7 +595,7 @@ class _JournalComposerSheetState extends State<_JournalComposerSheet> {
               ),
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'What happened today?',
+                hintText: t.journalComposerHint,
                 hintStyle: GoogleFonts.poppins(
                   fontSize: 16,
                   color: Colors.grey[700],
@@ -602,14 +603,9 @@ class _JournalComposerSheetState extends State<_JournalComposerSheet> {
               ),
             ),
           ),
-
           const SizedBox(height: 20),
-
-          // Bottom row: date chip + save button
-          // Bottom row: date chip + save button
           Row(
             children: [
-              // tappable date chip ("Today" or selected date)
               GestureDetector(
                 onTap: _pickDateTime,
                 child: Container(
@@ -619,7 +615,7 @@ class _JournalComposerSheetState extends State<_JournalComposerSheet> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    _dateChipLabel,
+                    _dateChipLabel(context),
                     style: GoogleFonts.poppins(
                       fontSize: 11,
                       color: Colors.white,
@@ -679,6 +675,8 @@ class _DateTimePickerSheetState extends State<_DateTimePickerSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return SafeArea(
       top: false,
       child: SizedBox(
@@ -692,7 +690,7 @@ class _DateTimePickerSheetState extends State<_DateTimePickerSheet> {
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
                     child: Text(
-                      'Cancel',
+                      t.commonCancel,
                       style: GoogleFonts.poppins(color: Colors.grey[500]),
                     ),
                   ),
@@ -700,7 +698,7 @@ class _DateTimePickerSheetState extends State<_DateTimePickerSheet> {
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(_temp),
                     child: Text(
-                      'Done',
+                      t.commonDone,
                       style: GoogleFonts.poppins(
                         color: const Color(0xFF4C7DFF),
                         fontWeight: FontWeight.w600,
@@ -715,7 +713,8 @@ class _DateTimePickerSheetState extends State<_DateTimePickerSheet> {
                 data: const CupertinoThemeData(
                   brightness: Brightness.dark,
                   textTheme: CupertinoTextThemeData(
-                    dateTimePickerTextStyle: TextStyle(color: Colors.white, fontSize: 18),
+                    dateTimePickerTextStyle:
+                    TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
                 child: CupertinoDatePicker(
@@ -751,6 +750,7 @@ class _JournalDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     final date = entry.entryDate;
 
     return Scaffold(
@@ -768,34 +768,44 @@ class _JournalDetailScreen extends StatelessWidget {
             onPressed: () async {
               final ok = await showDialog<bool>(
                 context: context,
-                builder: (ctx) => AlertDialog(
-                  backgroundColor: const Color(0xFF1C1C1E),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  title: Text(
-                    'Delete note?',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                builder: (ctx) {
+                  final t = AppLocalizations.of(ctx)!;
+                  return AlertDialog(
+                    backgroundColor: const Color(0xFF1C1C1E),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                  ),
-                  content: Text(
-                    'This action cannot be undone.',
-                    style: GoogleFonts.poppins(color: Colors.grey[400]),
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(ctx).pop(false),
-                      child: Text('Cancel', style: TextStyle(color: Colors.grey[400])),
+                    title: Text(
+                      t.journalDeleteNoteTitle,
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
                     ),
-                    TextButton(
-                      onPressed: () => Navigator.of(ctx).pop(true),
-                      child: const Text('Delete', style: TextStyle(color: Colors.redAccent)),
+                    content: Text(
+                      t.journalDeleteNoteBody,
+                      style: GoogleFonts.poppins(color: Colors.grey[400]),
                     ),
-                  ],
-                ),
-              ) ?? false;
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(false),
+                        child: Text(
+                          t.commonCancel,
+                          style: TextStyle(color: Colors.grey[400]),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(true),
+                        child: Text(
+                          t.commonDelete,
+                          style: const TextStyle(color: Colors.redAccent),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ) ??
+                  false;
 
               if (ok) await onDelete();
             },
@@ -812,7 +822,7 @@ class _JournalDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              _formatDetailDate(date),
+              _formatDetailDate(t, date),
               style: GoogleFonts.poppins(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -888,8 +898,6 @@ class _JournalEntry {
   }
 }
 
-
-
 class _MonthGroupData {
   final String monthLabel;
   final List<_JournalEntry> entries;
@@ -897,22 +905,26 @@ class _MonthGroupData {
   _MonthGroupData(this.monthLabel, this.entries);
 }
 
-List<_MonthGroupData> _groupByMonth(List<_JournalEntry> entries) {
+List<_MonthGroupData> _groupByMonth(
+    List<_JournalEntry> entries,
+    AppLocalizations t,
+    ) {
   final map = <String, List<_JournalEntry>>{};
 
   for (final e in entries) {
-    final key = '${e.entryDate.year}-${e.entryDate.month.toString().padLeft(2, '0')}';
+    final key =
+        '${e.entryDate.year}-${e.entryDate.month.toString().padLeft(2, '0')}';
     map.putIfAbsent(key, () => []).add(e);
   }
 
-  final keys = map.keys.toList()
-    ..sort((a, b) => b.compareTo(a));
+  final keys = map.keys.toList()..sort((a, b) => b.compareTo(a));
 
   return keys.map((k) {
     final parts = k.split('-');
     final year = int.tryParse(parts[0]) ?? 0;
     final month = int.tryParse(parts[1]) ?? 1;
-    final label = _monthName(month);
+
+    final label = _monthName(t, month);
     final display = year > 0 ? '$label $year' : label;
 
     final list = map[k]!..sort((a, b) => b.entryDate.compareTo(a.entryDate));
@@ -921,28 +933,90 @@ List<_MonthGroupData> _groupByMonth(List<_JournalEntry> entries) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* FORMATTERS                                                                 */
+/* FORMATTERS (FULLY LOCALIZED MONTHS + WEEKDAYS)                             */
 /* -------------------------------------------------------------------------- */
 
-String _weekdayShort(int weekday) {
-  const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  return labels[(weekday - 1).clamp(0, 6)];
+String _weekdayShort(AppLocalizations t, int weekday) {
+  switch (weekday) {
+    case DateTime.monday:
+      return t.weekdayMonShort;
+    case DateTime.tuesday:
+      return t.weekdayTueShort;
+    case DateTime.wednesday:
+      return t.weekdayWedShort;
+    case DateTime.thursday:
+      return t.weekdayThuShort;
+    case DateTime.friday:
+      return t.weekdayFriShort;
+    case DateTime.saturday:
+      return t.weekdaySatShort;
+    case DateTime.sunday:
+      return t.weekdaySunShort;
+    default:
+      return t.weekdayMonShort;
+  }
 }
 
-String _monthName(int month) {
-  const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-  return months[(month - 1).clamp(0, 11)];
+String _monthName(AppLocalizations t, int month) {
+  switch (month) {
+    case 1:
+      return t.monthJanuary;
+    case 2:
+      return t.monthFebruary;
+    case 3:
+      return t.monthMarch;
+    case 4:
+      return t.monthApril;
+    case 5:
+      return t.monthMay;
+    case 6:
+      return t.monthJune;
+    case 7:
+      return t.monthJuly;
+    case 8:
+      return t.monthAugust;
+    case 9:
+      return t.monthSeptember;
+    case 10:
+      return t.monthOctober;
+    case 11:
+      return t.monthNovember;
+    case 12:
+      return t.monthDecember;
+    default:
+      return t.monthJanuary;
+  }
 }
 
-String _monthShort(int month) {
-  const months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  ];
-  return months[(month - 1).clamp(0, 11)];
+String _monthShort(AppLocalizations t, int month) {
+  switch (month) {
+    case 1:
+      return t.monthJanuaryShort;
+    case 2:
+      return t.monthFebruaryShort;
+    case 3:
+      return t.monthMarchShort;
+    case 4:
+      return t.monthAprilShort;
+    case 5:
+      return t.monthMayShort;
+    case 6:
+      return t.monthJuneShort;
+    case 7:
+      return t.monthJulyShort;
+    case 8:
+      return t.monthAugustShort;
+    case 9:
+      return t.monthSeptemberShort;
+    case 10:
+      return t.monthOctoberShort;
+    case 11:
+      return t.monthNovemberShort;
+    case 12:
+      return t.monthDecemberShort;
+    default:
+      return t.monthJanuaryShort;
+  }
 }
 
 String _formatTime(DateTime d) {
@@ -951,12 +1025,12 @@ String _formatTime(DateTime d) {
   return '$h:$m';
 }
 
-String _formatChipDateTime(DateTime d) {
+String _formatChipDateTime(AppLocalizations t, DateTime d) {
   final day = d.day.toString();
-  final month = _monthShort(d.month);
+  final month = _monthShort(t, d.month);
   return '$day $month';
 }
 
-String _formatDetailDate(DateTime d) {
-  return '${d.day} ${_monthShort(d.month)}';
+String _formatDetailDate(AppLocalizations t, DateTime d) {
+  return '${d.day} ${_monthShort(t, d.month)}';
 }

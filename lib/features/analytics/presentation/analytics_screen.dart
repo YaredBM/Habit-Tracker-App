@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '/l10n/app_localizations.dart';
+
 /* -------------------------------------------------------------------------- */
 /* ENUMS & CONSTANTS                                                          */
 /* -------------------------------------------------------------------------- */
@@ -22,11 +24,9 @@ class AnalyticsScreen extends StatefulWidget {
 
   final String? habitId;
 
-
   @override
   State<AnalyticsScreen> createState() => _AnalyticsScreenState();
 }
-
 
 class _AnalyticsScreenState extends State<AnalyticsScreen> {
   AnalyticsRange _range = AnalyticsRange.week;
@@ -43,14 +43,16 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      return const Scaffold(
+      return Scaffold(
         backgroundColor: Colors.black,
         body: Center(
           child: Text(
-            'Please sign in to view analytics.',
-            style: TextStyle(color: Colors.white),
+            t.analyticsSignInPrompt,
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       );
@@ -72,7 +74,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'Analytics',
+          t.analyticsTitle,
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.w700,
@@ -83,15 +85,18 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: habitsStream,
         builder: (context, snapshot) {
+          final t = AppLocalizations.of(context)!;
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(color: Colors.white),
             );
           }
+
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return Center(
               child: Text(
-                'No habits yet',
+                t.analyticsNoHabitsYet,
                 style: GoogleFonts.poppins(color: Colors.white),
               ),
             );
@@ -102,7 +107,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
           for (final doc in docs) {
             final data = doc.data();
-            final title = data['title'] as String? ?? 'Habit';
+            final title = (data['title'] as String?) ?? t.analyticsHabitFallbackTitle;
             final colorValue = data['color'] as int? ?? 0xFF5CE1E6;
 
             // completedDates
@@ -110,9 +115,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             (data['completedDates'] as List<dynamic>? ?? []).cast<String>();
             final completedSet = _parseDates(completedDatesRaw);
 
-            // NEW: progressByDate + goal info (same pattern as HabitDetailScreen)
-            final rawProgress =
-            (data['progressByDate'] as Map<String, dynamic>? ?? {});
+            // progressByDate + goal info (same pattern as HabitDetailScreen)
+            final rawProgress = (data['progressByDate'] as Map<String, dynamic>? ?? {});
             final progressByDate = <String, num>{};
             rawProgress.forEach((key, value) {
               if (value is num) {
@@ -122,8 +126,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
             final goalEnabled = (data['goalEnabled'] as bool?) ?? false;
             final rawGoalValue = (data['goalValue'] as int?) ?? 1;
-            final goalValue =
-            goalEnabled ? (rawGoalValue <= 0 ? 1 : rawGoalValue) : 1;
+            final goalValue = goalEnabled ? (rawGoalValue <= 0 ? 1 : rawGoalValue) : 1;
 
             final best = _bestStreak(completedSet);
             final current = _currentStreak(completedSet);
@@ -148,27 +151,22 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             );
           }
 
-
           _HabitAnalyticsData? selectedHabit;
           if (_selectedHabitId != null) {
             try {
-              selectedHabit =
-                  habits.firstWhere((h) => h.id == _selectedHabitId);
+              selectedHabit = habits.firstWhere((h) => h.id == _selectedHabitId);
             } catch (_) {
               selectedHabit = null;
             }
           }
-          final bool showAll =
-              _selectedHabitId == null || selectedHabit == null;
+
+          final bool showAll = _selectedHabitId == null || selectedHabit == null;
 
           final completionsByDay = _aggregateCompletions(habits);
 
           final double averageScore = habits.isEmpty
               ? 0
-              : habits
-              .map((h) => h.monthlyScore)
-              .fold<int>(0, (a, b) => a + b) /
-              habits.length;
+              : habits.map((h) => h.monthlyScore).fold<int>(0, (a, b) => a + b) / habits.length;
 
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -234,7 +232,6 @@ class _HabitAnalyticsData {
   final Color color;
   final Set<DateTime> completedDates;
 
-  // NEW: same data used in HabitDetailScreen
   final Map<String, num> progressByDate;
   final bool goalEnabled;
   final int goalValue;
@@ -256,7 +253,6 @@ class _HabitAnalyticsData {
     required this.monthlyScore,
   });
 }
-
 
 class _ChartPoint {
   final DateTime date;
@@ -294,8 +290,7 @@ DateTime _stripTime(DateTime d) => DateTime(d.year, d.month, d.day);
 
 int _currentStreak(Set<DateTime> completed) {
   int streak = 0;
-  DateTime cursor = DateTime.now();
-  cursor = _stripTime(cursor);
+  DateTime cursor = _stripTime(DateTime.now());
 
   if (!completed.contains(cursor)) {
     cursor = cursor.subtract(const Duration(days: 1));
@@ -345,31 +340,83 @@ int _calculateScore({
   return ((count / daysInMonth) * 100).round().clamp(0, 100);
 }
 
-String _monthLabel(DateTime d) {
-  const months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  ];
-  return '${months[d.month - 1]} ${d.year}';
+/// Localized short month name (Jan..Dec) via l10n keys.
+String _monthShortL10n(AppLocalizations t, int month) {
+  switch (month) {
+    case 1:
+      return t.monthShortJan;
+    case 2:
+      return t.monthShortFeb;
+    case 3:
+      return t.monthShortMar;
+    case 4:
+      return t.monthShortApr;
+    case 5:
+      return t.monthShortMay;
+    case 6:
+      return t.monthShortJun;
+    case 7:
+      return t.monthShortJul;
+    case 8:
+      return t.monthShortAug;
+    case 9:
+      return t.monthShortSep;
+    case 10:
+      return t.monthShortOct;
+    case 11:
+      return t.monthShortNov;
+    case 12:
+      return t.monthShortDec;
+    default:
+      return t.monthShortJan;
+  }
 }
 
-_BarChartData _prepareBarData(AnalyticsRange range, DateTime currentMonth,
-    double Function(DateTime) getValue) {
+/// Localized weekday short (Mon..Sun) via l10n keys.
+String _weekdayShortL10n(AppLocalizations t, int weekdayMonIs1) {
+  switch (weekdayMonIs1) {
+    case 1:
+      return t.weekdayShortMon;
+    case 2:
+      return t.weekdayShortTue;
+    case 3:
+      return t.weekdayShortWed;
+    case 4:
+      return t.weekdayShortThu;
+    case 5:
+      return t.weekdayShortFri;
+    case 6:
+      return t.weekdayShortSat;
+    case 7:
+      return t.weekdayShortSun;
+    default:
+      return t.weekdayShortMon;
+  }
+}
+
+String _monthLabel(AppLocalizations t, DateTime d) {
+  return '${_monthShortL10n(t, d.month)} ${d.year}';
+}
+
+_BarChartData _prepareBarData(
+    AppLocalizations t,
+    AnalyticsRange range,
+    DateTime currentMonth,
+    double Function(DateTime) getValue,
+    ) {
   final barValues = <double>[];
   final xLabels = <String>[];
   final labelIndices = <int>[];
+
   final now = DateTime.now();
-  final daysInMonth =
-      DateTime(currentMonth.year, currentMonth.month + 1, 0).day;
+  final daysInMonth = DateTime(currentMonth.year, currentMonth.month + 1, 0).day;
 
   if (range == AnalyticsRange.week) {
-    final weekStart = now.subtract(Duration(days: now.weekday - 1));
-    const weekdayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
+    final weekStart = now.subtract(Duration(days: now.weekday - 1)); // Monday start
     for (int i = 0; i < 7; i++) {
       final date = weekStart.add(Duration(days: i));
       barValues.add(getValue(date));
-      xLabels.add(weekdayLabels[i]);
+      xLabels.add(_weekdayShortL10n(t, i + 1));
       labelIndices.add(i);
     }
   } else {
@@ -406,12 +453,14 @@ class _HabitTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
           _TabChip(
-            label: 'All habits',
+            label: t.analyticsAllHabitsTab,
             selected: selectedHabitId == null,
             onTap: () => onSelected(null),
           ),
@@ -488,9 +537,16 @@ class _AllHabitsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     const accent = Color(0xFFB4FF39);
-    final barData = _prepareBarData(range, currentMonth,
-            (date) => (completionsByDay[_stripTime(date)] ?? 0).toDouble());
+
+    final barData = _prepareBarData(
+      t,
+      range,
+      currentMonth,
+          (date) => (completionsByDay[_stripTime(date)] ?? 0).toDouble(),
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -499,14 +555,14 @@ class _AllHabitsView extends StatelessWidget {
           child: _ScoreDonut(
             percentage: averageScore,
             color: accent,
-            label: 'Average Score',
+            label: t.analyticsAverageScore,
           ),
         ),
         const SizedBox(height: 24),
         _BarChartSection(
-          title: 'Habits completed',
+          title: t.analyticsHabitsCompletedTitle,
           totalValue: barData.total.toInt().toString(),
-          subTitle: 'Total completed habits',
+          subTitle: t.analyticsTotalCompletedHabitsSubtitle,
           barValues: barData.values,
           xLabels: barData.labels,
           labelIndices: barData.indices,
@@ -519,7 +575,7 @@ class _AllHabitsView extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                'Habit heatmap',
+                t.analyticsHabitHeatmapTitle,
                 style: GoogleFonts.poppins(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
@@ -530,29 +586,28 @@ class _AllHabitsView extends StatelessWidget {
             TextButton.icon(
               onPressed: () async {
                 final picked = await showDatePicker(
-                    context: context,
-                    initialDate: currentMonth,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                    builder: (context, child) {
-                      return Theme(data: ThemeData.dark(), child: child!);
-                    });
+                  context: context,
+                  initialDate: currentMonth,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                  builder: (context, child) {
+                    return Theme(data: ThemeData.dark(), child: child!);
+                  },
+                );
                 if (picked != null) {
                   onMonthChanged(DateTime(picked.year, picked.month));
                 }
               },
               style: TextButton.styleFrom(
                 backgroundColor: const Color(0xFF1B1B20),
-                padding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              icon: const Icon(Icons.calendar_today,
-                  size: 14, color: Colors.white),
+              icon: const Icon(Icons.calendar_today, size: 14, color: Colors.white),
               label: Text(
-                _monthLabel(currentMonth),
+                _monthLabel(t, currentMonth),
                 style: GoogleFonts.poppins(fontSize: 12, color: Colors.white),
               ),
             ),
@@ -581,7 +636,6 @@ class _SingleHabitView extends StatelessWidget {
   final AnalyticsRange range;
   final ValueChanged<AnalyticsRange> onRangeChanged;
 
-  // 4 anchor days like the design: 3, 10, 17, 24 (clamped to the month)
   List<int> _anchorDaysForMonth(DateTime month, int lastDay) {
     const desired = [3, 10, 17, 24];
     return desired.where((d) => d <= lastDay).toList();
@@ -592,8 +646,7 @@ class _SingleHabitView extends StatelessWidget {
     final daysInMonth = DateTime(month.year, month.month + 1, 0).day;
 
     final now = DateTime.now();
-    final isCurrentMonth =
-        now.year == month.year && now.month == month.month;
+    final isCurrentMonth = now.year == month.year && now.month == month.month;
     final lastDay = isCurrentMonth ? now.day.clamp(1, daysInMonth) : daysInMonth;
 
     final monthCompletions = habit.completedDates
@@ -606,7 +659,7 @@ class _SingleHabitView extends StatelessWidget {
 
     for (final anchorDay in anchors) {
       final endDay = anchorDay;
-      final startDay = math.max(1, endDay - 6); // last 7 days window
+      final startDay = math.max(1, endDay - 6);
 
       int count = 0;
       for (int d = startDay; d <= endDay; d++) {
@@ -619,7 +672,7 @@ class _SingleHabitView extends StatelessWidget {
       points.add(
         _ChartPoint(
           date: DateTime(month.year, month.month, anchorDay),
-          value: count.toDouble(), // 0–7 → visible ups/downs
+          value: count.toDouble(),
         ),
       );
     }
@@ -627,18 +680,13 @@ class _SingleHabitView extends StatelessWidget {
     return points;
   }
 
-
-  // Monthly "Score" line – same logic as HabitDetailScreen score graph,
-  // but uses the month passed into this widget.
   List<_ChartPoint> _scoreTrendPoints() {
     final month = DateTime(currentMonth.year, currentMonth.month);
     final daysInMonth = DateTime(month.year, month.month + 1, 0).day;
 
     final now = DateTime.now();
-    final isCurrentMonth =
-        now.year == month.year && now.month == month.month;
-    final lastDay =
-    isCurrentMonth ? now.day.clamp(1, daysInMonth) : daysInMonth;
+    final isCurrentMonth = now.year == month.year && now.month == month.month;
+    final lastDay = isCurrentMonth ? now.day.clamp(1, daysInMonth) : daysInMonth;
 
     final monthCompletions = habit.completedDates
         .where((d) => d.year == month.year && d.month == month.month)
@@ -653,8 +701,6 @@ class _SingleHabitView extends StatelessWidget {
       if (monthCompletions.contains(date)) {
         completedSoFar++;
       }
-
-      // Score to date: completions so far / days passed * 100
       final score = (completedSoFar / day * 100.0).clamp(0.0, 100.0);
       points.add(_ChartPoint(date: date, value: score));
     }
@@ -662,50 +708,45 @@ class _SingleHabitView extends StatelessWidget {
     return points;
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
-    final donutSection = Center(
-      child: _ScoreDonut(
-        percentage: habit.monthlyScore.toDouble(),
-        color: habit.color,
-        label: 'Average Score',
-      ),
-    );
+    final t = AppLocalizations.of(context)!;
 
-    final barData = _prepareBarData(range, currentMonth,
-            (date) => (habit.completedDates.contains(_stripTime(date)) ? 1.0 : 0.0));
-
-    final barSection = _BarChartSection(
-      title: 'Habits completed',
-      totalValue: barData.total.toInt().toString(),
-      subTitle: 'Total completed habits',
-      barValues: barData.values,
-      xLabels: barData.labels,
-      labelIndices: barData.indices,
-      barColor: habit.color,
-      range: range,
-      onRangeChanged: onRangeChanged,
+    final barData = _prepareBarData(
+      t,
+      range,
+      currentMonth,
+          (date) => (habit.completedDates.contains(_stripTime(date)) ? 1.0 : 0.0),
     );
 
     final weeklyPoints = _weeklyCompletionPoints();
     final scorePoints = _scoreTrendPoints();
 
-    // Use a fixed "Score" color like Orange/Gold if desired, or habit color
-    // The image shows an orange/gold color for the score line.
-    //final scoreColor = const Color(0xFFFFAC30);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        donutSection,
+        Center(
+          child: _ScoreDonut(
+            percentage: habit.monthlyScore.toDouble(),
+            color: habit.color,
+            label: t.analyticsAverageScore,
+          ),
+        ),
         const SizedBox(height: 24),
-        barSection,
+        _BarChartSection(
+          title: t.analyticsHabitsCompletedTitle,
+          totalValue: barData.total.toInt().toString(),
+          subTitle: t.analyticsTotalCompletedHabitsSubtitle,
+          barValues: barData.values,
+          xLabels: barData.labels,
+          labelIndices: barData.indices,
+          barColor: habit.color,
+          range: range,
+          onRangeChanged: onRangeChanged,
+        ),
         const SizedBox(height: 24),
         Text(
-          'Streak',
+          t.analyticsStreakTitle,
           style: GoogleFonts.poppins(
             fontSize: 15,
             fontWeight: FontWeight.w600,
@@ -717,7 +758,7 @@ class _SingleHabitView extends StatelessWidget {
           children: [
             Expanded(
               child: _StreakCard(
-                label: 'Best streak',
+                label: t.analyticsBestStreak,
                 value: habit.bestStreak,
                 iconAsset: 'lib/assets/best_streak.png',
               ),
@@ -725,7 +766,7 @@ class _SingleHabitView extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: _StreakCard(
-                label: 'Current streak',
+                label: t.analyticsCurrentStreak,
                 value: habit.currentStreak,
                 iconAsset: 'lib/assets/current_streak.png',
               ),
@@ -734,7 +775,7 @@ class _SingleHabitView extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         Text(
-          'Weekly Completions',
+          t.analyticsWeeklyCompletionsTitle,
           style: GoogleFonts.poppins(
             fontSize: 15,
             fontWeight: FontWeight.w600,
@@ -746,10 +787,9 @@ class _SingleHabitView extends StatelessWidget {
           points: weeklyPoints,
           color: habit.color,
         ),
-
         const SizedBox(height: 24),
         Text(
-          'Score',
+          t.analyticsScoreTitle,
           style: GoogleFonts.poppins(
             fontSize: 15,
             fontWeight: FontWeight.w600,
@@ -761,7 +801,6 @@ class _SingleHabitView extends StatelessWidget {
           points: scorePoints,
           color: habit.color,
         ),
-
       ],
     );
   }
@@ -846,9 +885,8 @@ class _BarChartSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final maxValue = barValues.isEmpty
-        ? 1.0
-        : barValues.reduce(math.max).clamp(1.0, 999.0);
+    final maxValue =
+    barValues.isEmpty ? 1.0 : barValues.reduce(math.max).clamp(1.0, 999.0);
     final topYLabel = maxValue.round();
 
     return Column(
@@ -955,8 +993,7 @@ class _BarChartSection extends StatelessWidget {
                   builder: (context, constraints) {
                     final width = constraints.maxWidth;
                     final children = <Widget>[];
-                    if (barValues.isNotEmpty &&
-                        barValues.length == xLabels.length) {
+                    if (barValues.isNotEmpty && barValues.length == xLabels.length) {
                       final n = barValues.length;
                       final totalSpacing = width * 0.25;
                       final barWidth = (width - totalSpacing) / n;
@@ -966,7 +1003,8 @@ class _BarChartSection extends StatelessWidget {
                         if (index < 0 || index >= xLabels.length) continue;
                         final barLeft = space + index * (barWidth + space);
                         final barCenter = barLeft + barWidth / 2;
-                        var left = barCenter - 10;
+                        final left = barCenter - 10;
+
                         children.add(
                           Positioned(
                             left: left,
@@ -1043,7 +1081,7 @@ class _StreakCard extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Image.asset(
-            iconAsset, // e.g. assets/best_streak.png
+            iconAsset,
             width: 28,
             height: 28,
             fit: BoxFit.contain,
@@ -1073,8 +1111,7 @@ class _LineChartCard extends StatefulWidget {
   State<_LineChartCard> createState() => _LineChartCardState();
 }
 
-class _LineChartCardState extends State<_LineChartCard>
-    with SingleTickerProviderStateMixin {
+class _LineChartCardState extends State<_LineChartCard> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -1095,7 +1132,6 @@ class _LineChartCardState extends State<_LineChartCard>
   @override
   void didUpdateWidget(covariant _LineChartCard oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Any time the parent rebuilds with new points, rerun the animation
     _controller.forward(from: 0);
   }
 
@@ -1105,7 +1141,6 @@ class _LineChartCardState extends State<_LineChartCard>
     super.dispose();
   }
 
-  // 0, 1/3, 2/3, last – like the 4 anchors in the design
   List<int> _computeTickIndices(int n) {
     if (n <= 1) return [0];
     if (n <= 4) return List<int>.generate(n, (i) => i);
@@ -1123,16 +1158,14 @@ class _LineChartCardState extends State<_LineChartCard>
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     final yLabelSuffix = widget.isPercent ? '%' : '';
 
     double maxY;
     if (widget.fixedYLabels != null && widget.fixedYLabels!.isNotEmpty) {
       maxY = widget.fixedYLabels!.reduce(math.max).toDouble();
     } else if (widget.points.isNotEmpty) {
-      maxY = widget.points
-          .map((p) => p.value)
-          .reduce(math.max)
-          .clamp(1.0, double.infinity);
+      maxY = widget.points.map((p) => p.value).reduce(math.max).clamp(1.0, double.infinity);
     } else {
       maxY = 1.0;
     }
@@ -1155,15 +1188,13 @@ class _LineChartCardState extends State<_LineChartCard>
             height: 180,
             child: Row(
               children: [
-                // Y axis labels
                 SizedBox(
                   width: 30,
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       final height = constraints.maxHeight;
 
-                      if (widget.fixedYLabels != null &&
-                          widget.fixedYLabels!.isNotEmpty) {
+                      if (widget.fixedYLabels != null && widget.fixedYLabels!.isNotEmpty) {
                         return Stack(
                           children: widget.fixedYLabels!.map((val) {
                             final normalized = (val / maxY).clamp(0.0, 1.0);
@@ -1190,7 +1221,6 @@ class _LineChartCardState extends State<_LineChartCard>
                         );
                       }
 
-                      // fallback 0, 100
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -1218,9 +1248,8 @@ class _LineChartCardState extends State<_LineChartCard>
                   child: widget.points.isEmpty
                       ? Center(
                     child: Text(
-                      'No data',
-                      style:
-                      GoogleFonts.poppins(color: Colors.grey[700]),
+                      t.analyticsNoData,
+                      style: GoogleFonts.poppins(color: Colors.grey[700]),
                     ),
                   )
                       : AnimatedBuilder(
@@ -1244,7 +1273,6 @@ class _LineChartCardState extends State<_LineChartCard>
             ),
           ),
           const SizedBox(height: 12),
-          // X axis
           if (widget.labelMode == _LabelMode.all)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1262,7 +1290,7 @@ class _LineChartCardState extends State<_LineChartCard>
                         ),
                       ),
                       Text(
-                        _monthShort(p.date.month),
+                        _monthShortL10n(t, p.date.month),
                         style: GoogleFonts.poppins(
                           fontSize: 9,
                           color: Colors.grey[600],
@@ -1282,9 +1310,7 @@ class _LineChartCardState extends State<_LineChartCard>
                   final n = widget.points.length;
                   if (n == 0) return const SizedBox.shrink();
 
-                  final ticks = tickIndices.isEmpty
-                      ? List<int>.generate(n, (i) => i)
-                      : tickIndices;
+                  final ticks = tickIndices.isEmpty ? List<int>.generate(n, (i) => i) : tickIndices;
 
                   final maxIndex = n - 1;
                   final children = <Widget>[];
@@ -1292,14 +1318,14 @@ class _LineChartCardState extends State<_LineChartCard>
                   for (final index in ticks) {
                     if (index < 0 || index >= n) continue;
 
-                    final t = maxIndex == 0 ? 0.0 : index / maxIndex;
-                    final centerX = width * t;
+                    final tt = maxIndex == 0 ? 0.0 : index / maxIndex;
+                    final centerX = width * tt;
                     final left = (centerX - 12).clamp(0.0, width - 24);
 
                     final p = widget.points[index];
                     final showMonth = index == 0;
                     final label = showMonth
-                        ? '${p.date.day}\n${_monthShort(p.date.month)}'
+                        ? '${p.date.day}\n${_monthShortL10n(t, p.date.month)}'
                         : '${p.date.day}';
 
                     children.add(
@@ -1329,24 +1355,6 @@ class _LineChartCardState extends State<_LineChartCard>
       ),
     );
   }
-
-  String _monthShort(int m) {
-    const ms = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ];
-    return ms[(m - 1) % 12];
-  }
 }
 
 class _ScoreGraphCard extends StatelessWidget {
@@ -1358,18 +1366,14 @@ class _ScoreGraphCard extends StatelessWidget {
   final List<_ChartPoint> points;
   final Color color;
 
-  String _formatDate(DateTime date, {required bool showMonth}) {
+  String _formatDate(AppLocalizations t, DateTime date, {required bool showMonth}) {
     if (!showMonth) return '${date.day}';
-    const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-    return '${date.day}\n${months[date.month - 1]}';
+    return '${date.day}\n${_monthShortL10n(t, date.month)}';
   }
 
   @override
   Widget build(BuildContext context) {
-    // Same tick days as the HabitDetailScreen Score graph
+    final t = AppLocalizations.of(context)!;
     const tickDays = [3, 10, 17, 24];
 
     if (points.isEmpty) {
@@ -1382,7 +1386,7 @@ class _ScoreGraphCard extends StatelessWidget {
         ),
         alignment: Alignment.center,
         child: Text(
-          'No data',
+          t.analyticsNoData,
           style: GoogleFonts.poppins(color: Colors.grey[700]),
         ),
       );
@@ -1396,7 +1400,7 @@ class _ScoreGraphCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
       ),
       child: SizedBox(
-        height: 180, // slightly shorter to fit analytics layout
+        height: 180,
         child: LayoutBuilder(
           builder: (context, constraints) {
             const bottomPadding = 26.0;
@@ -1404,7 +1408,6 @@ class _ScoreGraphCard extends StatelessWidget {
 
             return Stack(
               children: [
-                // Y axis labels
                 Positioned(
                   left: 0,
                   top: 0,
@@ -1423,7 +1426,6 @@ class _ScoreGraphCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Chart area
                 Positioned(
                   left: leftPadding,
                   top: 0,
@@ -1437,7 +1439,6 @@ class _ScoreGraphCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // X axis tick labels
                 Positioned(
                   left: leftPadding,
                   right: 0,
@@ -1446,9 +1447,7 @@ class _ScoreGraphCard extends StatelessWidget {
                   child: LayoutBuilder(
                     builder: (ctx, box) {
                       final totalPoints = points.length;
-                      if (totalPoints == 0) {
-                        return const SizedBox.shrink();
-                      }
+                      if (totalPoints == 0) return const SizedBox.shrink();
 
                       return Stack(
                         children: tickDays.map((day) {
@@ -1458,15 +1457,12 @@ class _ScoreGraphCard extends StatelessWidget {
                           }
 
                           final divisor = math.max(1, totalPoints - 1);
-                          final t = index / divisor; // 0..1
-                          final alignX = t * 2 - 1; // -1..1
+                          final tt = index / divisor;
+                          final alignX = tt * 2 - 1;
 
                           final date = points[index].date;
                           final showMonth = day == tickDays.first;
-                          final label = _formatDate(
-                            date,
-                            showMonth: showMonth,
-                          );
+                          final label = _formatDate(t, date, showMonth: showMonth);
 
                           return Align(
                             alignment: Alignment(alignX, 0),
@@ -1503,17 +1499,15 @@ class _WeeklyCompletionsGraphCard extends StatelessWidget {
   final List<_ChartPoint> points;
   final Color color;
 
-  String _formatDate(DateTime date, {required bool showMonth}) {
+  String _formatDate(AppLocalizations t, DateTime date, {required bool showMonth}) {
     if (!showMonth) return '${date.day}';
-    const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-    return '${date.day}\n${months[date.month - 1]}';
+    return '${date.day}\n${_monthShortL10n(t, date.month)}';
   }
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     if (points.isEmpty) {
       return Container(
         width: double.infinity,
@@ -1524,7 +1518,7 @@ class _WeeklyCompletionsGraphCard extends StatelessWidget {
         ),
         alignment: Alignment.center,
         child: Text(
-          'No data',
+          t.analyticsNoData,
           style: GoogleFonts.poppins(color: Colors.grey[700]),
         ),
       );
@@ -1538,20 +1532,17 @@ class _WeeklyCompletionsGraphCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
       ),
       child: SizedBox(
-        height: 180, // similar height to Score graph
+        height: 180,
         child: LayoutBuilder(
           builder: (context, constraints) {
             const bottomPadding = 26.0;
             const leftPadding = 32.0;
             final totalPoints = points.length;
 
-            if (totalPoints == 0) {
-              return const SizedBox.shrink();
-            }
+            if (totalPoints == 0) return const SizedBox.shrink();
 
             return Stack(
               children: [
-                // Y-axis labels: 7,5,3,0 (like your old Weekly chart)
                 Positioned(
                   left: 0,
                   top: 0,
@@ -1568,9 +1559,6 @@ class _WeeklyCompletionsGraphCard extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // Chart area – uses the same smooth painter as before,
-                // just configured for a 0–7 range and our 4 anchor points.
                 Positioned(
                   left: leftPadding,
                   top: 0,
@@ -1583,15 +1571,11 @@ class _WeeklyCompletionsGraphCard extends StatelessWidget {
                       maxY: 7.0,
                       labelMode: _LabelMode.ticks,
                       horizontalGridValues: const [7, 5, 3, 0],
-                      progress: 1.0, // no animation here
-                      tickIndices:
-                      List<int>.generate(totalPoints, (i) => i),
+                      progress: 1.0,
+                      tickIndices: List<int>.generate(totalPoints, (i) => i),
                     ),
                   ),
                 ),
-
-                // X-axis labels – 3,10,17,24 with month under the first,
-                // spaced exactly like the Score graph.
                 Positioned(
                   left: leftPadding,
                   right: 0,
@@ -1606,15 +1590,12 @@ class _WeeklyCompletionsGraphCard extends StatelessWidget {
                           for (int i = 0; i < totalPoints; i++)
                             Builder(
                               builder: (ctx) {
-                                final t = i / divisor; // 0..1
-                                final alignX = t * 2 - 1; // -1..1
+                                final tt = i / divisor;
+                                final alignX = tt * 2 - 1;
 
                                 final date = points[i].date;
                                 final showMonth = i == 0;
-                                final label = _formatDate(
-                                  date,
-                                  showMonth: showMonth,
-                                );
+                                final label = _formatDate(t, date, showMonth: showMonth);
 
                                 return Align(
                                   alignment: Alignment(alignX, 0),
@@ -1644,7 +1625,6 @@ class _WeeklyCompletionsGraphCard extends StatelessWidget {
   }
 }
 
-
 class _ScoreAxisLabel extends StatelessWidget {
   const _ScoreAxisLabel(this.text);
   final String text;
@@ -1662,7 +1642,6 @@ class _ScoreAxisLabel extends StatelessWidget {
   }
 }
 
-
 class _RangeToggle extends StatelessWidget {
   const _RangeToggle({
     required this.range,
@@ -1674,6 +1653,8 @@ class _RangeToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
@@ -1684,12 +1665,12 @@ class _RangeToggle extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _RangeChip(
-            label: 'This week',
+            label: t.analyticsThisWeek,
             selected: range == AnalyticsRange.week,
             onTap: () => onChanged(AnalyticsRange.week),
           ),
           _RangeChip(
-            label: 'This month',
+            label: t.analyticsThisMonth,
             selected: range == AnalyticsRange.month,
             onTap: () => onChanged(AnalyticsRange.month),
           ),
@@ -1744,10 +1725,22 @@ class _HeatmapCalendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final firstDay = DateTime(month.year, month.month, 1);
     final daysInMonth = DateTime(month.year, month.month + 1, 0).day;
     final firstWeekday = firstDay.weekday; // 1=Mon
     final totalCells = daysInMonth + firstWeekday - 1;
+
+    final weekdayLetters = <String>[
+      t.weekdayVeryShortMon,
+      t.weekdayVeryShortTue,
+      t.weekdayVeryShortWed,
+      t.weekdayVeryShortThu,
+      t.weekdayVeryShortFri,
+      t.weekdayVeryShortSat,
+      t.weekdayVeryShortSun,
+    ];
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -1759,12 +1752,12 @@ class _HeatmapCalendar extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((label) {
+            children: weekdayLetters.map((label) {
               return Expanded(
                 child: Center(
                   child: Text(
                     label,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 10,
                       color: Color(0xFF8A8A99),
                     ),
@@ -1837,7 +1830,7 @@ class _DonutPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = size.width / 2;
-    final strokeWidth = 12.0;
+    const strokeWidth = 12.0;
 
     final bgPaint = Paint()
       ..color = backgroundColor
@@ -1902,19 +1895,16 @@ class _BarChartPainter extends CustomPainter {
       final right = left + barWidth;
       final barBottom = size.height;
 
-      // Background
       canvas.drawRRect(
         RRect.fromLTRBR(left, 0, right, barBottom, const Radius.circular(6)),
         bgBarPaint,
       );
 
-      // Foreground
       final barTop = size.height * (1 - normalized);
-      final adjustedTop =
-      (value > 0 && barTop == barBottom) ? barBottom - 4 : barTop;
+      final adjustedTop = (value > 0 && barTop == barBottom) ? barBottom - 4 : barTop;
+
       canvas.drawRRect(
-        RRect.fromLTRBR(
-            left, adjustedTop, right, barBottom, const Radius.circular(6)),
+        RRect.fromLTRBR(left, adjustedTop, right, barBottom, const Radius.circular(6)),
         barPaint,
       );
     }
@@ -1941,7 +1931,6 @@ class _ScoreLineChartPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (points.isEmpty) return;
 
-    // Horizontal grid lines (0,20,40,60,80,100)
     final gridPaint = Paint()
       ..color = Colors.white.withValues(alpha: 0.1)
       ..strokeWidth = 1
@@ -1955,7 +1944,6 @@ class _ScoreLineChartPainter extends CustomPainter {
 
     final totalDays = points.length;
 
-    // Vertical grid lines at day ticks
     for (final day in tickDays) {
       if (day > totalDays) continue;
       final divisor = math.max(1, totalDays - 1);
@@ -1964,7 +1952,6 @@ class _ScoreLineChartPainter extends CustomPainter {
       _drawDashedLine(canvas, Offset(x, 0), Offset(x, size.height), gridPaint);
     }
 
-    // Line path + filled area
     final path = Path();
     final fillPath = Path();
     final dx = totalDays > 1 ? size.width / (totalDays - 1) : 0.0;
@@ -1982,8 +1969,7 @@ class _ScoreLineChartPainter extends CustomPainter {
       } else {
         final prevX = dx * (i - 1);
         final prevP = points[i - 1];
-        final prevY = size.height *
-            (1.0 - (prevP.value / 100.0).clamp(0.0, 1.0));
+        final prevY = size.height * (1.0 - (prevP.value / 100.0).clamp(0.0, 1.0));
 
         final cp1X = prevX + (x - prevX) / 2;
         final cp2X = cp1X;
@@ -1996,7 +1982,6 @@ class _ScoreLineChartPainter extends CustomPainter {
     fillPath.lineTo(size.width, size.height);
     fillPath.close();
 
-    // Gradient fill under line
     final gradientShader = ui.Gradient.linear(
       const Offset(0, 0),
       Offset(0, size.height),
@@ -2012,7 +1997,6 @@ class _ScoreLineChartPainter extends CustomPainter {
 
     canvas.drawPath(fillPath, fillPaint);
 
-    // Main line
     final linePaint = Paint()
       ..color = color
       ..strokeWidth = 2.5
@@ -2022,7 +2006,6 @@ class _ScoreLineChartPainter extends CustomPainter {
 
     canvas.drawPath(path, linePaint);
 
-    // Dots on tick days
     final dotPaint = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
@@ -2049,7 +2032,6 @@ class _ScoreLineChartPainter extends CustomPainter {
     const dashWidth = 4.0;
     const dashSpace = 4.0;
 
-    // horizontal vs vertical
     if ((p1.dy - p2.dy).abs() < 0.01) {
       double x = p1.dx;
       while (x < p2.dx) {
@@ -2078,7 +2060,6 @@ class _ScoreLineChartPainter extends CustomPainter {
     return oldDelegate.points != points || oldDelegate.color != color;
   }
 }
-
 
 class _SmoothLineChartPainter extends CustomPainter {
   _SmoothLineChartPainter({
@@ -2124,9 +2105,7 @@ class _SmoothLineChartPainter extends CustomPainter {
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke;
 
-    // X positions evenly distributed
-    final spacing =
-    points.length > 1 ? size.width / (points.length - 1) : 0.0;
+    final spacing = points.length > 1 ? size.width / (points.length - 1) : 0.0;
     final coords = <Offset>[];
 
     for (int i = 0; i < points.length; i++) {
@@ -2137,47 +2116,29 @@ class _SmoothLineChartPainter extends CustomPainter {
       coords.add(Offset(x, y));
     }
 
-    final indicesForTicks = tickIndices ??
-        List<int>.generate(coords.length, (i) => i);
+    final indicesForTicks =
+        tickIndices ?? List<int>.generate(coords.length, (i) => i);
 
-    // Vertical grid lines
     if (labelMode == _LabelMode.ticks) {
       for (final idx in indicesForTicks) {
         if (idx < 0 || idx >= coords.length) continue;
         final c = coords[idx];
-        _drawDashedLine(
-          canvas,
-          Offset(c.dx, 0),
-          Offset(c.dx, size.height),
-          gridPaint,
-        );
+        _drawDashedLine(canvas, Offset(c.dx, 0), Offset(c.dx, size.height), gridPaint);
       }
     } else {
       for (final c in coords) {
-        _drawDashedLine(
-          canvas,
-          Offset(c.dx, 0),
-          Offset(c.dx, size.height),
-          gridPaint,
-        );
+        _drawDashedLine(canvas, Offset(c.dx, 0), Offset(c.dx, size.height), gridPaint);
       }
     }
 
-    // Horizontal grid lines
     if (horizontalGridValues != null && horizontalGridValues!.isNotEmpty) {
       for (final val in horizontalGridValues!) {
         final norm = (val / maxY).clamp(0.0, 1.0);
         final y = size.height * (1 - norm);
-        _drawDashedLine(
-          canvas,
-          Offset(0, y),
-          Offset(size.width, y),
-          gridPaint,
-        );
+        _drawDashedLine(canvas, Offset(0, y), Offset(size.width, y), gridPaint);
       }
     }
 
-    // Smooth curve
     final path = Path();
     path.moveTo(coords[0].dx, coords[0].dy);
     for (int i = 0; i < coords.length - 1; i++) {
@@ -2188,7 +2149,6 @@ class _SmoothLineChartPainter extends CustomPainter {
       path.cubicTo(cp1.dx, cp1.dy, cp2.dx, cp2.dy, p1.dx, p1.dy);
     }
 
-    // Gradient fill
     final fillPath = Path.from(path)
       ..lineTo(coords.last.dx, size.height)
       ..lineTo(coords.first.dx, size.height)
@@ -2203,7 +2163,6 @@ class _SmoothLineChartPainter extends CustomPainter {
       ],
     );
 
-
     canvas.drawPath(
       fillPath,
       Paint()
@@ -2211,10 +2170,8 @@ class _SmoothLineChartPainter extends CustomPainter {
         ..style = PaintingStyle.fill,
     );
 
-    // Line
     canvas.drawPath(path, linePaint);
 
-    // Dots on tick positions (or all if labelMode==all)
     if (labelMode == _LabelMode.ticks) {
       for (final idx in indicesForTicks) {
         if (idx < 0 || idx >= coords.length) continue;
@@ -2259,7 +2216,6 @@ class _SmoothLineChartPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _SmoothLineChartPainter oldDelegate) {
-    // Small chart, so it’s fine to always repaint – guarantees data changes show up
     return true;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '/l10n/app_localizations.dart';
 
 enum _SettingsTheme { light, dark }
 enum _StartWeekOn { saturday, sunday, monday }
@@ -26,14 +27,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Color(0xFFFF71C1), // pink
   ];
 
+  /// These are internal identifiers, not user-facing strings.
+  /// We map them to localized labels at render time.
   final List<String> _habitTabsOrder = [
-    'Today',
-    'Weekly',
-    'Overall',
+    'today',
+    'weekly',
+    'overall',
   ];
+
+  String _tabLabel(BuildContext context, String key) {
+    final t = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'today':
+        return t.habitsTabToday;
+      case 'weekly':
+        return t.habitsTabWeekly;
+      case 'overall':
+        return t.habitsTabOverall;
+      default:
+        return key;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -53,9 +72,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               const SizedBox(height: 12),
+
               // Title
               Text(
-                'Settings',
+                t.settingsTitle,
                 style: GoogleFonts.poppins(
                   fontSize: 28,
                   fontWeight: FontWeight.w700,
@@ -66,7 +86,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // THEME
               Text(
-                'Theme',
+                t.settingsThemeTitle,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -81,14 +101,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _theme = value;
                   });
                 },
-                options: const [
+                options: [
                   _SettingsOption<_SettingsTheme>(
                     value: _SettingsTheme.light,
-                    label: 'Light',
+                    label: t.settingsThemeLight,
                   ),
                   _SettingsOption<_SettingsTheme>(
                     value: _SettingsTheme.dark,
-                    label: 'Dark',
+                    label: t.settingsThemeDark,
                   ),
                 ],
               ),
@@ -97,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // ACCENT COLOR
               Text(
-                'Accent color',
+                t.settingsAccentColorTitle,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -117,8 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         });
                       },
                     ),
-                    if (i != _accentColors.length - 1)
-                      const SizedBox(width: 12),
+                    if (i != _accentColors.length - 1) const SizedBox(width: 12),
                   ],
                 ],
               ),
@@ -127,7 +146,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // START WEEK ON
               Text(
-                'Start week on',
+                t.settingsStartWeekOnTitle,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -142,18 +161,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _startWeekOn = value;
                   });
                 },
-                options: const [
+                options: [
                   _SettingsOption<_StartWeekOn>(
                     value: _StartWeekOn.saturday,
-                    label: 'Saturday',
+                    label: t.settingsStartWeekSaturday,
                   ),
                   _SettingsOption<_StartWeekOn>(
                     value: _StartWeekOn.sunday,
-                    label: 'Sunday',
+                    label: t.settingsStartWeekSunday,
                   ),
                   _SettingsOption<_StartWeekOn>(
                     value: _StartWeekOn.monday,
-                    label: 'Monday',
+                    label: t.settingsStartWeekMonday,
                   ),
                 ],
               ),
@@ -162,7 +181,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // HABIT TABS ORDER
               Text(
-                'Habit tabs order',
+                t.settingsHabitTabsOrderTitle,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -189,11 +208,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     });
                   },
                   itemBuilder: (context, index) {
-                    final label = _habitTabsOrder[index];
+                    final key = _habitTabsOrder[index];
                     final isLast = index == _habitTabsOrder.length - 1;
 
                     return ReorderableDragStartListener(
-                      key: ValueKey(label),
+                      key: ValueKey(key),
                       index: index,
                       child: Column(
                         children: [
@@ -205,7 +224,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             child: Row(
                               children: [
                                 Text(
-                                  label,
+                                  _tabLabel(context, key),
                                   style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     color: Colors.white,
@@ -222,11 +241,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           if (!isLast)
                             Container(
-                              margin:
-                              const EdgeInsets.symmetric(horizontal: 16),
+                              margin: const EdgeInsets.symmetric(horizontal: 16),
                               height: 0.6,
-                              color:
-                              Colors.white.withValues(alpha: 0.08),
+                              color: Colors.white.withValues(alpha: 0.08),
                             ),
                         ],
                       ),
@@ -236,7 +253,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Long press an item to reorder',
+                t.settingsHabitTabsOrderHint,
                 style: GoogleFonts.poppins(
                   fontSize: 11,
                   color: Colors.white.withValues(alpha: 0.6),

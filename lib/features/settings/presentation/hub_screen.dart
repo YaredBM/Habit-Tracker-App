@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/features/settings/presentation/settings_screen.dart';
 import 'pro_plan_screen.dart';
+import 'package:ecohabit/features/settings/presentation/language_screen.dart';
+import 'package:ecohabit/core/locale/locale_controller.dart';
+import '/l10n/app_localizations.dart';
 
 class HubScreen extends StatelessWidget {
   const HubScreen({
@@ -26,6 +29,8 @@ class HubScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -63,7 +68,7 @@ class HubScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 24),
               child: Text(
-                'Version: $appVersion',
+                t.hubVersionLabel(appVersion),
                 style: GoogleFonts.poppins(
                   fontSize: 12,
                   color: Colors.grey[500],
@@ -86,13 +91,15 @@ class _ProCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return InkWell(
       borderRadius: BorderRadius.circular(24),
       onTap: () {
         ProPlanScreen.show(
           context,
           isSubscribed: true,
-          planLabel: 'Pro Yearly',
+          planLabel: t.hubProPlanLabel,
         );
       },
       child: Container(
@@ -115,7 +122,7 @@ class _ProCard extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Text(
-              'EcoHabit Pro',
+              t.hubProTitle,
               style: GoogleFonts.poppins(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
@@ -152,6 +159,8 @@ class _HubMenuCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -162,55 +171,66 @@ class _HubMenuCard extends StatelessWidget {
         children: [
           _HubMenuItem(
             icon: Icons.settings_outlined,
-            label: 'Settings',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const SettingsScreen(),
-                ),
-              );
-            },
+            label: t.hubMenuSettings,
+            onTap: onSettingsTap ??
+                    () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                  );
+                },
           ),
           const _HubDivider(),
           _HubMenuItem(
             icon: Icons.bar_chart_outlined,
-            label: 'Analytics',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const AnalyticsScreen(),
-                ),
-              );
-            },
+            label: t.hubMenuAnalytics,
+            onTap: onAnalyticsTap ??
+                    () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const AnalyticsScreen()),
+                  );
+                },
           ),
           const _HubDivider(),
           _HubMenuItem(
             icon: Icons.menu_book_outlined,
-            label: 'Journal',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const JournalScreen(),
-                ),
-              );
-            },
+            label: t.hubMenuJournal,
+            onTap: onJournalTap ??
+                    () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const JournalScreen()),
+                  );
+                },
           ),
           const _HubDivider(),
           _HubMenuItem(
             icon: Icons.person_outline,
-            label: 'Account',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const AccountScreen(),
-                ),
+            label: t.hubMenuAccount,
+            onTap: onAccountTap ??
+                    () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const AccountScreen()),
+                  );
+                },
+          ),
+          _HubMenuItem(
+            icon: Icons.language_outlined,
+            label: t.chooseLanguageTitle,
+            onTap: () async {
+              final code = await Navigator.of(context).push<String>(
+                MaterialPageRoute(builder: (_) => const LanguageScreen()),
+              );
+
+              if (!context.mounted || code == null) return;
+
+              await localeController.setLocale(
+                code == 'system' ? null : Locale(code),
               );
             },
           ),
           const _HubDivider(),
           _HubMenuItem(
             icon: Icons.folder_open_outlined,
-            label: 'Backup',
+            label: t.hubMenuBackup,
             onTap: onBackupTap,
           ),
         ],
@@ -234,11 +254,7 @@ class _HubMenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final row = Row(
       children: [
-        Icon(
-          icon,
-          color: Colors.white,
-          size: 20,
-        ),
+        Icon(icon, color: Colors.white, size: 20),
         const SizedBox(width: 14),
         Expanded(
           child: Text(
@@ -249,11 +265,7 @@ class _HubMenuItem extends StatelessWidget {
             ),
           ),
         ),
-        const Icon(
-          Icons.chevron_right,
-          color: Colors.white70,
-          size: 20,
-        ),
+        const Icon(Icons.chevron_right, color: Colors.white70, size: 20),
       ],
     );
 
@@ -280,4 +292,3 @@ class _HubDivider extends StatelessWidget {
     );
   }
 }
-

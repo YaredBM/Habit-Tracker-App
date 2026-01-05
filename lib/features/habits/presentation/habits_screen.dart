@@ -9,16 +9,16 @@ import 'create_habit_screen.dart';
 import 'habit_detail_screen.dart';
 import '/features/auth/presentation/sign_in_screen.dart';
 import 'package:ecohabit/features/explore/presentation/explore_screen.dart';
-
+import '/l10n/app_localizations.dart';
 
 enum HabitsTab { today, weekly, overall }
 
 class HabitsScreen extends StatelessWidget {
   const HabitsScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     const backgroundColor = Color(0xFF000000);
 
     return DefaultTabController(
@@ -26,6 +26,7 @@ class HabitsScreen extends StatelessWidget {
       initialIndex: 0,
       child: Builder(
         builder: (context) {
+          final t = AppLocalizations.of(context)!;
           final tabController = DefaultTabController.of(context);
 
           Future<void> openCreate() async {
@@ -40,8 +41,8 @@ class HabitsScreen extends StatelessWidget {
             if (!context.mounted) return;
             if (result is String) {
               messenger.showSnackBar(
-                const SnackBar(
-                  content: Text('Habit completed correctly'),
+                SnackBar(
+                  content: Text(t.habitsSnackHabitCompletedCorrectly),
                 ),
               );
               tabController.animateTo(HabitsTab.today.index);
@@ -56,8 +57,8 @@ class HabitsScreen extends StatelessWidget {
                 children: [
                   // Top bar
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     child: Row(
                       children: [
                         IconButton(
@@ -96,7 +97,7 @@ class HabitsScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Text(
-                      'Habits',
+                      t.habitsTitle,
                       style: GoogleFonts.poppins(
                         fontSize: 28,
                         fontWeight: FontWeight.w600,
@@ -137,7 +138,6 @@ class HabitsScreen extends StatelessWidget {
               ),
             ),
 
-            // Bottom navigation bar (a bit shorter & nicely aligned)
             bottomNavigationBar: Container(
               color: const Color(0xFF2A2A32),
               child: SafeArea(
@@ -147,7 +147,7 @@ class HabitsScreen extends StatelessWidget {
                   child: BottomNavigationBar(
                     backgroundColor: const Color(0xFF2A2A32),
                     elevation: 0,
-                    currentIndex: 0, // HabitsScreen is "Home"
+                    currentIndex: 0,
                     type: BottomNavigationBarType.fixed,
                     iconSize: 24,
                     selectedFontSize: 0,
@@ -157,15 +157,12 @@ class HabitsScreen extends StatelessWidget {
                     onTap: (index) {
                       switch (index) {
                         case 0:
-                        // already here (Home)
                           return;
-
                         case 1:
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (_) => AnalyticsScreen()),
                           );
                           return;
-
                         case 2:
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (_) => ExploreScreen()),
@@ -173,25 +170,24 @@ class HabitsScreen extends StatelessWidget {
                           return;
                       }
                     },
-                    items: const [
+                    items: [
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.home_outlined),
-                        label: 'Home',
+                        icon: const Icon(Icons.home_outlined),
+                        label: t.habitsBottomNavHome,
                       ),
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.bar_chart_outlined),
-                        label: 'Analytics',
+                        icon: const Icon(Icons.bar_chart_outlined),
+                        label: t.habitsBottomNavAnalytics,
                       ),
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.explore_outlined),
-                        label: 'Explore',
+                        icon: const Icon(Icons.explore_outlined),
+                        label: t.habitsBottomNavExplore,
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-
           );
         },
       ),
@@ -207,7 +203,6 @@ class AuthGate extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        // Optional: splash/loading
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             backgroundColor: Colors.black,
@@ -223,7 +218,6 @@ class AuthGate extends StatelessWidget {
           return const SignInScreen();
         }
 
-        // User is signed in
         return const HabitsScreen();
       },
     );
@@ -237,32 +231,38 @@ class _HabitsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return AnimatedBuilder(
       animation: controller,
       builder: (context, _) {
         final index = controller.index;
 
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _TabPill(
-              label: 'Today',
-              isSelected: index == 0,
-              onTap: () => controller.animateTo(0),
-            ),
-            const SizedBox(width: 12),
-            _TabPill(
-              label: 'Weekly',
-              isSelected: index == 1,
-              onTap: () => controller.animateTo(1),
-            ),
-            const SizedBox(width: 12),
-            _TabPill(
-              label: 'Overall',
-              isSelected: index == 2,
-              onTap: () => controller.animateTo(2),
-            ),
-          ],
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          child: Row(
+            children: [
+              _TabPill(
+                label: t.habitsTabToday,
+                isSelected: index == 0,
+                onTap: () => controller.animateTo(0),
+              ),
+              const SizedBox(width: 12),
+              _TabPill(
+                label: t.habitsTabWeekly,
+                isSelected: index == 1,
+                onTap: () => controller.animateTo(1),
+              ),
+              const SizedBox(width: 12),
+              _TabPill(
+                label: t.habitsTabOverall,
+                isSelected: index == 2,
+                onTap: () => controller.animateTo(2),
+              ),
+              const SizedBox(width: 6), // small right padding
+            ],
+          ),
         );
       },
     );
@@ -326,12 +326,14 @@ class _HabitsListState extends State<_HabitsList> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final user = FirebaseAuth.instance.currentUser;
     final tabController = DefaultTabController.of(context);
     if (user == null) {
       return _EmptyHabitsState(
-        title: 'Not signed in',
-        subtitle: 'Please sign in to create habits.',
+        title: t.habitsNotSignedInTitle,
+        subtitle: t.habitsNotSignedInSubtitle,
         onCreate: null,
       );
     }
@@ -350,6 +352,8 @@ class _HabitsListState extends State<_HabitsList> {
         context: context,
         barrierDismissible: true,
         builder: (dialogCtx) {
+          final t = AppLocalizations.of(context)!;
+
           return Dialog(
             backgroundColor: const Color(0xFF000000),
             shape: RoundedRectangleBorder(
@@ -367,7 +371,7 @@ class _HabitsListState extends State<_HabitsList> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Good Job!',
+                    t.habitsGoodJobTitle,
                     style: GoogleFonts.poppins(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -376,7 +380,7 @@ class _HabitsListState extends State<_HabitsList> {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    'All set and done.',
+                    t.habitsAllSetAndDone,
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       color: Colors.grey[400],
@@ -396,7 +400,7 @@ class _HabitsListState extends State<_HabitsList> {
                         ),
                       ),
                       child: Text(
-                        'Great!',
+                        t.habitsGreatButton,
                         style: GoogleFonts.poppins(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
@@ -418,6 +422,8 @@ class _HabitsListState extends State<_HabitsList> {
       required int previousCount,
       required int newCount,
     }) async {
+      final t = AppLocalizations.of(context)!;
+
       final today = todayKey();
       final goalValue = (data['goalValue'] as int?) ?? 1;
       final wasCompleted = previousCount >= goalValue;
@@ -437,7 +443,6 @@ class _HabitsListState extends State<_HabitsList> {
               ? FieldValue.arrayUnion([today])
               : FieldValue.arrayRemove([today]),
           'createdAt': FieldValue.serverTimestamp(),
-
         });
 
         if (!mounted) return;
@@ -445,17 +450,17 @@ class _HabitsListState extends State<_HabitsList> {
           await showCompletionCelebration();
         } else {
           messenger.showSnackBar(
-            const SnackBar(
-              content: Text('Progress updated'),
-              duration: Duration(milliseconds: 800),
+            SnackBar(
+              content: Text(t.habitsSnackProgressUpdated),
+              duration: const Duration(milliseconds: 800),
             ),
           );
         }
       } catch (_) {
         if (!mounted) return;
         messenger.showSnackBar(
-          const SnackBar(
-            content: Text('Could not update progress. Try again.'),
+          SnackBar(
+            content: Text(t.habitsSnackCouldNotUpdateProgress),
           ),
         );
       }
@@ -476,6 +481,7 @@ class _HabitsListState extends State<_HabitsList> {
           borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
         ),
         builder: (ctx) {
+          final t = AppLocalizations.of(ctx)!;
           int localCount = todayCount;
 
           return Padding(
@@ -503,7 +509,7 @@ class _HabitsListState extends State<_HabitsList> {
                     ),
                     const SizedBox(height: 18),
                     Text(
-                      data['title'] as String? ?? 'Habit',
+                      data['title'] as String? ?? t.habitsDefaultHabitTitle,
                       style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
@@ -512,7 +518,12 @@ class _HabitsListState extends State<_HabitsList> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      '$localCount / $goalValue $goalUnit$plural per day',
+                      t.habitsCompletionSheetPerDay(
+                        localCount,
+                        goalValue,
+                        goalUnit,
+                        plural,
+                      ),
                       style: GoogleFonts.poppins(
                         fontSize: 13,
                         color: Colors.grey[400],
@@ -579,9 +590,8 @@ class _HabitsListState extends State<_HabitsList> {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: reachedGoal
-                              ? const Color(0xFF00B894)
-                              : Colors.white,
+                          backgroundColor:
+                          reachedGoal ? const Color(0xFF00B894) : Colors.white,
                           foregroundColor:
                           reachedGoal ? Colors.white : Colors.black,
                           padding: const EdgeInsets.symmetric(vertical: 12),
@@ -590,7 +600,9 @@ class _HabitsListState extends State<_HabitsList> {
                           ),
                         ),
                         child: Text(
-                          reachedGoal ? 'Mark completed' : 'Save progress',
+                          reachedGoal
+                              ? t.habitsCompletionSheetMarkCompleted
+                              : t.habitsCompletionSheetSaveProgress,
                           style: GoogleFonts.poppins(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
@@ -600,7 +612,7 @@ class _HabitsListState extends State<_HabitsList> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Tap + or - to register the times or units you set.',
+                      t.habitsCompletionSheetHint,
                       style: GoogleFonts.poppins(
                         fontSize: 12,
                         color: Colors.grey[500],
@@ -619,6 +631,8 @@ class _HabitsListState extends State<_HabitsList> {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: habitsStream,
       builder: (context, snapshot) {
+        final t = AppLocalizations.of(context)!;
+
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(
@@ -654,8 +668,7 @@ class _HabitsListState extends State<_HabitsList> {
             final description = data['description'] as String?;
             final colorValue = data['color'] as int? ?? 0xFF5CE1E6;
             final completedDates =
-            (data['completedDates'] as List<dynamic>? ?? [])
-                .cast<String>();
+            (data['completedDates'] as List<dynamic>? ?? []).cast<String>();
             final goalEnabled = (data['goalEnabled'] as bool?) ?? false;
 
             final progressByDate =
@@ -663,10 +676,8 @@ class _HabitsListState extends State<_HabitsList> {
             final todayCount = (progressByDate[todayKey()] as int?) ??
                 (completedDates.contains(todayKey()) ? 1 : 0);
 
-            final goalValue = goalEnabled
-                ? (data['goalValue'] as int?) ?? 1
-                : 1;
-            final goalUnit = (data['goalUnit'] as String?) ?? 'time';
+            final goalValue = goalEnabled ? (data['goalValue'] as int?) ?? 1 : 1;
+            final goalUnit = (data['goalUnit'] as String?) ?? t.habitsGoalUnitTime;
 
             final color = Color(colorValue);
             final todayCompleted = todayCount >= goalValue;
@@ -705,8 +716,7 @@ class _HabitsListState extends State<_HabitsList> {
             listContent = ListView.separated(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
               itemCount: todayHabits.length,
-              separatorBuilder: (context, index) =>
-              const SizedBox(height: 12),
+              separatorBuilder: (context, index) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
                 final item = todayHabits[index];
 
@@ -744,8 +754,9 @@ class _HabitsListState extends State<_HabitsList> {
                             if (!mounted) return;
                             if (result is String) {
                               messenger.showSnackBar(
-                                const SnackBar(
-                                  content: Text('Habit completed correctly'),
+                                SnackBar(
+                                  content: Text(
+                                      t.habitsSnackHabitCompletedCorrectly),
                                 ),
                               );
                               navigator.pop();
@@ -777,15 +788,14 @@ class _HabitsListState extends State<_HabitsList> {
                     if (result is String) {
                       if (result == 'deleted') {
                         messenger.showSnackBar(
-                          const SnackBar(
-                            content: Text('Habit deleted'),
-                          ),
+                          SnackBar(content: Text(t.habitsSnackHabitDeleted)),
                         );
                         tabController.animateTo(HabitsTab.today.index);
                       } else {
                         messenger.showSnackBar(
-                          const SnackBar(
-                            content: Text('Habit completed correctly'),
+                          SnackBar(
+                            content:
+                            Text(t.habitsSnackHabitCompletedCorrectly),
                           ),
                         );
                         tabController.animateTo(HabitsTab.today.index);
@@ -848,6 +858,8 @@ class _HabitsListState extends State<_HabitsList> {
                         BorderRadius.vertical(top: Radius.circular(24)),
                       ),
                       builder: (ctx) {
+                        final t = AppLocalizations.of(ctx)!;
+
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
                           child: Column(
@@ -858,8 +870,7 @@ class _HabitsListState extends State<_HabitsList> {
                                   width: 40,
                                   height: 4,
                                   decoration: BoxDecoration(
-                                    color: Colors.white
-                                        .withValues(alpha: 0.25),
+                                    color: Colors.white.withValues(alpha: 0.25),
                                     borderRadius: BorderRadius.circular(999),
                                   ),
                                 ),
@@ -875,7 +886,7 @@ class _HabitsListState extends State<_HabitsList> {
                                 activeColor: const Color(0xFF5CE1E6),
                                 checkColor: Colors.black,
                                 title: Text(
-                                  'Show Completed',
+                                  t.habitsShowCompleted,
                                   style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     color: Colors.white,
@@ -903,6 +914,8 @@ class _HabitsListState extends State<_HabitsList> {
           itemCount: docs.length,
           separatorBuilder: (context, index) => const SizedBox(height: 12),
           itemBuilder: (context, index) {
+            final t = AppLocalizations.of(context)!;
+
             final doc = docs[index];
             final data = doc.data();
             final id = doc.id;
@@ -912,15 +925,14 @@ class _HabitsListState extends State<_HabitsList> {
             final colorValue = data['color'] as int? ?? 0xFF5CE1E6;
             final repeatType = data['repeatType'] as String? ?? 'daily';
             final completedDates =
-            (data['completedDates'] as List<dynamic>? ?? [])
-                .cast<String>();
+            (data['completedDates'] as List<dynamic>? ?? []).cast<String>();
 
             final progressByDate =
             (data['progressByDate'] as Map<String, dynamic>? ?? {});
             final todayCount = (progressByDate[todayKey()] as int?) ??
                 (completedDates.contains(todayKey()) ? 1 : 0);
             final goalValue = (data['goalValue'] as int?) ?? 1;
-            final goalUnit = (data['goalUnit'] as String?) ?? 'time';
+            final goalUnit = (data['goalUnit'] as String?) ?? t.habitsGoalUnitTime;
             final goalEnabled = (data['goalEnabled'] as bool?) ?? false;
 
             final color = Color(colorValue);
@@ -981,8 +993,9 @@ class _HabitsListState extends State<_HabitsList> {
                         if (!mounted) return;
                         if (result is String) {
                           messenger.showSnackBar(
-                            const SnackBar(
-                              content: Text('Habit completed correctly'),
+                            SnackBar(
+                              content:
+                              Text(t.habitsSnackHabitCompletedCorrectly),
                             ),
                           );
                           tabController.animateTo(HabitsTab.today.index);
@@ -1013,9 +1026,7 @@ class _HabitsListState extends State<_HabitsList> {
                 if (!mounted) return;
                 if (result is String && result == 'deleted') {
                   messenger.showSnackBar(
-                    const SnackBar(
-                      content: Text('Habit deleted'),
-                    ),
+                    SnackBar(content: Text(t.habitsSnackHabitDeleted)),
                   );
                   tabController.animateTo(HabitsTab.today.index);
                 }
@@ -1103,6 +1114,8 @@ class _TodayProgressSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final progress = totalHabits == 0
         ? 0.0
         : (completedCount / totalHabits).clamp(0.0, 1.0);
@@ -1119,7 +1132,7 @@ class _TodayProgressSummary extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '$completedCount completed',
+                t.habitsProgressCountCompleted(completedCount),
                 style: GoogleFonts.poppins(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -1139,34 +1152,46 @@ class _TodayProgressSummary extends StatelessWidget {
             ],
           ),
         ),
-        const Spacer(),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.06),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                showCompleted
-                    ? Icons.check_circle
-                    : Icons.check_circle_outline,
-                color: Colors.white,
-                size: 18,
+        const SizedBox(width: 10),
+
+        // ✅ This section can shrink when translations get longer
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.06),
+                borderRadius: BorderRadius.circular(12),
               ),
-              const SizedBox(width: 8),
-              Text(
-                showCompleted ? 'Completed shown' : 'Completed hidden',
-                style: GoogleFonts.poppins(
-                  fontSize: 12,
-                  color: Colors.white,
-                ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    showCompleted ? Icons.check_circle : Icons.check_circle_outline,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      showCompleted
+                          ? t.habitsCompletedShown
+                          : t.habitsCompletedHidden,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
+
         IconButton(
           onPressed: onToggleFilter,
           icon: const Icon(Icons.more_horiz, color: Colors.white),
@@ -1181,6 +1206,8 @@ class _AllHabitsCompleted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -1192,7 +1219,7 @@ class _AllHabitsCompleted extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Good Job!',
+            t.habitsGoodJobTitle,
             style: GoogleFonts.poppins(
               fontSize: 18,
               fontWeight: FontWeight.w700,
@@ -1201,7 +1228,7 @@ class _AllHabitsCompleted extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'All set and done.',
+            t.habitsAllSetAndDone,
             style: GoogleFonts.poppins(
               fontSize: 13,
               color: Colors.grey[400],
@@ -1226,6 +1253,7 @@ class _EmptyHabitsState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     const accentColor = Color(0xFF5CE1E6);
 
     return Center(
@@ -1240,7 +1268,7 @@ class _EmptyHabitsState extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            title ?? 'No habits for today',
+            title ?? t.habitsEmptyTitle,
             style: GoogleFonts.poppins(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -1250,7 +1278,7 @@ class _EmptyHabitsState extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            subtitle ?? 'There is no habit for today. Create one?',
+            subtitle ?? t.habitsEmptySubtitle,
             style: GoogleFonts.poppins(
               fontSize: 13,
               color: Colors.grey[400],
@@ -1271,7 +1299,7 @@ class _EmptyHabitsState extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  '+ Create',
+                  t.habitsEmptyCreateButton,
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
@@ -1285,8 +1313,6 @@ class _EmptyHabitsState extends StatelessWidget {
     );
   }
 }
-
-// TODAY TAB – pill-style card
 
 class _TodayHabitCard extends StatelessWidget {
   final String title;
@@ -1311,9 +1337,7 @@ class _TodayHabitCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = goalEnabled
-        ? const Color(0xFF15151A)
-        : color.withValues(alpha: 0.28);
+    final bg = goalEnabled ? const Color(0xFF15151A) : color.withValues(alpha: 0.28);
 
     return Container(
       decoration: BoxDecoration(
@@ -1376,8 +1400,6 @@ class _TodayHabitCard extends StatelessWidget {
   }
 }
 
-// WEEKLY TAB – 7-day chips that highlight completed days
-
 class _WeeklyHabitCard extends StatelessWidget {
   final String title;
   final Color color;
@@ -1391,11 +1413,13 @@ class _WeeklyHabitCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final chipBg = Colors.white.withValues(alpha: 0.06);
 
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    final weekStart = today.subtract(Duration(days: today.weekday - 1)); // Monday
+    final weekStart = today.subtract(Duration(days: today.weekday - 1));
     final weekEnd = weekStart.add(const Duration(days: 7));
 
     final Set<int> completedDaysOfWeek = {};
@@ -1406,9 +1430,7 @@ class _WeeklyHabitCard extends StatelessWidget {
         if (!d.isBefore(weekStart) && d.isBefore(weekEnd) && !d.isAfter(today)) {
           completedDaysOfWeek.add(d.weekday);
         }
-      } catch (_) {
-        // ignore parse errors
-      }
+      } catch (_) {}
     }
 
     return Container(
@@ -1452,9 +1474,7 @@ class _WeeklyHabitCard extends StatelessWidget {
                         : chipBg,
                     borderRadius: BorderRadius.circular(999),
                     border: locked
-                        ? Border.all(
-                      color: Colors.white.withValues(alpha: 0.08),
-                    )
+                        ? Border.all(color: Colors.white.withValues(alpha: 0.08))
                         : null,
                   ),
                   child: Text(
@@ -1472,7 +1492,7 @@ class _WeeklyHabitCard extends StatelessWidget {
               }),
               const Spacer(),
               Text(
-                '${completedDaysOfWeek.length} completed',
+                t.habitsWeeklyCompletedCount(completedDaysOfWeek.length),
                 style: GoogleFonts.poppins(
                   fontSize: 12,
                   color: Colors.grey[400],
@@ -1485,8 +1505,6 @@ class _WeeklyHabitCard extends StatelessWidget {
     );
   }
 }
-
-// OVERALL TAB – big grid of dots like the reference
 
 class _OverallHabitCard extends StatelessWidget {
   final String title;
@@ -1503,6 +1521,8 @@ class _OverallHabitCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final bg = const Color(0xFF15151A);
     const totalDots = 120;
 
@@ -1565,10 +1585,10 @@ class _OverallHabitCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             repeatType == 'daily'
-                ? 'Everyday'
+                ? t.habitsOverallEveryday
                 : repeatType == 'weekly'
-                ? 'Weekly habit'
-                : 'Monthly habit',
+                ? t.habitsOverallWeeklyHabit
+                : t.habitsOverallMonthlyHabit,
             style: GoogleFonts.poppins(
               fontSize: 11,
               color: Colors.grey[400],

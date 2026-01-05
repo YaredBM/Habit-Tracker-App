@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '/l10n/app_localizations.dart';
 
 import '../../habits/presentation/habits_screen.dart';
 import '../data/auth_service.dart';
@@ -20,8 +21,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _obscurePassword = true;
   bool _isLoading = false;
 
-  String? _error;          // global Firebase error
-  String? _emailError;     // per-field errors
+  String? _error; // global Firebase error
+  String? _emailError; // per-field errors
   String? _usernameError;
   String? _passwordError;
 
@@ -34,15 +35,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> _handleSignUp() async {
+    final t = AppLocalizations.of(context)!;
+
     final email = _emailController.text.trim();
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
 
     // Local validation
     setState(() {
-      _emailError   = email.isEmpty    ? 'Please enter your email'    : null;
-      _usernameError = username.isEmpty ? 'Please enter a username'   : null;
-      _passwordError = password.isEmpty ? 'Please enter a password'   : null;
+      _emailError = email.isEmpty ? t.signUpEmailRequired : null;
+      _usernameError = username.isEmpty ? t.signUpUsernameRequired : null;
+      _passwordError = password.isEmpty ? t.signUpPasswordRequired : null;
       _error = null;
     });
 
@@ -71,11 +74,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
     } on FirebaseAuthException catch (e) {
       setState(() {
-        _error = e.message ?? 'Sign up error';
+        _error = e.message ?? t.signUpErrorDefault;
       });
     } catch (e, _) {
       setState(() {
-        _error = 'Something went wrong. Please try again.';
+        _error = t.signUpErrorGeneric;
       });
     } finally {
       if (mounted) {
@@ -86,6 +89,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     final bgColor = const Color(0xFF111015); // dark background
     final fieldColor = const Color(0xFF1E1C22);
     final borderColor = Colors.white12;
@@ -120,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                 // Title
                 Text(
-                  'Sign Up',
+                  t.signUpTitle,
                   style: GoogleFonts.poppins(
                     fontSize: 28,
                     fontWeight: FontWeight.w600,
@@ -146,7 +151,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Email',
+                    t.signUpEmailLabel,
                     style: GoogleFonts.poppins(
                       fontSize: 13,
                       color: Colors.grey[300],
@@ -156,7 +161,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 8),
                 _AuthTextField(
                   controller: _emailController,
-                  hintText: 'Enter email',
+                  hintText: t.signUpEmailHint,
                   fieldColor: fieldColor,
                   borderColor: borderColor,
                   prefixIcon: Icons.email_outlined,
@@ -181,7 +186,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Create Username',
+                    t.signUpUsernameLabel,
                     style: GoogleFonts.poppins(
                       fontSize: 13,
                       color: Colors.grey[300],
@@ -191,7 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 8),
                 _AuthTextField(
                   controller: _usernameController,
-                  hintText: 'Enter username',
+                  hintText: t.signUpUsernameHint,
                   fieldColor: fieldColor,
                   borderColor: borderColor,
                   prefixIcon: Icons.person_outline,
@@ -216,7 +221,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Create Password',
+                    t.signUpPasswordLabel,
                     style: GoogleFonts.poppins(
                       fontSize: 13,
                       color: Colors.grey[300],
@@ -226,7 +231,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 8),
                 _AuthTextField(
                   controller: _passwordController,
-                  hintText: 'Password',
+                  hintText: t.signUpPasswordHint,
                   fieldColor: fieldColor,
                   borderColor: borderColor,
                   prefixIcon: Icons.vpn_key_outlined,
@@ -283,7 +288,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     )
                         : Text(
-                      'Sign Up',
+                      t.signUpButton,
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -292,7 +297,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-
 
                 const SizedBox(height: 24),
 
@@ -308,7 +312,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Text(
-                        'Or continue with',
+                        t.signUpOrContinueWith,
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           color: Colors.grey[400],
@@ -339,7 +343,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-
 
                 const SizedBox(height: 16),
               ],
@@ -394,8 +397,7 @@ class _AuthTextField extends StatelessWidget {
           color: Colors.grey[400],
         ),
         suffixIcon: suffixIcon,
-        contentPadding:
-        const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: borderColor),

@@ -74,9 +74,11 @@ The repository includes comprehensive engineering documentation:
 * **QA Report:** Testing strategy following the **IDEAL Model**.
 
 **Class Diagrams**
+
 <img width="9608" height="5915" alt="Class Diagram 3" src="https://github.com/user-attachments/assets/e129c150-0553-4e65-88b1-0e595a3928fd" />
 
 **Use Case Diagrams**
+
 <img width="620" height="374" alt="Use Case Diagram" src="https://github.com/user-attachments/assets/99ac1ec8-5ffe-433d-8bae-dd215cf7920e" />
 
 
